@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace GXPEngineTest {
     public class Program : Game {
         public Program() : base(pWidth: Globals.WIDTH, pHeight: Globals.HEIGHT, pFullScreen: Globals.FULLSCREEN, pVSync: Globals.VSYNC) {
-            
+            Logger.Log("Game started");
             Canvas canvas = new Canvas(800, 600);
 
             //add some content
@@ -19,8 +19,12 @@ namespace GXPEngineTest {
             canvas.graphics.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(400, 300, 400, 300));
             //add canvas to display list
             AddChild(canvas);
+            Logger.LogWarn("Added canvas as child to game");
         }
         public static void Main(string[] args) {
+            Logger.LogError("I HAS ERROR");
+            var ts = new TestSerialize(800, 600, false, false);
+            ts.SaveJson("test.json");
             new Program().Start();
         }
     }
@@ -41,9 +45,9 @@ namespace GXPEngineTest {
         public void SaveJson(string FileName) {
             using (var writer = new StreamWriter(FileName)) {
                 var json = JsonConvert.SerializeObject(this);
-                Console.WriteLine(json);
                 writer.Write(json);
                 writer.Flush();
+                Logger.Log(new Vector2(16, 8));
             }
         }
         public void SaveXML(string FileName)

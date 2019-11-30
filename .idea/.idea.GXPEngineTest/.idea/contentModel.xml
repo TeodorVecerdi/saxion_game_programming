@@ -54,6 +54,7 @@
         <e p="Utils" t="Include">
           <e p="Input.cs" t="Include" />
           <e p="Key.cs" t="Include" />
+          <e p="Logger.cs" t="Include" />
           <e p="MouseHandler.cs" t="Include" />
           <e p="Time.cs" t="Include" />
           <e p="Utils.cs" t="Include" />
