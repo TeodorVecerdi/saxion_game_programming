@@ -59,6 +59,10 @@ namespace GXPEngine {
             return x == other.x && y == other.y;
         }
 
+        public override int GetHashCode() {
+            return x.GetHashCode() ^ (y.GetHashCode() << 2);
+        }
+
         /// <summary>
         /// Returns a nicely formatted string for the vector
         /// </summary>

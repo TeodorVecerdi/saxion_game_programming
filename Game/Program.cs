@@ -47,7 +47,7 @@ namespace GXPEngineTest {
                 var json = JsonConvert.SerializeObject(this);
                 writer.Write(json);
                 writer.Flush();
-                Logger.Log(new Vector2(16, 8));
+                Logger.Log("Vector2="+new Vector2(16, 8));
             }
         }
         public void SaveXML(string FileName)
