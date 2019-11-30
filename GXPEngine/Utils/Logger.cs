@@ -7,7 +7,6 @@ using System.Text;
 
 namespace GXPEngine {
     public class Logger {
-        public static Logger Instance;
         private const string LogFormat = " at {0}.{1}:{2} ({3}:line {2})";
 
         private static string GetString(object message) {
