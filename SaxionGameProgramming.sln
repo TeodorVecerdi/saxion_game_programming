@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GXPEngineTest", "GXPEngineTest.csproj", "{BCD4339B-8934-4A80-A122-00187942940E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaxionGameProgramming", "SaxionGameProgramming.csproj", "{BCD4339B-8934-4A80-A122-00187942940E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

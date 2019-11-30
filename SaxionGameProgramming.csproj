@@ -7,8 +7,8 @@
     <ProjectGuid>{BCD4339B-8934-4A80-A122-00187942940E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GXPEngineTest</RootNamespace>
-    <AssemblyName>GXPEngineTest</AssemblyName>
+    <RootNamespace>SaxionGameProgramming</RootNamespace>
+    <AssemblyName>SaxionGameProgramming</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,12 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Globals.cs" />
+    <Compile Include="Game\Program.cs" />
     <Compile Include="GXPEngine\AddOns\Camera.cs" />
     <Compile Include="GXPEngine\AddOns\EasyDraw.cs" />
     <Compile Include="GXPEngine\AddOns\HierarchyManager.cs" />
@@ -54,13 +61,13 @@
     <Compile Include="GXPEngine\Core\Rectangle.cs" />
     <Compile Include="GXPEngine\Core\Texture2D.cs" />
     <Compile Include="GXPEngine\Core\Transformable.cs" />
-    <Compile Include="GXPEngine\Core\Vector2.cs" />
     <Compile Include="GXPEngine\FMOD\FMOD.cs" />
     <Compile Include="GXPEngine\Game.cs" />
     <Compile Include="GXPEngine\GameObject.cs" />
     <Compile Include="GXPEngine\Managers\CollisionManager.cs" />
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
-    <Compile Include="GXPEngine\Mathf.cs" />
+    <Compile Include="GXPEngine\Math\Mathf.cs" />
+    <Compile Include="GXPEngine\Math\Vector2.cs" />
     <Compile Include="GXPEngine\OpenGL\GL.cs" />
     <Compile Include="GXPEngine\Pivot.cs" />
     <Compile Include="GXPEngine\Sound.cs" />
@@ -68,11 +75,14 @@
     <Compile Include="GXPEngine\Sprite.cs" />
     <Compile Include="GXPEngine\Utils\Input.cs" />
     <Compile Include="GXPEngine\Utils\Key.cs" />
+    <Compile Include="GXPEngine\Utils\Logger.cs" />
     <Compile Include="GXPEngine\Utils\MouseHandler.cs" />
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
