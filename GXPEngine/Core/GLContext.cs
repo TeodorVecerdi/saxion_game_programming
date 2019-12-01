@@ -240,6 +240,19 @@ namespace GXPEngine.Core {
 			GL.DisableClientState(GL.VERTEX_ARRAY);
 			GL.DisableClientState(GL.TEXTURE_COORD_ARRAY);			
 		}
+
+		/// <summary>
+		/// Draws triangles
+		/// </summary>
+		public void DrawTriangles(float[] vertices, int[] indices, float[] uvs) {
+			GL.EnableClientState(GL.TEXTURE_COORD_ARRAY);
+			GL.EnableClientState(GL.VERTEX_ARRAY);
+			GL.TexCoordPointer(2, GL.FLOAT, 0, uvs);
+			GL.VertexPointer(2, GL.FLOAT, 0, vertices);
+			GL.DrawElements(GL.TRIANGLES, indices.Length, GL.UNSIGNED_INT, indices);
+			GL.DisableClientState(GL.VERTEX_ARRAY);
+			GL.DisableClientState(GL.TEXTURE_COORD_ARRAY);
+		}
 		
 		//------------------------------------------------------------------------------------------------------------------------
 		//														GetKey()
