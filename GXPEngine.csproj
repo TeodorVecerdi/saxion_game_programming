@@ -59,6 +59,7 @@
     <Compile Include="GXPEngine\GameObject.cs" />
     <Compile Include="GXPEngine\Graphics\Canvas.cs" />
     <Compile Include="GXPEngine\Graphics\Mesh.cs" />
+    <Compile Include="GXPEngine\Graphics\TileAtlas.cs" />
     <Compile Include="GXPEngine\Managers\CollisionManager.cs" />
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
     <Compile Include="GXPEngine\Math\Mathf.cs" />

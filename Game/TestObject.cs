@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using GXPEngine;
 using GXPEngine.Core;
-using GXPEngine.Graphics;
 
 namespace GXPEngineTest {
     public class TestObject : GameObject {

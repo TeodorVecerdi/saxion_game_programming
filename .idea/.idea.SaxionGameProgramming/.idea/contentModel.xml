@@ -43,6 +43,7 @@
         <e p="Graphics" t="Include">
           <e p="Canvas.cs" t="Include" />
           <e p="Mesh.cs" t="Include" />
+          <e p="TileAtlas.cs" t="Include" />
         </e>
         <e p="Managers" t="Include">
           <e p="CollisionManager.cs" t="Include" />

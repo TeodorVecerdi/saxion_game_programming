@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 using GXPEngine;
 using GXPEngine.Core;
@@ -8,10 +10,9 @@ namespace GXPEngineTest {
     public class Program : Game {
         public Program() : base(Globals.WIDTH, Globals.HEIGHT, Globals.FULLSCREEN, Globals.VSYNC,
             pPixelArt: Globals.PIXEL_ART) {
-            Logger.Log("Game started");
-            var t1 = new TestObject(8, 8, 32f, Texture2D.GetInstance("checkers.png", true));
-            var t2 = new TestObject(3, 3, 64f, Texture2D.GetInstance("checkers.png", true));
-            var t3 = new TestObject(2, 2, 48f, Texture2D.GetInstance("checkers.png", true));
+            var t1 = new TestObject(8, 8, 32f, Texture2D.GetInstance("data/checkers.png", true));
+            var t2 = new TestObject(3, 3, 64f, Texture2D.GetInstance("data/checkers.png", true));
+            var t3 = new TestObject(2, 2, 48f, Texture2D.GetInstance("data/checkers.png", true));
             t2.Move(128f, 128f);
             t3.Move(256f, 256f);
 
@@ -24,31 +25,32 @@ namespace GXPEngineTest {
             AddChild(t1);
             AddChild(t2);
             AddChild(t3);
-            Logger.LogWarn("Added canvas as child to game");
         }
 
         public static void Main(string[] args) {
-            Logger.LogError("I HAS ERROR");
-            var ts = new TestSerialize(800, 600, false, false);
-            ts.SaveJson("test.json");
             new Program().Start();
         }
     }
 
-    public class TestSerialize {
-        public bool fullscreen;
-        public int height;
-        public bool vsync;
-        public int width;
-        public TestSerialize() { }
+    [Serializable]
+    public struct TileAtlasTile {
+        public string TileName;
+        public int Column;
+        public int Row;
 
-        public TestSerialize(int width, int height, bool fullscreen, bool vsync) {
-            this.width = width;
-            this.height = height;
-            this.fullscreen = fullscreen;
-            this.vsync = vsync;
+        public TileAtlasTile(string tileName, int column, int row) {
+            TileName = tileName;
+            Column = column;
+            Row = row;
         }
-
+    }
+    public class TestSerialize {
+        public string TileAtlasTexture;
+        public int Columns;
+        public int Rows;
+        public List<TileAtlasTile> TileAtlasTiles;
+        
+        public TestSerialize() { }
         public void SaveJson(string FileName) {
             using (var writer = new StreamWriter(FileName)) {
                 var json = JsonConvert.SerializeObject(this);
