@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Game\Globals.cs" />
     <Compile Include="Game\Program.cs" />
+    <Compile Include="Game\TestObject.cs" />
     <Compile Include="GXPEngine\AddOns\Camera.cs" />
     <Compile Include="GXPEngine\AddOns\EasyDraw.cs" />
     <Compile Include="GXPEngine\AddOns\HierarchyManager.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="GXPEngine\Core\Collider.cs" />
     <Compile Include="GXPEngine\Core\Collision.cs" />
     <Compile Include="GXPEngine\Core\GLContext.cs" />
+    <Compile Include="GXPEngine\Core\Mesh.cs" />
     <Compile Include="GXPEngine\Core\Rectangle.cs" />
     <Compile Include="GXPEngine\Core\Texture2D.cs" />
     <Compile Include="GXPEngine\Core\Transformable.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
     <Compile Include="GXPEngine\Math\Mathf.cs" />
     <Compile Include="GXPEngine\Math\Vector2.cs" />
+    <Compile Include="GXPEngine\Math\Vector3.cs" />
     <Compile Include="GXPEngine\OpenGL\GL.cs" />
     <Compile Include="GXPEngine\Pivot.cs" />
     <Compile Include="GXPEngine\Sound.cs" />

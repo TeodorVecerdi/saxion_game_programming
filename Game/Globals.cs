@@ -15,5 +15,6 @@ namespace GXPEngineTest {
         }
         public const bool FULLSCREEN = false;
         public const bool VSYNC = false;
+        public const bool PIXEL_ART = true;
     }
 }

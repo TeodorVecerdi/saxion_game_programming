@@ -9,6 +9,7 @@
       <e p="Game" t="Include">
         <e p="Globals.cs" t="Include" />
         <e p="Program.cs" t="Include" />
+        <e p="TestObject.cs" t="Include" />
       </e>
       <e p="GXPEngine" t="Include">
         <e p="AddOns" t="Include">
@@ -27,6 +28,7 @@
           <e p="Collider.cs" t="Include" />
           <e p="Collision.cs" t="Include" />
           <e p="GLContext.cs" t="Include" />
+          <e p="Mesh.cs" t="Include" />
           <e p="Rectangle.cs" t="Include" />
           <e p="Texture2D.cs" t="Include" />
           <e p="Transformable.cs" t="Include" />
@@ -43,6 +45,7 @@
         <e p="Math" t="Include">
           <e p="Mathf.cs" t="Include" />
           <e p="Vector2.cs" t="Include" />
+          <e p="Vector3.cs" t="Include" />
         </e>
         <e p="OpenGL" t="Include">
           <e p="GL.cs" t="Include" />
