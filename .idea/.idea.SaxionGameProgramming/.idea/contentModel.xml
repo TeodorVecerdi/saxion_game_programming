@@ -13,6 +13,9 @@
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
         <e p="TestObject.cs" t="Include" />
+        <e p="TileDefinition" t="Include">
+          <e p="World.cs" t="Include" />
+        </e>
       </e>
       <e p="Game.csproj" t="IncludeRecursive" />
       <e p="GXPEngine" t="Include">

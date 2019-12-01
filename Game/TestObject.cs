@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Game.TileDefinition;
 using GXPEngine;
 using GXPEngine.Core;
 
@@ -9,13 +11,16 @@ namespace GXPEngineTest {
         private int height;
         private Mesh mesh;
         private float tsize;
+        private Random random;
+
 
         public TestObject(int width, int height, float tsize, string texturePath) : this(width, height, tsize, Texture2D.GetInstance(texturePath, true)) { }
 
         public TestObject(int width, int height, float tsize, Texture2D texture) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
-
+            name = $"TestObject{GetHashCode()}";
             mesh = new Mesh(texture);
+            random = new Random(Time.now);
 
             this.width = width;
             this.height = height;
@@ -42,11 +47,13 @@ namespace GXPEngineTest {
                 indiceList.Add(squareCount * 4 + 1);
                 indiceList.Add(squareCount * 4 + 2);
                 indiceList.Add(squareCount * 4 + 3);
-
-                uvList.Add(new Vector2(0f, 1f));
-                uvList.Add(new Vector2(1f, 1f));
-                uvList.Add(new Vector2(1f, 0f));
-                uvList.Add(new Vector2(0f, 0f));
+                var uv = random.Next(5) switch {
+                    0 => World.Dirt.SpriteUV, 1 => World.Grass.SpriteUV, 2 => World.Sand.SpriteUV, 3 => World.Stone.SpriteUV, _ => World.Water.SpriteUV
+                };
+                uvList.Add(new Vector2(uv.xa, uv.yb));
+                uvList.Add(new Vector2(uv.xb, uv.yb));
+                uvList.Add(new Vector2(uv.xb, uv.ya));
+                uvList.Add(new Vector2(uv.xa, uv.ya));
                 squareCount++;
             }
 
@@ -62,6 +69,11 @@ namespace GXPEngineTest {
             glContext.DrawMesh(mesh);
             glContext.SetColor(1, 1, 1, 1);
             BlendMode.NORMAL.enable();
+            var ed = parent.GetChildren().Find((child) => child.name.Equals("UI_EasyDraw")) as EasyDraw;
+            ed.Clear(0);
+            ed.Fill(255);
+            ed.TextAlign(CenterMode.Max, CenterMode.Min);
+            ed.Text("FPS: " + game.currentFps, Globals.WIDTH, 0);
         }
     }
 }

@@ -7,14 +7,19 @@ using GXPEngine.Core;
 using Newtonsoft.Json;
 
 namespace GXPEngineTest {
-    public class Program : Game {
+    public class Program : GXPEngine.Game {
         public Program() : base(Globals.WIDTH, Globals.HEIGHT, Globals.FULLSCREEN, Globals.VSYNC,
             pPixelArt: Globals.PIXEL_ART) {
-            var t1 = new TestObject(8, 8, 32f, Texture2D.GetInstance("data/checkers.png", true));
-            var t2 = new TestObject(3, 3, 64f, Texture2D.GetInstance("data/checkers.png", true));
-            var t3 = new TestObject(2, 2, 48f, Texture2D.GetInstance("data/checkers.png", true));
-            t2.Move(128f, 128f);
-            t3.Move(256f, 256f);
+            targetFps = 1000;
+            ShowMouse(true);
+            
+            var ed = new EasyDraw(Globals.WIDTH, Globals.HEIGHT, false);
+            ed.name = "UI_EasyDraw";
+            var t1 = new TestObject(1024, 1024, 1, Texture2D.GetInstance("data/TileMap_World.png", true));
+//            var t2 = new TestObject(3, 3, 64f, Texture2D.GetInstance("data/checkers.png", true));
+//            var t3 = new TestObject(2, 2, 48f, Texture2D.GetInstance("data/checkers.png", true));
+//            t2.Move(128f, 128f);
+//            t3.Move(256f, 256f);
 
 //            Canvas canvas = new Canvas(800, 600);
 //            canvas.graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(0, 0, 400, 300));
@@ -22,9 +27,13 @@ namespace GXPEngineTest {
 //            canvas.graphics.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(0, 300, 400, 300));
 //            canvas.graphics.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(400, 300, 400, 300));
 //            AddChild(canvas);
+            AddChild(ed);
             AddChild(t1);
-            AddChild(t2);
-            AddChild(t3);
+            GetChildren().ForEach((child) => {
+                Console.WriteLine(child.name);
+            });
+            //            AddChild(t2);
+//            AddChild(t3);
         }
 
         public static void Main(string[] args) {

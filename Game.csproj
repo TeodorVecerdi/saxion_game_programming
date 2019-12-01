@@ -11,6 +11,7 @@
     <AssemblyName>Game</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,6 +48,7 @@
     <Compile Include="Game\Program.cs" />
     <Compile Include="Game\TestObject.cs" />
     <Compile Include="Game\Properties\AssemblyInfo.cs" />
+    <Compile Include="Game\TileDefinition\World.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
