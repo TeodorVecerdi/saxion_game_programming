@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GXPEngine.OpenGL;
 
 namespace GXPEngine.Core {
@@ -242,9 +243,9 @@ namespace GXPEngine.Core {
 		}
 
 		/// <summary>
-		/// Draws triangles
+		/// Draws triangles using 2D coordinates for vertices
 		/// </summary>
-		public void DrawTriangles(float[] vertices, int[] indices, float[] uvs) {
+		public void DrawTriangles2D(float[] vertices, int[] indices, float[] uvs) {
 			GL.EnableClientState(GL.TEXTURE_COORD_ARRAY);
 			GL.EnableClientState(GL.VERTEX_ARRAY);
 			GL.TexCoordPointer(2, GL.FLOAT, 0, uvs);
@@ -252,6 +253,36 @@ namespace GXPEngine.Core {
 			GL.DrawElements(GL.TRIANGLES, indices.Length, GL.UNSIGNED_INT, indices);
 			GL.DisableClientState(GL.VERTEX_ARRAY);
 			GL.DisableClientState(GL.TEXTURE_COORD_ARRAY);
+		}
+		
+		/// <summary>
+		/// Draws triangles using 3D coordinates for vertices
+		/// </summary>
+		public void DrawTriangles(float[] vertices, int[] indices, float[] uvs) {
+			GL.EnableClientState(GL.TEXTURE_COORD_ARRAY);
+			GL.EnableClientState(GL.VERTEX_ARRAY);
+			GL.TexCoordPointer(2, GL.FLOAT, 0, uvs);
+			GL.VertexPointer(3, GL.FLOAT, 0, vertices);
+			GL.DrawElements(GL.TRIANGLES, indices.Length, GL.UNSIGNED_INT, indices);
+			GL.DisableClientState(GL.VERTEX_ARRAY);
+			GL.DisableClientState(GL.TEXTURE_COORD_ARRAY);
+		}
+
+		public void DrawMesh(Mesh mesh) {
+			List<float> vertices = new List<float>();
+			List<float> uvs = new List<float>();
+			foreach (var vertex in mesh.Vertices) {
+				vertices.Add(vertex.x);
+				vertices.Add(vertex.y);
+				vertices.Add(vertex.z);
+			}
+			foreach (var uv in mesh.Uvs) {
+				uvs.Add(uv.x);
+				uvs.Add(uv.y);
+			}
+			mesh.Texture.Bind();
+			DrawTriangles(vertices.ToArray(), mesh.IndexArray, uvs.ToArray());
+			mesh.Texture.Unbind();
 		}
 		
 		//------------------------------------------------------------------------------------------------------------------------
