@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -10,9 +9,7 @@ namespace GXPEngine {
         private const string LogFormat = " at {0}.{1}:{2} ({3}:line {2})";
 
         private static string GetString(object message) {
-            if (message == null) {
-                return "Null";
-            }
+            if (message == null) return "Null";
 
             var formattable = message as IFormattable;
             return formattable != null ? formattable.ToString(null, CultureInfo.InvariantCulture) : message.ToString();
@@ -26,7 +23,7 @@ namespace GXPEngine {
             method.Append(mth.Name);
             method.Append("(");
             var methodParameters = mth.GetParameters();
-            for (int i = 0; i < methodParameters.Length; i++) {
+            for (var i = 0; i < methodParameters.Length; i++) {
                 method.Append(methodParameters[i].ParameterType);
                 if (i != methodParameters.Length - 1) method.Append(", ");
             }
@@ -49,10 +46,11 @@ namespace GXPEngine {
             method.Append(mth.Name);
             method.Append("(");
             var methodParameters = mth.GetParameters();
-            for (int i = 0; i < methodParameters.Length; i++) {
+            for (var i = 0; i < methodParameters.Length; i++) {
                 method.Append(methodParameters[i].ParameterType);
                 if (i != methodParameters.Length - 1) method.Append(", ");
             }
+
             method.Append(")");
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkYellow;
@@ -64,6 +62,7 @@ namespace GXPEngine {
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
         }
+
         public static void LogError(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
@@ -72,10 +71,11 @@ namespace GXPEngine {
             method.Append(mth.Name);
             method.Append("(");
             var methodParameters = mth.GetParameters();
-            for (int i = 0; i < methodParameters.Length; i++) {
+            for (var i = 0; i < methodParameters.Length; i++) {
                 method.Append(methodParameters[i].ParameterType);
                 if (i != methodParameters.Length - 1) method.Append(", ");
             }
+
             method.Append(")");
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkRed;

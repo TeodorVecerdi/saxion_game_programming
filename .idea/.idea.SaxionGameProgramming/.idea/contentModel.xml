@@ -25,7 +25,6 @@
           <e p="Window.cs" t="Include" />
         </e>
         <e p="AnimationSprite.cs" t="Include" />
-        <e p="Canvas.cs" t="Include" />
         <e p="Core" t="Include">
           <e p="BlendMode.cs" t="Include" />
           <e p="BoxCollider.cs" t="Include" />
@@ -42,6 +41,7 @@
         <e p="Game.cs" t="Include" />
         <e p="GameObject.cs" t="Include" />
         <e p="Graphics" t="Include">
+          <e p="Canvas.cs" t="Include" />
           <e p="Mesh.cs" t="Include" />
         </e>
         <e p="Managers" t="Include">

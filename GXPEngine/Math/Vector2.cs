@@ -1,19 +1,18 @@
 using System;
 using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace GXPEngine {
     /// <summary>
-    /// Representation of 2D vectors and points.
+    ///     Representation of 2D vectors and points.
     /// </summary>
     public struct Vector2 : IEquatable<Vector2>, IFormattable {
         /// <summary>
-        /// X component of the vector
+        ///     X component of the vector
         /// </summary>
         public float x;
 
         /// <summary>
-        /// Y component of the vector
+        ///     Y component of the vector
         /// </summary>
         public float y;
 
@@ -33,18 +32,16 @@ namespace GXPEngine {
         }
 
         public void Normalize() {
-            float mag = magnitude;
-            if (mag > float.Epsilon) {
+            var mag = magnitude;
+            if (mag > float.Epsilon)
                 this = this / mag;
-            }
-            else {
+            else
                 this = zero;
-            }
         }
 
         public Vector2 normalized {
             get {
-                Vector2 v = new Vector2(x, y);
+                var v = new Vector2(x, y);
                 v.Normalize();
                 return v;
             }
@@ -64,7 +61,7 @@ namespace GXPEngine {
         }
 
         /// <summary>
-        /// Returns a nicely formatted string for the vector
+        ///     Returns a nicely formatted string for the vector
         /// </summary>
         public override string ToString() {
             return ToString(null, CultureInfo.InvariantCulture.NumberFormat);
@@ -73,32 +70,30 @@ namespace GXPEngine {
         public string ToString(string format, IFormatProvider formatProvider) {
             if (string.IsNullOrEmpty(format))
                 format = "F1";
-            return String.Format("({0}, {1})", x.ToString(format, formatProvider), y.ToString(format, formatProvider));
+            return string.Format("({0}, {1})", x.ToString(format, formatProvider), y.ToString(format, formatProvider));
         }
 
         /// <summary>
-        /// Returns the length of this vector
+        ///     Returns the length of this vector
         /// </summary>
         public float magnitude => Mathf.Sqrt(x * x + y * y);
 
         /// <summary>
-        /// Returns the squared length of this vector
+        ///     Returns the squared length of this vector
         /// </summary>
         public float sqrMagnitude => x * x + y * y;
-        
+
         /// <summary>
-        /// Converts a <see cref="GXPEngine.Vector3"/> to a Vector2.
+        ///     Converts a <see cref="GXPEngine.Vector3" /> to a Vector2.
         /// </summary>
-        public static implicit operator Vector2(Vector3 v)
-        {
+        public static implicit operator Vector2(Vector3 v) {
             return new Vector2(v.x, v.y);
         }
 
         /// <summary>
-        /// Converts a Vector2 to a <see cref="GXPEngine.Vector3"/>.
+        ///     Converts a Vector2 to a <see cref="GXPEngine.Vector3" />.
         /// </summary>
-        public static implicit operator Vector3(Vector2 v)
-        {
+        public static implicit operator Vector3(Vector2 v) {
             return new Vector3(v.x, v.y, 0);
         }
 
@@ -135,31 +130,22 @@ namespace GXPEngine {
         }
 
         public static bool operator ==(Vector2 lhs, Vector2 rhs) {
-            float diffX = lhs.x - rhs.x;
-            float diffY = lhs.y - rhs.y;
-            return (diffX * diffX + diffY * diffY) < Mathf.Epsilon;
+            var diffX = lhs.x - rhs.x;
+            var diffY = lhs.y - rhs.y;
+            return diffX * diffX + diffY * diffY < Mathf.Epsilon;
         }
 
         public static bool operator !=(Vector2 lhs, Vector2 rhs) {
             return !(lhs == rhs);
         }
 
-        static readonly Vector2 zeroVector = new Vector2(0f, 0f);
-        static readonly Vector2 oneVector = new Vector2(1f, 1f);
-        static readonly Vector2 upVector = new Vector2(0f, 1f);
-        static readonly Vector2 downVector = new Vector2(0f, -1f);
-        static readonly Vector2 leftVector = new Vector2(-1f, 0f);
-        static readonly Vector2 rightVector = new Vector2(1f, 0f);
-        static readonly Vector2 positiveInfinityVector = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
-        static readonly Vector2 negativeInfinityVector = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
-
-        public static Vector2 zero => zeroVector;
-        public static Vector2 one => oneVector;
-        public static Vector2 up => upVector;
-        public static Vector2 down => downVector;
-        public static Vector2 left => leftVector;
-        public static Vector2 right => rightVector;
-        public static Vector2 positiveInfinity => positiveInfinityVector;
-        public static Vector2 negativeInfinity => negativeInfinityVector;
+        public static Vector2 zero { get; } = new Vector2(0f, 0f);
+        public static Vector2 one { get; } = new Vector2(1f, 1f);
+        public static Vector2 up { get; } = new Vector2(0f, 1f);
+        public static Vector2 down { get; } = new Vector2(0f, -1f);
+        public static Vector2 left { get; } = new Vector2(-1f, 0f);
+        public static Vector2 right { get; } = new Vector2(1f, 0f);
+        public static Vector2 positiveInfinity { get; } = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+        public static Vector2 negativeInfinity { get; } = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
     }
 }
