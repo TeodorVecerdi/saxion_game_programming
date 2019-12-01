@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace GXPEngine.Core {
+    
+    /// <summary>
+    /// Representation of a textured mesh
+    /// </summary>
     public class Mesh {
         private List<Vector3> vertices;
         private List<Vector2> uvs;
@@ -13,6 +17,9 @@ namespace GXPEngine.Core {
 
         private Texture2D texture;
 
+        /// <summary>
+        /// The mesh vertices
+        /// </summary>
         public List<Vector3> Vertices {
             get => vertices;
             set {
@@ -20,6 +27,10 @@ namespace GXPEngine.Core {
                 vertexArray = value.ToArray();
             }
         }
+        
+        /// <summary>
+        /// The mesh UVs
+        /// </summary>
         public List<Vector2> Uvs {
             get => uvs;
             set {
@@ -27,6 +38,10 @@ namespace GXPEngine.Core {
                 uvArray = value.ToArray();
             }
         }
+        
+        /// <summary>
+        /// The mesh indices/triangles
+        /// </summary>
         public List<int> Indices {
             get => indices;
             set {
@@ -34,10 +49,25 @@ namespace GXPEngine.Core {
                 indexArray = value.ToArray();
             }
         }
+        
+        /// <summary>
+        /// Get the mesh's vertex array
+        /// </summary>
         public Vector3[] VertexArray => vertexArray;
+        
+        /// <summary>
+        /// Get the mesh's uv array
+        /// </summary>
         public Vector2[] UvArray => uvArray;
+        
+        /// <summary>
+        /// Get the mesh's index/triangle array
+        /// </summary>
         public int[] IndexArray => indexArray;
 
+        /// <summary>
+        /// The texture used by the mesh
+        /// </summary>
         public Texture2D Texture {
             get => texture;
             set => texture = value;
@@ -62,6 +92,9 @@ namespace GXPEngine.Core {
             Indices = indices;
         }
         
+        /// <summary>
+        /// Clears the mesh vertices, uvs and indices
+        /// </summary>
         public void Clear() {
             vertices.Clear();
             uvs.Clear();
