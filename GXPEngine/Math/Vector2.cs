@@ -85,6 +85,22 @@ namespace GXPEngine {
         /// Returns the squared length of this vector
         /// </summary>
         public float sqrMagnitude => x * x + y * y;
+        
+        /// <summary>
+        /// Converts a <see cref="GXPEngine.Vector3"/> to a Vector2.
+        /// </summary>
+        public static implicit operator Vector2(Vector3 v)
+        {
+            return new Vector2(v.x, v.y);
+        }
+
+        /// <summary>
+        /// Converts a Vector2 to a <see cref="GXPEngine.Vector3"/>.
+        /// </summary>
+        public static implicit operator Vector3(Vector2 v)
+        {
+            return new Vector3(v.x, v.y, 0);
+        }
 
         public static Vector2 operator +(Vector2 a, Vector2 b) {
             return new Vector2(a.x + b.x, a.y + b.y);
