@@ -9,8 +9,12 @@
       <e p="Game" t="Include">
         <e p="Globals.cs" t="Include" />
         <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
         <e p="TestObject.cs" t="Include" />
       </e>
+      <e p="Game.csproj" t="IncludeRecursive" />
       <e p="GXPEngine" t="Include">
         <e p="AddOns" t="Include">
           <e p="Camera.cs" t="Include" />
@@ -28,7 +32,6 @@
           <e p="Collider.cs" t="Include" />
           <e p="Collision.cs" t="Include" />
           <e p="GLContext.cs" t="Include" />
-          <e p="Mesh.cs" t="Include" />
           <e p="Rectangle.cs" t="Include" />
           <e p="Texture2D.cs" t="Include" />
           <e p="Transformable.cs" t="Include" />
@@ -38,6 +41,9 @@
         </e>
         <e p="Game.cs" t="Include" />
         <e p="GameObject.cs" t="Include" />
+        <e p="Graphics" t="Include">
+          <e p="Mesh.cs" t="Include" />
+        </e>
         <e p="Managers" t="Include">
           <e p="CollisionManager.cs" t="Include" />
           <e p="UpdateManager.cs" t="Include" />
@@ -51,6 +57,9 @@
           <e p="GL.cs" t="Include" />
         </e>
         <e p="Pivot.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
         <e p="Sound.cs" t="Include" />
         <e p="SoundChannel.cs" t="Include" />
         <e p="Sprite.cs" t="Include" />
@@ -63,13 +72,10 @@
           <e p="Utils.cs" t="Include" />
         </e>
       </e>
+      <e p="GXPEngine.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="packages.config" t="Include" />
-      <e p="Properties" t="Include">
-        <e p="AssemblyInfo.cs" t="Include" />
-      </e>
-      <e p="SaxionGameProgramming.csproj" t="IncludeRecursive" />
       <e p="SaxionGameProgramming.sln" t="IncludeFlat" />
     </e>
   </component>

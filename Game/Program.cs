@@ -5,9 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using GXPEngine;
 using GXPEngine.Core;
-using GXPEngine.Managers;
 using Newtonsoft.Json;
-using Rectangle = System.Drawing.Rectangle;
 
 namespace GXPEngineTest {
     public class Program : Game {

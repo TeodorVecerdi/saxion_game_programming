@@ -9,7 +9,7 @@ namespace GXPEngine
 	/// </summary>
 	public class Canvas : Sprite
 	{
-		protected Graphics _graphics;
+		protected System.Drawing.Graphics _graphics;
 		protected bool _invalidate = false;
 
 		//------------------------------------------------------------------------------------------------------------------------
@@ -34,13 +34,13 @@ namespace GXPEngine
 
 		public Canvas (System.Drawing.Bitmap bitmap, bool addCollider=true) : base (bitmap,addCollider)
 		{
-			_graphics = Graphics.FromImage(bitmap);
+			_graphics = System.Drawing.Graphics.FromImage(bitmap);
 			_invalidate = true;
 		}
 
 		public Canvas(string filename, bool addCollider=true):base(filename,addCollider)
 		{
-			_graphics = Graphics.FromImage(texture.bitmap);
+			_graphics = System.Drawing.Graphics.FromImage(texture.bitmap);
 			_invalidate = true;
 		}
 
@@ -52,7 +52,7 @@ namespace GXPEngine
 		/// Returns the graphics component. This interface provides tools to draw on the sprite.
 		/// See: <a href="http://msdn.microsoft.com/en-us/library/system.drawing.graphics(v=vs.110).aspx">System.Drawing.Graphics</a>
 		/// </summary>
-		public Graphics graphics {
+		public System.Drawing.Graphics graphics {
 			get { 
 				_invalidate = true;
 				return _graphics; 

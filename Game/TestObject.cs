@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using GXPEngine;
 using GXPEngine.Core;
+using GXPEngine.Graphics;
 
 namespace GXPEngineTest {
     public class TestObject : GameObject {
@@ -14,7 +15,7 @@ namespace GXPEngineTest {
         }
 
         public TestObject(int width, int height, float tsize, Texture2D texture) {
-            if (Game.main == null) {
+            if (game == null) {
                 throw new Exception("GameObjects cannot be created before creating a Game instance.");
             }
             

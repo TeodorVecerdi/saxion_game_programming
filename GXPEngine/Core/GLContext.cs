@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GXPEngine.Graphics;
 using GXPEngine.OpenGL;
 
 namespace GXPEngine.Core {

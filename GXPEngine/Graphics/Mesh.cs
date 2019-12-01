@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using GXPEngine.Core;
 
-namespace GXPEngine.Core {
+namespace GXPEngine.Graphics {
     
     /// <summary>
     /// Representation of a textured mesh
