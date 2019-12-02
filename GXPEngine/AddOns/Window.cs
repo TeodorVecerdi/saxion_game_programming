@@ -7,7 +7,8 @@ namespace GXPEngine {
     ///     This is not a gameobject. Instead, subscribe the RenderWindow method to the main game's
     ///     OnAfterRender event.
     /// </summary>
-    internal class Window {
+    public class Window {
+//    internal class Window { <-- Why internal
         private readonly Transformable window;
         private bool _dirty = true;
         private int _width, _height;

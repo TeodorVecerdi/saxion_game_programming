@@ -4,7 +4,8 @@ namespace GXPEngine {
 	///     of what's rendered in that window.
 	///     (Don't forget to add this as child somewhere in the hierarchy.)
 	/// </summary>
-	internal class Camera : GameObject {
+	public class Camera : GameObject {
+//	internal class Camera : GameObject { <-- Why was this internal?
         private readonly Window _renderTarget;
 
         /// <summary>
