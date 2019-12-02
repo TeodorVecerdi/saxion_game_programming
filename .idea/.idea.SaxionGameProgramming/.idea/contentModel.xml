@@ -16,6 +16,12 @@
         <e p="TileDefinition" t="Include">
           <e p="World.cs" t="Include" />
         </e>
+        <e p="Utils" t="Include">
+          <e p="ListUtils.cs" t="Include" />
+          <e p="Math.cs" t="Include" />
+          <e p="Rand.cs" t="Include" />
+          <e p="RandomNumberGenerator.cs" t="Include" />
+        </e>
       </e>
       <e p="Game.csproj" t="IncludeRecursive" />
       <e p="GXPEngine" t="Include">
@@ -68,9 +74,9 @@
         <e p="SoundChannel.cs" t="Include" />
         <e p="Sprite.cs" t="Include" />
         <e p="Utils" t="Include">
+          <e p="Debug.cs" t="Include" />
           <e p="Input.cs" t="Include" />
           <e p="Key.cs" t="Include" />
-          <e p="Logger.cs" t="Include" />
           <e p="MouseHandler.cs" t="Include" />
           <e p="Time.cs" t="Include" />
           <e p="Utils.cs" t="Include" />

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GXPEngine {
-    public class Logger {
+    public class Debug {
         private const string LogFormat = " at {0}.{1}:{2} ({3}:line {2})";
 
         private static string GetString(object message) {
@@ -38,7 +38,7 @@ namespace GXPEngine {
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
         }
 
-        public static void LogWarn(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void LogWarning(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
             var className = mth.ReflectedType?.Name;

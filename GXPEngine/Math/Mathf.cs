@@ -130,9 +130,16 @@ namespace GXPEngine {
         }
 
         /// <summary>
-        ///     Returns the nearest integer to the specified value
+        /// Returns <paramref name="f"/> rounded to the nearest integer
         /// </summary>
-        public static int Round(float f) {
+        public static float Round(float f) {
+            return (float) Math.Round(f);
+        }
+        
+        /// <summary>
+        /// Returns <paramref name="f"/> rounded to the nearest integer
+        /// </summary>
+        public static int RoundToInt(float f) {
             return (int) Math.Round(f);
         }
 

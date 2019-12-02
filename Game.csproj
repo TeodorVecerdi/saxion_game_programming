@@ -45,6 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Globals.cs" />
+    <Compile Include="Game\Utils\ListUtils.cs" />
+    <Compile Include="Game\Utils\Math.cs" />
+    <Compile Include="Game\Utils\Rand.cs" />
+    <Compile Include="Game\Utils\RandomNumberGenerator.cs" />
     <Compile Include="Game\Program.cs" />
     <Compile Include="Game\TestObject.cs" />
     <Compile Include="Game\Properties\AssemblyInfo.cs" />

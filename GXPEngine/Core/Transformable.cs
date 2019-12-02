@@ -271,6 +271,12 @@ namespace GXPEngine {
             _matrix[12] = _matrix[12] + cs * stepX - sn * stepY;
             _matrix[13] = _matrix[13] + sn * stepX + cs * stepY;
         }
+        public void Move(Vector2 step) {
+            Move(step.x, step.y);
+        }
+        public void Move(Vector3 step) {
+            Move(step.x, step.y);
+        }
 
         //------------------------------------------------------------------------------------------------------------------------
         //														Translate()
