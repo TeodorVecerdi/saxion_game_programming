@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Game.TileDefinition;
 using GXPEngine;
 using GXPEngine.Core;
 
 namespace GXPEngineTest {
     public class TestObject : GameObject {
-        private int width;
-        private int height;
-        private Mesh mesh;
-        private float tsize;
-        private Random random;
-
+        private readonly int height;
+        private readonly Mesh mesh;
+        private readonly Random random;
+        private readonly float tsize;
+        private readonly int width;
+        public float Speed = 10f;
+        public bool disableMovement = false;
 
         public TestObject(int width, int height, float tsize, string texturePath) : this(width, height, tsize, Texture2D.GetInstance(texturePath, true)) { }
 
@@ -21,7 +21,6 @@ namespace GXPEngineTest {
             name = $"TestObject{GetHashCode()}";
             mesh = new Mesh(texture);
             random = new Random(Time.now);
-
             this.width = width;
             this.height = height;
             this.tsize = tsize;
@@ -62,6 +61,23 @@ namespace GXPEngineTest {
             mesh.Uvs = uvList;
         }
 
+        public void Update() {
+            if(disableMovement) return;
+            int vertical = 0, horizontal = 0;
+            if (Input.GetKey(Key.W)) vertical -= 1;
+            if (Input.GetKey(Key.S)) vertical += 1;
+            if (Input.GetKey(Key.A)) horizontal -= 1;
+            if (Input.GetKey(Key.D)) horizontal += 1;
+            var delta = new Vector2(horizontal, vertical) * Speed;
+            Move(delta);
+
+            if (Input.GetKeyDown(Key.SPACE)) {
+                Debug.Log("Resetting texture");
+                mesh.Clear();
+                GenerateMesh();
+            }
+        }
+
         protected override void RenderSelf(GLContext glContext) {
             if (game == null) return;
             BlendMode.NORMAL.enable();
@@ -69,11 +85,6 @@ namespace GXPEngineTest {
             glContext.DrawMesh(mesh);
             glContext.SetColor(1, 1, 1, 1);
             BlendMode.NORMAL.enable();
-            var ed = parent.GetChildren().Find((child) => child.name.Equals("UI_EasyDraw")) as EasyDraw;
-            ed.Clear(0);
-            ed.Fill(255);
-            ed.TextAlign(CenterMode.Max, CenterMode.Min);
-            ed.Text("FPS: " + game.currentFps, Globals.WIDTH, 0);
         }
     }
 }

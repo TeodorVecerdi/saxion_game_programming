@@ -1,39 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using GXPEngine;
 using GXPEngine.Core;
 using Newtonsoft.Json;
+using Rectangle = GXPEngine.Core.Rectangle;
 
 namespace GXPEngineTest {
     public class Program : GXPEngine.Game {
         public Program() : base(Globals.WIDTH, Globals.HEIGHT, Globals.FULLSCREEN, Globals.VSYNC,
             pPixelArt: Globals.PIXEL_ART) {
-            targetFps = 1000;
             ShowMouse(true);
-            
-            var ed = new EasyDraw(Globals.WIDTH, Globals.HEIGHT, false);
-            ed.name = "UI_EasyDraw";
-            var t1 = new TestObject(1024, 1024, 1, Texture2D.GetInstance("data/TileMap_World.png", true));
-//            var t2 = new TestObject(3, 3, 64f, Texture2D.GetInstance("data/checkers.png", true));
-//            var t3 = new TestObject(2, 2, 48f, Texture2D.GetInstance("data/checkers.png", true));
-//            t2.Move(128f, 128f);
-//            t3.Move(256f, 256f);
 
-//            Canvas canvas = new Canvas(800, 600);
-//            canvas.graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(0, 0, 400, 300));
-//            canvas.graphics.FillRectangle(new SolidBrush(Color.Blue), new Rectangle(400, 0, 400, 300));
-//            canvas.graphics.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(0, 300, 400, 300));
-//            canvas.graphics.FillRectangle(new SolidBrush(Color.Gray), new Rectangle(400, 300, 400, 300));
-//            AddChild(canvas);
-            AddChild(ed);
+//            var ed = new EasyDraw(Globals.WIDTH, Globals.HEIGHT, false);
+//            ed.name = "UI_EasyDraw";
+            var t1 = new TestObject(8, 8, 16, Texture2D.GetInstance("data/TileMap_World.png", true));
+            var world = new TestObject(16, 16, 64, Texture2D.GetInstance("data/TileMap_World.png", true));
+            world.disableMovement = true;
+            var camera = new Camera(-4 * 16, -4 * 16, Globals.WIDTH, Globals.HEIGHT);
+            t1.AddChild(camera);
+
+            var UI = new Window(0, 0, Globals.WIDTH, Globals.HEIGHT, new Camera(0, 0, Globals.WIDTH, Globals.HEIGHT));
+            OnAfterRender += UI.RenderWindow;
+            Canvas canvas = new Canvas(800, 600);
+            canvas.graphics.DrawLine(new Pen(new SolidBrush(Color.Chartreuse), 2), Globals.WIDTH / 2f, 0, Globals.WIDTH / 2f, Globals.HEIGHT);
+            canvas.graphics.DrawLine(new Pen(new SolidBrush(Color.Chartreuse), 2), 0, Globals.HEIGHT / 2f, Globals.WIDTH, Globals.HEIGHT / 2f);
+
+//            t1.AddChild(canvas);
+//            canvas.AddChild(UI.camera);
+            camera.AddChild(canvas);
+//            canvas.AddChild(camera);
+            AddChild(world);
             AddChild(t1);
-            GetChildren().ForEach((child) => {
-                Console.WriteLine(child.name);
-            });
-            //            AddChild(t2);
-//            AddChild(t3);
+            AddChild(canvas);
         }
 
         public static void Main(string[] args) {
@@ -53,19 +55,21 @@ namespace GXPEngineTest {
             Row = row;
         }
     }
+
     public class TestSerialize {
         public string TileAtlasTexture;
         public int Columns;
         public int Rows;
         public List<TileAtlasTile> TileAtlasTiles;
-        
+
         public TestSerialize() { }
+
         public void SaveJson(string FileName) {
             using (var writer = new StreamWriter(FileName)) {
                 var json = JsonConvert.SerializeObject(this);
                 writer.Write(json);
                 writer.Flush();
-                Logger.Log("Vector2=" + new Vector2(16, 8));
+                Debug.Log("Vector2=" + new Vector2(16, 8));
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GXPEngine;
+using Debug = GXPEngine.Debug;
 
 namespace Game.Utils {
     public static class Rand {
@@ -18,7 +19,7 @@ namespace Game.Utils {
         public static int Seed {
             set {
                 if (stateStack.Count == 0)
-                    Logger.LogError("Modifying the initial rand seed. Call PushState() first. The initial rand seed should always be based on the startup time and set only once.");
+                    Debug.LogError("Modifying the initial rand seed. Call PushState() first. The initial rand seed should always be based on the startup time and set only once.");
                 random.seed = (uint) value;
                 iterations = 0U;
             }
@@ -65,7 +66,7 @@ namespace Game.Utils {
         public static void EnsureStateStackEmpty() {
             if (stateStack.Count <= 0)
                 return;
-            Logger.LogWarning("Random state stack is not empty. There were more calls to PushState than PopState. Fixing.");
+            Debug.LogWarning("Random state stack is not empty. There were more calls to PushState than PopState. Fixing.");
             while (stateStack.Any())
                 PopState();
         }
@@ -265,23 +266,23 @@ namespace Game.Utils {
             if (double.IsPositiveInfinity(mtb))
                 return false;
             if (mtb <= 0.0) {
-                Logger.LogError("MTBEventOccurs with mtb=" + mtb);
+                Debug.LogError("MTBEventOccurs with mtb=" + mtb);
                 return true;
             }
 
             if (mtbUnit <= 0.0) {
-                Logger.LogError("MTBEventOccurs with mtbUnit=" + mtbUnit);
+                Debug.LogError("MTBEventOccurs with mtbUnit=" + mtbUnit);
                 return false;
             }
 
             if (checkDuration <= 0.0) {
-                Logger.LogError("MTBEventOccurs with checkDuration=" + checkDuration);
+                Debug.LogError("MTBEventOccurs with checkDuration=" + checkDuration);
                 return false;
             }
 
             double num1 = checkDuration / (mtb * (double) mtbUnit);
             if (num1 <= 0.0) {
-                Logger.LogError("chancePerCheck is " + num1 + ". mtb=" + mtb + ", mtbUnit=" + mtbUnit + ", checkDuration=" + checkDuration);
+                Debug.LogError("chancePerCheck is " + num1 + ". mtb=" + mtb + ", mtbUnit=" + mtbUnit + ", checkDuration=" + checkDuration);
                 return false;
             }
 
