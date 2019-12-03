@@ -45,14 +45,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Globals.cs" />
+    <Compile Include="Game\Objects\GameBackgroundTest.cs" />
+    <Compile Include="Game\Objects\Player.cs" />
     <Compile Include="Game\Utils\ListUtils.cs" />
     <Compile Include="Game\Utils\Math.cs" />
     <Compile Include="Game\Utils\Rand.cs" />
     <Compile Include="Game\Utils\RandomNumberGenerator.cs" />
     <Compile Include="Game\Program.cs" />
-    <Compile Include="Game\TestObject.cs" />
     <Compile Include="Game\Properties\AssemblyInfo.cs" />
     <Compile Include="Game\TileDefinition\World.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data/**" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -65,10 +69,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
+         Other similar extension points exist, see Microsoft.Common.targets.     -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <MyFiles Include="data\*.*" />
+    </ItemGroup>
+    <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFolder="$(OutputPath)\data" />
+  </Target>
 </Project>

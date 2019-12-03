@@ -1,41 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using Game;
 using GXPEngine;
 using GXPEngine.Core;
 using Newtonsoft.Json;
-using Rectangle = GXPEngine.Core.Rectangle;
 
-namespace GXPEngineTest {
+namespace Game {
     public class Program : GXPEngine.Game {
         public Program() : base(Globals.WIDTH, Globals.HEIGHT, Globals.FULLSCREEN, Globals.VSYNC,
             pPixelArt: Globals.PIXEL_ART) {
             ShowMouse(true);
-
-//            var ed = new EasyDraw(Globals.WIDTH, Globals.HEIGHT, false);
-//            ed.name = "UI_EasyDraw";
-            var t1 = new TestObject(8, 8, 16, Texture2D.GetInstance("data/TileMap_World.png", true));
-            var world = new TestObject(16, 16, 64, Texture2D.GetInstance("data/TileMap_World.png", true));
-            world.disableMovement = true;
-            var camera = new Camera(-4 * 16, -4 * 16, Globals.WIDTH, Globals.HEIGHT);
-            t1.AddChild(camera);
-
-            var UI = new Window(0, 0, Globals.WIDTH, Globals.HEIGHT, new Camera(0, 0, Globals.WIDTH, Globals.HEIGHT));
-            OnAfterRender += UI.RenderWindow;
-            Canvas canvas = new Canvas(800, 600);
-            canvas.graphics.DrawLine(new Pen(new SolidBrush(Color.Chartreuse), 2), Globals.WIDTH / 2f, 0, Globals.WIDTH / 2f, Globals.HEIGHT);
-            canvas.graphics.DrawLine(new Pen(new SolidBrush(Color.Chartreuse), 2), 0, Globals.HEIGHT / 2f, Globals.WIDTH, Globals.HEIGHT / 2f);
+//            var t1 = new GameBackgroundTest(8, 8, 16, Texture2D.GetInstance("data/TileMap_World.png", true));
+            var world = new GameBackgroundTest(16, 16, Globals.TILE_SIZE, Texture2D.GetInstance("data/TileMap_World.png", true));
+//            var camera = new Camera(-4 * 16, -4 * 16, Globals.WIDTH, Globals.HEIGHT);
+            var player = new Player();
+//            t1.AddChild(camera);
 
 //            t1.AddChild(canvas);
-//            canvas.AddChild(UI.camera);
-            camera.AddChild(canvas);
-//            canvas.AddChild(camera);
+
             AddChild(world);
-            AddChild(t1);
-            AddChild(canvas);
+            AddChild(player);
+
+//            AddChild(t1);
         }
 
         public static void Main(string[] args) {
@@ -57,12 +45,10 @@ namespace GXPEngineTest {
     }
 
     public class TestSerialize {
-        public string TileAtlasTexture;
         public int Columns;
         public int Rows;
+        public string TileAtlasTexture;
         public List<TileAtlasTile> TileAtlasTiles;
-
-        public TestSerialize() { }
 
         public void SaveJson(string FileName) {
             using (var writer = new StreamWriter(FileName)) {

@@ -1,26 +1,22 @@
 using System;
 using System.Collections.Generic;
 using Game.TileDefinition;
+using Game.Utils;
 using GXPEngine;
 using GXPEngine.Core;
 
-namespace GXPEngineTest {
-    public class TestObject : GameObject {
+namespace Game {
+    public class GameBackgroundTest : GameObject {
         private readonly int height;
         private readonly Mesh mesh;
-        private readonly Random random;
         private readonly float tsize;
         private readonly int width;
-        public float Speed = 10f;
-        public bool disableMovement = false;
 
-        public TestObject(int width, int height, float tsize, string texturePath) : this(width, height, tsize, Texture2D.GetInstance(texturePath, true)) { }
+        public GameBackgroundTest(int width, int height, float tsize, string texturePath) : this(width, height, tsize, Texture2D.GetInstance(texturePath, true)) { }
 
-        public TestObject(int width, int height, float tsize, Texture2D texture) {
+        public GameBackgroundTest(int width, int height, float tsize, Texture2D texture) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
-            name = $"TestObject{GetHashCode()}";
             mesh = new Mesh(texture);
-            random = new Random(Time.now);
             this.width = width;
             this.height = height;
             this.tsize = tsize;
@@ -46,7 +42,7 @@ namespace GXPEngineTest {
                 indiceList.Add(squareCount * 4 + 1);
                 indiceList.Add(squareCount * 4 + 2);
                 indiceList.Add(squareCount * 4 + 3);
-                var uv = random.Next(5) switch {
+                var uv = Rand.Range(0, 5) switch {
                     0 => World.Dirt.SpriteUV, 1 => World.Grass.SpriteUV, 2 => World.Sand.SpriteUV, 3 => World.Stone.SpriteUV, _ => World.Water.SpriteUV
                 };
                 uvList.Add(new Vector2(uv.xa, uv.yb));
@@ -59,23 +55,6 @@ namespace GXPEngineTest {
             mesh.Vertices = vertList;
             mesh.Indices = indiceList;
             mesh.Uvs = uvList;
-        }
-
-        public void Update() {
-            if(disableMovement) return;
-            int vertical = 0, horizontal = 0;
-            if (Input.GetKey(Key.W)) vertical -= 1;
-            if (Input.GetKey(Key.S)) vertical += 1;
-            if (Input.GetKey(Key.A)) horizontal -= 1;
-            if (Input.GetKey(Key.D)) horizontal += 1;
-            var delta = new Vector2(horizontal, vertical) * Speed;
-            Move(delta);
-
-            if (Input.GetKeyDown(Key.SPACE)) {
-                Debug.Log("Resetting texture");
-                mesh.Clear();
-                GenerateMesh();
-            }
         }
 
         protected override void RenderSelf(GLContext glContext) {

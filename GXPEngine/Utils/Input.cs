@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GXPEngine.Core;
 
 namespace GXPEngine {
@@ -7,7 +8,7 @@ namespace GXPEngine {
 	///     The Input class contains functions for reading keys and mouse
 	/// </summary>
 	public class Input {
-		private static Dictionary<string, ValueTuple<int, int>> Axes = new Dictionary<string, (int, int)>();
+		private static Dictionary<string, ValueTuple<List<int>, List<int>>> Axes = new Dictionary<string, (List<int>, List<int>)>();
 		/// <summary>
 		///     Gets the current mouse x position in pixels.
 		/// </summary>
@@ -87,8 +88,8 @@ namespace GXPEngine {
             return GLContext.GetMouseButtonUp(button); /*courtesy of LeonB*/
         }
 
-		public static void AddAxis(string axisName, int negativeKey, int positiveKey) {
-			Axes.Add(axisName, ValueTuple.Create(negativeKey, positiveKey));
+		public static void AddAxis(string axisName, List<int> negativeKeys, List<int> positiveKeys) {
+			Axes.Add(axisName, ValueTuple.Create(negativeKeys, positiveKeys));
 		}
 
 		public static float GetAxis(string axisName) {
@@ -97,8 +98,8 @@ namespace GXPEngine {
 				throw new KeyNotFoundException($"Axis {axisName} does not exist.");
 			}
 			var value = 0f;
-			if (GetKey(Axes[axisName].Item1)) value -= 1f;
-			if (GetKey(Axes[axisName].Item2)) value += 1f;
+			if (Axes[axisName].Item1.Any(GetKey)) value -= 1f;
+			if (Axes[axisName].Item2.Any(GetKey)) value += 1f;
 			return value;
 		}
     }

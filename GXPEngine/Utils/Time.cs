@@ -26,10 +26,11 @@ namespace GXPEngine {
         /// <value>
         ///     The delta time.
         /// </value>
-        public static int deltaTime { get; private set; }
+        public static int deltaTimeMs { get; private set; }
+        public static float deltaTime => deltaTimeMs / 1000f;
 
         internal static void newFrame() {
-            deltaTime = time - previousTime;
+            deltaTimeMs = time - previousTime;
             previousTime = time;
         }
     }
