@@ -2,6 +2,7 @@ using System;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Game.Utils {
     [XmlRoot(ElementName="randomObject")]
@@ -17,7 +18,7 @@ namespace Game.Utils {
     }
 
     [XmlRoot(ElementName="level")]
-    public class GameLevelLevel {
+    public class GameLevel {
         [XmlElement(ElementName="randomObject")]
         public List<GameLevelRandomObject> RandomObject { get; set; }
         [XmlElement(ElementName="randomObjectProb")]
@@ -54,11 +55,24 @@ namespace Game.Utils {
         public int AmoebaMaxSize { get; set; }
     }
 
+    public class Level {
+        public static TiledTileset TiledTileset = TiledTilesetLoader.LoadTileset("data/Levels/BoulderDash.tsx");
+        public GameLevel GameLevel;
+        public TiledLevelMap TiledLevel;
+        public Tileset Tileset;
+
+        public Level(string path) {
+            GameLevel = GameLevelLoader.LoadGameLevel(path);
+            TiledLevel = TiledLevelLoader.LoadTiledMap(GameLevel.TiledLevelPath);
+            Tileset = new Tileset(TiledTileset);
+        }
+    }
+
     public static class GameLevelLoader {
-        public static GameLevelLevel LoadGameLevel(string path) {
+        public static GameLevel LoadGameLevel(string path) {
             using (var stream = File.OpenRead(path)) {
-                var serializer = new XmlSerializer(typeof(GameLevelLevel));
-                return serializer.Deserialize(stream) as GameLevelLevel;
+                var serializer = new XmlSerializer(typeof(GameLevel));
+                return serializer.Deserialize(stream) as GameLevel;
             }
         }
     }

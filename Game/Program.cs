@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using Game;
+using Game.Utils;
 using GXPEngine;
 using GXPEngine.Core;
 using Newtonsoft.Json;
@@ -19,9 +20,13 @@ namespace Game {
 //            t1.AddChild(camera);
 
 //            t1.AddChild(canvas);
-            TiledMapParser.Map map = TiledMapParser.MapParser.ReadMap("data/Level1.tmx");
-            Debug.Log(map.Layers[0].Data.innerXML);
 //            Debug.Log(map);
+            var level = new Level("data/Levels/GameLevels/Level1.xml");
+            foreach (var tilesetTile in level.Tileset.Tiles) {
+            Debug.Log($"{tilesetTile.Key}, {tilesetTile.Value.Name}, {tilesetTile.Value.UV}");
+            }
+            Debug.Log($"{level.GameLevel.Name}: {level.GameLevel.Description}");
+            Debug.Log(level.TiledLevel.TiledLevelLayer.TiledLevelData.Text);
             AddChild(world);
             AddChild(player);
 

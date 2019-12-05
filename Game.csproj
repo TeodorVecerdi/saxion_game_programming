@@ -59,9 +59,6 @@
     <Compile Include="Game\Utils\TiledTilesetLoader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data/*.*" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -70,15 +67,60 @@
       <Name>GXPEngine</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="data\Levels\BoulderDash.tsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\barry.png" />
+    <Content Include="data\checkers.png" />
+    <Content Include="data\circle.png" />
+    <Content Include="data\colors.png" />
+    <Content Include="data\Levels\GameLevels\Level1.xml" />
+    <Content Include="data\Levels\TiledLevels\Level1.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level10.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level11.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level12.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level13.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level14.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level15.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level16.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level17.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level18.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level19.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level2.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level20.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level3.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level4.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level5.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level6.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level7.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level8.tmx" />
+    <Content Include="data\Levels\TiledLevels\Level9.tmx" />
+    <Content Include="data\Levels\TiledSprites.png" />
+    <Content Include="data\playerDown.png" />
+    <Content Include="data\playerLeft.png" />
+    <Content Include="data\playerRight.png" />
+    <Content Include="data\square.png" />
+    <Content Include="data\TileMap_World.png" />
+    <Content Include="data\triangle.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.     -->
+  <PropertyGroup>
+    <YourDestinationDirectory>$(OutputPath)\data</YourDestinationDirectory>
+    <YourSourceDirectory>data</YourSourceDirectory>
+  </PropertyGroup>
   <Target Name="BeforeBuild">
+    <CreateItem Include="$(YourSourceDirectory)\**\*.*">
+      <Output TaskParameter="Include" ItemName="YourFilesToCopy" />
+    </CreateItem>
+    <Copy SourceFiles="@(YourFilesToCopy)" DestinationFiles="@(YourFilesToCopy->'$(YourDestinationDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
   <Target Name="AfterBuild">
-    <ItemGroup>
-      <MyFiles Include="data\*.*" />
+    <!--<ItemGroup>
+      <MyFiles Include="data\*\*" />
     </ItemGroup>
-    <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFolder="$(OutputPath)\data" />
+    <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFolder="$(OutputPath)\data" />-->
   </Target>
 </Project>

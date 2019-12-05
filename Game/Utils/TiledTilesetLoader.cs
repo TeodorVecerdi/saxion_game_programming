@@ -2,6 +2,7 @@ using System;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using System.IO;
+using GXPEngine.Core;
 
 namespace Game.Utils {
     /* 
@@ -14,14 +15,14 @@ namespace Game.Utils {
         [XmlAttribute(AttributeName = "source")]
         public string Source { get; set; }
         [XmlAttribute(AttributeName = "width")]
-        public string Width { get; set; }
+        public int Width { get; set; }
         [XmlAttribute(AttributeName = "height")]
-        public string Height { get; set; }
+        public int Height { get; set; }
     }
 
     [XmlRoot(ElementName = "tile")]
     public class TiledTilesetTile {
-        [XmlAttribute(AttributeName = "id")] public string Id { get; set; }
+        [XmlAttribute(AttributeName = "id")] public int Id { get; set; }
         [XmlAttribute(AttributeName = "type")] public string Type { get; set; }
     }
 
@@ -44,6 +45,30 @@ namespace Game.Utils {
         public int Columns { get; set; }
         public int Rows => (Tilecount % Columns == 0 ? Tilecount / Columns : Tilecount / Columns + 1);
 
+    }
+
+    public class TiledTile {
+        public int Id;
+        public string Name;
+        public Rectangle UV;
+
+        public TiledTile(int id, string name) {
+            Id = id;
+            Name = name;
+            int col = id % 4;
+            int row = id / 4;
+            UV = new Rectangle(col*0.25F, row*0.25F, 0.25F, 0.25F);
+        }
+    }
+
+    public class Tileset {
+        public Dictionary<int, TiledTile> Tiles;
+        public Tileset(TiledTileset tileset) {
+            Tiles = new Dictionary<int, TiledTile>();
+            foreach (var tile in tileset.Tile) {
+                Tiles.Add(tile.Id, new TiledTile(tile.Id, tile.Type));
+            }
+        }
     }
 
     public static class TiledTilesetLoader {
