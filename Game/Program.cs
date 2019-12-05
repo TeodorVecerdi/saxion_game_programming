@@ -19,7 +19,9 @@ namespace Game {
 //            t1.AddChild(camera);
 
 //            t1.AddChild(canvas);
-
+            TiledMapParser.Map map = TiledMapParser.MapParser.ReadMap("data/Level1.tmx");
+            Debug.Log(map.Layers[0].Data.innerXML);
+//            Debug.Log(map);
             AddChild(world);
             AddChild(player);
 

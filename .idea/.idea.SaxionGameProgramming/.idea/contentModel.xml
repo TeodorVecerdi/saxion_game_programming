@@ -11,6 +11,7 @@
         <e p="checkers.png" t="Include" />
         <e p="circle.png" t="Include" />
         <e p="colors.png" t="Include" />
+        <e p="Level1.tmx" t="Include" />
         <e p="playerDown.png" t="Include" />
         <e p="playerLeft.png" t="Include" />
         <e p="playerRight.png" t="Include" />
@@ -32,10 +33,13 @@
           <e p="World.cs" t="Include" />
         </e>
         <e p="Utils" t="Include">
+          <e p="GameLevelLoader.cs" t="Include" />
           <e p="ListUtils.cs" t="Include" />
           <e p="Math.cs" t="Include" />
           <e p="Rand.cs" t="Include" />
           <e p="RandomNumberGenerator.cs" t="Include" />
+          <e p="TiledLevelLoader.cs" t="Include" />
+          <e p="TiledTilesetLoader.cs" t="Include" />
         </e>
       </e>
       <e p="Game.csproj" t="IncludeRecursive" />

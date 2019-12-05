@@ -1,0 +1,249 @@
+====
+
+ExCeSs.presents you
+
+---------------------------------
+The Boulder Dash Construction Kit
+Original.Documentation
+---------------------------------
+
+Music.by DraxOVibrants
+Logo by Sush/ExCeSs
+Doxx typed by St0rmfr0nt/ExCeSs
+
+
+Press Space to Start reading...
+
+
+The Construction Kit Documantation is
+from the Original c64 Diskette version,
+Original provided by myself.
+
+Rockford's the name, and underground
+mining's the game!..
+
+Can you guide rockford through the 16
+different caves, collecting diamonds and
+avoiding failing boulders, exploding
+fireflies and and other underground
+hazards?
+
+not only does this pack contain the
+latest boulder dash game. but also an
+amazing construction kit that alloows
+you to design and play your very own
+caves and puzzles. so now, there is no
+limit to the fun you can have!
+
+"there have been pale imitations - this
+is the original and best."
+
+INSTRUCTIONS
+------------
+
+THE.GAME:
+the objject of boulder dash is to search
+through caves and collect the indicated
+number oof diamonds in the time limit.@@
+the way to solve the caves is usually
+very simple, but not on the first
+apparent. please read the description of
+the game elementts in the BCONSTRUCTION.
+KITB.TO.UNDERSTAND.MORE.ABOUT.THE.
+DIFFERENT.ASPECTS OF.THE.GAMEN.
+
+PLAYING.THE.GAME
+
+once the game sectionhas finished
+loading you will be asked for a file
+name. type BGAME1B (this is a set of 16
+pre-defined caves) or the name of the
+game you have created using the kit..
+
+you can move your character, rockford,
+
+you can then start the cave again.
+you are awarded an extra life every 500
+points.
+
+THE.CONSTRUCTION.KIT..
+
+by using this part of the program you
+can create your own boulder dash caaves
+and intermissions. you can also make a
+complete game by using up to 64 screens
+in any order of caves and intermissions.
+these designs can be used with the
+boulder dash iv game.....
+
+on the atari st the control of the edit
+screen is by mouse. clicking the right
+button or pressing.ESCape leaves the
+menu that you are currently in. on the
+amiga and c64 use the cursor keys and
+space.
+
+
+STARTING
+
+when editing for the first time you will
+be presented with a menu that gives you
+the choice of editing a current cave or
+intermission or creating a new one....
+use the mouse or keys to move the
+pointer on the menu and click on the
+desired option.
+
+along the top or side of the screen you
+will see a number of icons. reading from
+left to right their functions are
+described below (to select an icon press
+the left mouse button, on amiga and c64
+just press fire in port 2)
+
+OBJECTS
+
+BOULDER: the rocks will fall if
+unsupported and can be pushed if there
+are no objects in front of it. when
+selected place the game screen by moving
+the mouse (or joystick)@and press left
+button (or fire for c64 and amiga).
+
+DIAMONDZ.in every cave a certain number
+of diamonds need to be collected to win
+and to leave the cave.
+
+ENCHANTED.WALLZ looks like any other
+wall exept when hit by an object it will
+"mill" for a certain time. during this
+time it will turn boulders into diamonds
+and vice versa.
+
+WALLZ.a regaular wall used to build
+spaces and paths. it can't be crossed by
+can be destroyed by explosions.
+
+TITANIUM.WALLZ this wall is
+indestructible
+
+GROWING.WALLZ if there are no obstacles
+next to it, this wall will grow into any
+free space....
+
+EXTRA.ROCKFORDZ these won't move but you
+must protect them from beeing destroyed
+by boulders ect.
+
+DIRTZ.used as a filler. stops all
+objects exept rockford!
+
+FIREFLIESZ.they explode on contact
+killing rockford. they are destroyed by
+dropping boulders on them or by contact
+with amoeba.
+
+BUTTERFLIESZ they behave as above except
+they produce diamonds when they explode.
+
+AMOEBAZ.this grows through dirt and
+unless confined (when it turn into
+diamonds) will eventually turn into
+boulders.
+
+SLIME
+blocks rocks and diamonds to pas through....
+
+HIDDEN.EXIT.DOORZ.this door looks like
+the titanium all and is obviously
+difficult to find...
+
+EXIT.DOORZ.this exit will be revealed as
+soon as the required number of diamonds
+have been collected...
+
+
+THE COMMANDSZ
+
+LINE.MODEZ.(press l) this draws a row of
+the current icon selected. click for the
+start position and click again for the
+end position..
+
+RANDOMZ.selecting the dice icon will
+place 20 of the selected objects on the
+game screen randomly..
+
+ERASERZ.(press e) this selects an empty
+space which can be used to delete
+misplaced objects.
+
+CLOCKZ.(press v) this allows the timing
+and counters to be altered
+
+COLOURSZ.(press c) this changes the
+colours. in the colour menu select the
+colour to change and press the button.
+the r g b indicators can be changed by
+using the mouse (on amiga and c64 the
+joystick). press the left button to
+select a new colour (with joystick just
+press fire)
+
+TESTZ.(press t) this tests the screen
+you are editing. use the joystick to
+control rockford. you have one life
+only
+
+MAIN.MENUEZ.(press m) this selects the
+main menue described below
+========================================
+NEW.SCREENZ.(press n) this selects new
+screen and clears the cave/intermission=
+you are working on
+
+OTHER.FUNCTIONS.ACCESSED.BY.KEYS.ONLY.
+AREZ
+
+F=full screen (view the whole playing
+area)
+S=sound on/off
+
+NOTEZ.on the atari st pressing HOI swaps
+in between scolling play area and non-
+scolling play area. on the commodore 64
+and amiga to view the different areas of
+the play screen, select full screen (FI
+and then move the cursor to the new
+area.
+
+MAIN.MENUZ
+using the main menu=you can set up the
+cave/intermission parameters, load, save
+restart a cave, access the disk commands
+and the game options.
+
+GAME.OPTIONSZ=this allows the player to
+link together different caves and
+intermissions. use the mouse or keys to
+select the caves and intermissions.
+after select y/n option to decide
+whether the player can access that cave
+from the main game. you can then save
+your sequence to disk.
+
+NOTEZ.PLEASE.USE.A.SEPERATE.DISK.TO.SAVE
+YOUR.CAVES.AND.SEQUENCESN
+
+A.NOTE.ABOUT.CAVES.AND.INTERMISSIONSZ
+a standard bould dash "game" consists of
+a total of 16 caves and 4 intermissions.
+the caves are made up of 4 tv screens of
+maze, ect. and this is where the player
+is rewarded with a "bonus game", the
+intermission. this is just a single
+screen where he/she can score extra
+points or lives. obviously using this
+kit, one can alter the number of caves
+and intermissions to any number of
+sequence.
