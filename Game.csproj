@@ -45,9 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Globals.cs" />
-    <Compile Include="Game\Objects\GameBackgroundTest.cs" />
+    <Compile Include="Game\Objects\World.cs" />
     <Compile Include="Game\Objects\Player.cs" />
-    <Compile Include="Game\Utils\GameLevelLoader.cs" />
+    <Compile Include="Game\Utils\Level.cs" />
+    <Compile Include="Game\Utils\LevelUtils.cs" />
     <Compile Include="Game\Utils\ListUtils.cs" />
     <Compile Include="Game\Utils\Math.cs" />
     <Compile Include="Game\Utils\Rand.cs" />
@@ -55,8 +56,8 @@
     <Compile Include="Game\Program.cs" />
     <Compile Include="Game\Properties\AssemblyInfo.cs" />
     <Compile Include="Game\TileDefinition\World.cs" />
-    <Compile Include="Game\Utils\TiledLevelLoader.cs" />
-    <Compile Include="Game\Utils\TiledTilesetLoader.cs" />
+    <Compile Include="Game\Utils\TileType.cs" />
+    <Compile Include="Game\GameDescription.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,9 +67,6 @@
       <Project>{b5fcb6a7-b775-46cf-941e-5f4f8da125b9}</Project>
       <Name>GXPEngine</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="data\Levels\BoulderDash.tsx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\barry.png" />
@@ -97,12 +95,17 @@
     <Content Include="data\Levels\TiledLevels\Level8.tmx" />
     <Content Include="data\Levels\TiledLevels\Level9.tmx" />
     <Content Include="data\Levels\TiledSprites.png" />
+    <Content Include="data\Levels\Tilesets\Main.xml" />
     <Content Include="data\playerDown.png" />
     <Content Include="data\playerLeft.png" />
     <Content Include="data\playerRight.png" />
     <Content Include="data\square.png" />
     <Content Include="data\TileMap_World.png" />
     <Content Include="data\triangle.png" />
+    <Content Include="Game\Remake.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="data\Levels\Tilesets\Main.tsx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

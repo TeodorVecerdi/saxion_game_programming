@@ -11,7 +11,38 @@
         <e p="checkers.png" t="Include" />
         <e p="circle.png" t="Include" />
         <e p="colors.png" t="Include" />
-        <e p="Level1.tmx" t="Include" />
+        <e p="Levels" t="Include">
+          <e p="GameLevels" t="Include">
+            <e p="Level1.xml" t="Include" />
+          </e>
+          <e p="TiledLevels" t="Include">
+            <e p="Level1.tmx" t="Include" />
+            <e p="Level10.tmx" t="Include" />
+            <e p="Level11.tmx" t="Include" />
+            <e p="Level12.tmx" t="Include" />
+            <e p="Level13.tmx" t="Include" />
+            <e p="Level14.tmx" t="Include" />
+            <e p="Level15.tmx" t="Include" />
+            <e p="Level16.tmx" t="Include" />
+            <e p="Level17.tmx" t="Include" />
+            <e p="Level18.tmx" t="Include" />
+            <e p="Level19.tmx" t="Include" />
+            <e p="Level2.tmx" t="Include" />
+            <e p="Level20.tmx" t="Include" />
+            <e p="Level3.tmx" t="Include" />
+            <e p="Level4.tmx" t="Include" />
+            <e p="Level5.tmx" t="Include" />
+            <e p="Level6.tmx" t="Include" />
+            <e p="Level7.tmx" t="Include" />
+            <e p="Level8.tmx" t="Include" />
+            <e p="Level9.tmx" t="Include" />
+          </e>
+          <e p="TiledSprites.png" t="Include" />
+          <e p="Tilesets" t="Include">
+            <e p="Main.tsx" t="Include" />
+            <e p="Main.xml" t="Include" />
+          </e>
+        </e>
         <e p="playerDown.png" t="Include" />
         <e p="playerLeft.png" t="Include" />
         <e p="playerRight.png" t="Include" />
@@ -20,26 +51,28 @@
         <e p="triangle.png" t="Include" />
       </e>
       <e p="Game" t="Include">
+        <e p="GameDescription.txt" t="Include" />
         <e p="Globals.cs" t="Include" />
         <e p="Objects" t="Include">
-          <e p="GameBackgroundTest.cs" t="Include" />
           <e p="Player.cs" t="Include" />
+          <e p="World.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
+        <e p="Remake.txt" t="Include" />
         <e p="TileDefinition" t="Include">
           <e p="World.cs" t="Include" />
         </e>
         <e p="Utils" t="Include">
-          <e p="GameLevelLoader.cs" t="Include" />
+          <e p="Level.cs" t="Include" />
+          <e p="LevelUtils.cs" t="Include" />
           <e p="ListUtils.cs" t="Include" />
           <e p="Math.cs" t="Include" />
           <e p="Rand.cs" t="Include" />
           <e p="RandomNumberGenerator.cs" t="Include" />
-          <e p="TiledLevelLoader.cs" t="Include" />
-          <e p="TiledTilesetLoader.cs" t="Include" />
+          <e p="TileType.cs" t="Include" />
         </e>
       </e>
       <e p="Game.csproj" t="IncludeRecursive" />
