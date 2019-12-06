@@ -34,7 +34,6 @@ namespace GXPEngine {
             UvSize = new Vector2(1f / Columns, 1f / Rows);
         }
 
-        // ReSharper disable once InconsistentNaming
         /// <summary>
         /// Get the UV for a specific tile using column and row for the tile
         /// </summary>

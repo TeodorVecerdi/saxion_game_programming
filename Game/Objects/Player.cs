@@ -1,3 +1,4 @@
+using Game.Utils;
 using GXPEngine;
 using GXPEngine.Core;
 using GXPEngine.OpenGL;
@@ -9,7 +10,8 @@ namespace Game {
         private Texture2D playerRight, playerLeft, playerDown;
         private Texture2D activeTexture;
 
-        public Player() {
+        public Player(Vector2 position) {
+            SetXY(position.x * Globals.TILE_SIZE, position.y * Globals.TILE_SIZE);
             mainCamera = new Camera(-32, -32, Globals.WIDTH, Globals.HEIGHT);
             playerRight = Texture2D.GetInstance("data/playerRight.png", true);
             playerLeft = Texture2D.GetInstance("data/playerLeft.png", true);
@@ -19,19 +21,20 @@ namespace Game {
         }
 
         public void Update() {
-            if (Input.GetKeyDown(Key.D) || Input.GetKeyDown(Key.RIGHT)) {
-                Move(Globals.TILE_SIZE, 0f);
-                activeTexture = playerRight;
-            }
+            var movement = new Vector2(Input.GetAxisDown("Horizontal"), Input.GetAxisDown("Vertical"));
+            if (!movement.Equals(Vector2.zero)) {
+                var dTilePosition = new Vector2(x, y) + (movement * Globals.TILE_SIZE);
+                var dTileGrid = WorldToGrid(dTilePosition);
+                var currentPosGrid = WorldToGrid(new Vector2(x, y));
+                var dTile = Level.Tileset.Tiles[Level.ActiveLevel.Tiles[(int) dTileGrid.x, (int) dTileGrid.y]];
+                var world = parent.GetChildren().Find(o => o.name.Equals("World")) as World;
+                if (dTile.Passable) {
+                    Move(movement * Globals.TILE_SIZE);
+                    if (dTile.Name == "Dirt" || dTile.Name == "Miner") Level.ActiveLevel.Tiles[(int) dTileGrid.x, (int) dTileGrid.y] = TileType.Empty;
+                    Level.ActiveLevel.Tiles[(int) dTileGrid.x, (int) dTileGrid.y] = TileType.Miner;
+                }
 
-            if (Input.GetKeyDown(Key.A) || Input.GetKeyDown(Key.LEFT)) {
-                Move(-Globals.TILE_SIZE, 0f);
-                activeTexture = playerLeft;
-            }
-
-            if (Input.GetKeyDown(Key.S) || Input.GetKeyDown(Key.DOWN)) {
-                Move(0f, Globals.TILE_SIZE);
-                activeTexture = playerDown;
+                world.RebuildMesh();
             }
         }
 
@@ -43,7 +46,15 @@ namespace Game {
             activeTexture.Bind();
             glContext.SetColor(255, 255, 255, 255);
             glContext.DrawQuad(verts, uv);
-            glContext.SetColor(1, 1, 1, 1);
+            glContext.SetColor(255, 255, 255, 255);
+        }
+
+        public Vector2 WorldToGrid(Vector2 world) {
+            return (world / Globals.TILE_SIZE);
+        }
+
+        public Vector2 GridToWorld(Vector2 grid) {
+            return grid * Globals.TILE_SIZE;
         }
     }
 }

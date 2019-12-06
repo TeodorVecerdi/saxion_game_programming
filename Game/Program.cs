@@ -14,19 +14,23 @@ namespace Game {
             pPixelArt: Globals.PIXEL_ART) {
             ShowMouse(true);
 //            var t1 = new GameBackgroundTest(8, 8, 16, Texture2D.GetInstance("data/TileMap_World.png", true));
-            var world = new GameBackgroundTest(16, 16, Globals.TILE_SIZE, Texture2D.GetInstance("data/TileMap_World.png", true));
+            var level1 = new Level("data/Levels/GameLevels/Level1.xml");
+            var world = new World(level1, Texture2D.GetInstance("data/Levels/TiledSprites.png", true));
+            world.name = "World";
+            Level.ActiveLevel = level1;
+            Input.AddAxis("Horizontal", new List<int>{Key.A, Key.LEFT}, new List<int>{Key.D, Key.RIGHT});
+            Input.AddAxis("Vertical", new List<int>{Key.W, Key.UP}, new List<int>{Key.S, Key.DOWN});
+//            Loader.LoadTileset("data/Levels/Tilesets/Main.tsx");
 //            var camera = new Camera(-4 * 16, -4 * 16, Globals.WIDTH, Globals.HEIGHT);
-            var player = new Player();
-//            t1.AddChild(camera);
-
+            var player = new Player(level1.PlayerStart);
+//            player.AddChild(camera);
+            string s = "";
+            foreach (var tilesKey in Level.Tileset.Tiles.Keys) {
+                s += tilesKey + " ";
+            }
+            Debug.Log(s);
 //            t1.AddChild(canvas);
 //            Debug.Log(map);
-            var level = new Level("data/Levels/GameLevels/Level1.xml");
-            foreach (var tilesetTile in level.Tileset.Tiles) {
-            Debug.Log($"{tilesetTile.Key}, {tilesetTile.Value.Name}, {tilesetTile.Value.UV}");
-            }
-            Debug.Log($"{level.GameLevel.Name}: {level.GameLevel.Description}");
-            Debug.Log(level.TiledLevel.TiledLevelLayer.TiledLevelData.Text);
             AddChild(world);
             AddChild(player);
 
