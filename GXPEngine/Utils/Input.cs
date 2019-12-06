@@ -102,5 +102,15 @@ namespace GXPEngine {
 			if (Axes[axisName].Item2.Any(GetKey)) value += 1f;
 			return value;
 		}
+		public static float GetAxisDown(string axisName) {
+			if (!Axes.ContainsKey(axisName)) {
+				Debug.LogError($"Axis {axisName} does not exist.");
+				throw new KeyNotFoundException($"Axis {axisName} does not exist.");
+			}
+			var value = 0f;
+			if (Axes[axisName].Item1.Any(GetKeyDown)) value -= 1f;
+			if (Axes[axisName].Item2.Any(GetKeyDown)) value += 1f;
+			return value;
+		}
     }
 }
