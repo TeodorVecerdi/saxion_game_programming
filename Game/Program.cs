@@ -22,7 +22,7 @@ namespace Game {
             Input.AddAxis("Vertical", new List<int>{Key.W, Key.UP}, new List<int>{Key.S, Key.DOWN});
 //            Loader.LoadTileset("data/Levels/Tilesets/Main.tsx");
 //            var camera = new Camera(-4 * 16, -4 * 16, Globals.WIDTH, Globals.HEIGHT);
-            var player = new Player(level1.PlayerStart);
+//            var player = new Player(level1.PlayerStart);
 //            player.AddChild(camera);
             string s = "";
             foreach (var tilesKey in Level.Tileset.Tiles.Keys) {
@@ -32,7 +32,7 @@ namespace Game {
 //            t1.AddChild(canvas);
 //            Debug.Log(map);
             AddChild(world);
-            AddChild(player);
+//            AddChild(player);
 
 //            AddChild(t1);
         }

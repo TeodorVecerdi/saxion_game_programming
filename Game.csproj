@@ -45,6 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Globals.cs" />
+    <Compile Include="Game\Objects\Amoeba.cs" />
+    <Compile Include="Game\Objects\Boulder.cs" />
+    <Compile Include="Game\Objects\Brick.cs" />
+    <Compile Include="Game\Objects\Butterfly.cs" />
+    <Compile Include="Game\Objects\Diamond.cs" />
+    <Compile Include="Game\Objects\Dirt.cs" />
+    <Compile Include="Game\Objects\Door.cs" />
+    <Compile Include="Game\Objects\ExpandingWall.cs" />
+    <Compile Include="Game\Objects\Firefly.cs" />
+    <Compile Include="Game\Objects\MagicWall.cs" />
+    <Compile Include="Game\Objects\SteelWall.cs" />
     <Compile Include="Game\Objects\World.cs" />
     <Compile Include="Game\Objects\Player.cs" />
     <Compile Include="Game\Utils\Level.cs" />
@@ -55,9 +66,7 @@
     <Compile Include="Game\Utils\RandomNumberGenerator.cs" />
     <Compile Include="Game\Program.cs" />
     <Compile Include="Game\Properties\AssemblyInfo.cs" />
-    <Compile Include="Game\TileDefinition\World.cs" />
     <Compile Include="Game\Utils\TileType.cs" />
-    <Compile Include="Game\GameDescription.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -101,8 +110,30 @@
     <Content Include="data\playerRight.png" />
     <Content Include="data\square.png" />
     <Content Include="data\TileMap_World.png" />
+    <Content Include="data\tiles\steelWall.png" />
+    <Content Include="data\tiles\door.png" />
+    <Content Include="data\tiles\brick.png" />
+    <Content Include="data\tiles\magicWall.png" />
+    <Content Include="data\tiles\boulder.png" />
+    <Content Include="data\tiles\dirt.png" />
+    <Content Include="data\tiles\amoeba.png" />
+    <Content Include="data\tiles\firefly.png" />
+    <Content Include="data\tiles\diamond.png" />
+    <Content Include="data\tiles\butterfly.png" />
     <Content Include="data\triangle.png" />
+    <Content Include="data\UI\0.png" />
+    <Content Include="data\UI\1.png" />
+    <Content Include="data\UI\2.png" />
+    <Content Include="data\UI\3.png" />
+    <Content Include="data\UI\4.png" />
+    <Content Include="data\UI\5.png" />
+    <Content Include="data\UI\6.png" />
+    <Content Include="data\UI\7.png" />
+    <Content Include="data\UI\8.png" />
+    <Content Include="data\UI\9.png" />
+    <Content Include="data\UI\diamond.png" />
     <Content Include="Game\Remake.txt" />
+    <Content Include="Game\GameDescription.txt" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="data\Levels\Tilesets\Main.tsx" />

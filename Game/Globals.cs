@@ -10,5 +10,8 @@ namespace Game {
         public const bool PIXEL_ART = true;
         public static int HEIGHT => USE_ASPECT_RATIO ? H_ASPECT : H_MAIN;
         public static float TILE_SIZE = 64f;
+        
+        public static float[] QUAD_VERTS = {0, 0, TILE_SIZE, 0, TILE_SIZE, TILE_SIZE, 0, TILE_SIZE};
+        public static float[] QUAD_UV = {0, 0, 1, 0, 1, 1, 0, 1};
     }
 }

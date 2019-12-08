@@ -1,60 +1,62 @@
+using System.Runtime.InteropServices;
 using Game.Utils;
 using GXPEngine;
 using GXPEngine.Core;
-using GXPEngine.OpenGL;
 
 namespace Game {
-    public class Player : GameObject {
-        public float Speed = 200f;
+    public class Player : Sprite {
         private Camera mainCamera;
         private Texture2D playerRight, playerLeft, playerDown;
         private Texture2D activeTexture;
+        private World world;
+        private Texture2D[] UINumbers = {Texture2D.GetInstance("data/UI/0.png", true),
+            Texture2D.GetInstance("data/UI/1.png", true),
+            Texture2D.GetInstance("data/UI/2.png", true),
+            Texture2D.GetInstance("data/UI/3.png", true),
+            Texture2D.GetInstance("data/UI/4.png", true),
+            Texture2D.GetInstance("data/UI/5.png", true),
+            Texture2D.GetInstance("data/UI/6.png", true),
+            Texture2D.GetInstance("data/UI/7.png", true),
+            Texture2D.GetInstance("data/UI/8.png", true),
+            Texture2D.GetInstance("data/UI/9.png", true),
+            Texture2D.GetInstance("data/UI/diamond.png", true)
+        };
 
-        public Player(Vector2 position) {
-            SetXY(position.x * Globals.TILE_SIZE, position.y * Globals.TILE_SIZE);
+        public Player(Vector2 position, World world) : base("data/playerDown.png", true, true) {
+            SetXY(position.x, position.y);
             mainCamera = new Camera(-32, -32, Globals.WIDTH, Globals.HEIGHT);
             playerRight = Texture2D.GetInstance("data/playerRight.png", true);
             playerLeft = Texture2D.GetInstance("data/playerLeft.png", true);
             playerDown = Texture2D.GetInstance("data/playerDown.png", true);
             activeTexture = playerRight;
+            this.world = world;
             AddChild(mainCamera);
         }
 
-        public void Update() {
-            var movement = new Vector2(Input.GetAxisDown("Horizontal"), Input.GetAxisDown("Vertical"));
-            if (!movement.Equals(Vector2.zero)) {
-                var dTilePosition = new Vector2(x, y) + (movement * Globals.TILE_SIZE);
-                var dTileGrid = WorldToGrid(dTilePosition);
-                var currentPosGrid = WorldToGrid(new Vector2(x, y));
-                var dTile = Level.Tileset.Tiles[Level.ActiveLevel.Tiles[(int) dTileGrid.x, (int) dTileGrid.y]];
-                var world = parent.GetChildren().Find(o => o.name.Equals("World")) as World;
-                if (dTile.Passable) {
-                    Move(movement * Globals.TILE_SIZE);
-                    if (dTile.Name == "Dirt" || dTile.Name == "Miner") Level.ActiveLevel.Tiles[(int) dTileGrid.x, (int) dTileGrid.y] = TileType.Empty;
-                    Level.ActiveLevel.Tiles[(int) dTileGrid.x, (int) dTileGrid.y] = TileType.Miner;
-                }
-
-                world.RebuildMesh();
-            }
-        }
-
         protected override void RenderSelf(GLContext glContext) {
-            float[] verts = {
-                0, 0, Globals.TILE_SIZE, 0, Globals.TILE_SIZE, Globals.TILE_SIZE, 0, Globals.TILE_SIZE
-            };
-            float[] uv = {0, 0, 1, 0, 1, 1, 0, 1};
-            activeTexture.Bind();
-            glContext.SetColor(255, 255, 255, 255);
-            glContext.DrawQuad(verts, uv);
-            glContext.SetColor(255, 255, 255, 255);
-        }
+            base.RenderSelf(glContext);
+            int n1 = world.diamondsCollected / 10 % 10;
+            int n2 = world.diamondsCollected % 10;
+            glContext.SetColor(255,255,255,255);
+            UINumbers[n1].Bind();
+            float[] verts = {0-Globals.WIDTH/2f + 32, 0-Globals.HEIGHT/2f + 32,
+                Globals.TILE_SIZE-Globals.WIDTH/2f + 32, 0-Globals.HEIGHT/2f + 32,
+                Globals.TILE_SIZE-Globals.WIDTH/2f + 32, 32-Globals.HEIGHT/2f + 32,
+                0-Globals.WIDTH/2f + 32, 32-Globals.HEIGHT/2f + 32};
+            glContext.DrawQuad(verts, Globals.QUAD_UV);
+            UINumbers[n2].Bind();
+            float[] verts2 = {0-Globals.WIDTH/2f + 32+64, 0-Globals.HEIGHT/2f + 32,
+                Globals.TILE_SIZE-Globals.WIDTH/2f + 32+64, 0-Globals.HEIGHT/2f + 32,
+                Globals.TILE_SIZE-Globals.WIDTH/2f + 32+64, 32-Globals.HEIGHT/2f + 32,
+                0-Globals.WIDTH/2f + 32+64, 32-Globals.HEIGHT/2f + 32};
+            glContext.DrawQuad(verts2, Globals.QUAD_UV);
+            UINumbers[10].Bind();
+            float[] verts3 = {0-Globals.WIDTH/2f + 32+64+64, 0-Globals.HEIGHT/2f + 32,
+                Globals.TILE_SIZE-Globals.WIDTH/2f + 32+64+64, 0-Globals.HEIGHT/2f + 32,
+                Globals.TILE_SIZE-Globals.WIDTH/2f + 32+64+64, 32-Globals.HEIGHT/2f + 32,
+                0-Globals.WIDTH/2f + 32+64+64, 32-Globals.HEIGHT/2f + 32};
+            glContext.DrawQuad(verts3, Globals.QUAD_UV);
 
-        public Vector2 WorldToGrid(Vector2 world) {
-            return (world / Globals.TILE_SIZE);
-        }
-
-        public Vector2 GridToWorld(Vector2 grid) {
-            return grid * Globals.TILE_SIZE;
         }
     }
 }

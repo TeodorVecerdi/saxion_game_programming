@@ -48,13 +48,49 @@
         <e p="playerRight.png" t="Include" />
         <e p="square.png" t="Include" />
         <e p="TileMap_World.png" t="Include" />
+        <e p="tiles" t="Include">
+          <e p="amoeba.png" t="Include" />
+          <e p="boulder.png" t="Include" />
+          <e p="brick.png" t="Include" />
+          <e p="butterfly.png" t="Include" />
+          <e p="diamond.png" t="Include" />
+          <e p="dirt.png" t="Include" />
+          <e p="door.png" t="Include" />
+          <e p="firefly.png" t="Include" />
+          <e p="magicWall.png" t="Include" />
+          <e p="steelWall.png" t="Include" />
+        </e>
         <e p="triangle.png" t="Include" />
+        <e p="UI" t="Include">
+          <e p="0.png" t="Include" />
+          <e p="1.png" t="Include" />
+          <e p="2.png" t="Include" />
+          <e p="3.png" t="Include" />
+          <e p="4.png" t="Include" />
+          <e p="5.png" t="Include" />
+          <e p="6.png" t="Include" />
+          <e p="7.png" t="Include" />
+          <e p="8.png" t="Include" />
+          <e p="9.png" t="Include" />
+          <e p="diamond.png" t="Include" />
+        </e>
       </e>
       <e p="Game" t="Include">
         <e p="GameDescription.txt" t="Include" />
         <e p="Globals.cs" t="Include" />
         <e p="Objects" t="Include">
+          <e p="Amoeba.cs" t="Include" />
+          <e p="Boulder.cs" t="Include" />
+          <e p="Brick.cs" t="Include" />
+          <e p="Butterfly.cs" t="Include" />
+          <e p="Diamond.cs" t="Include" />
+          <e p="Dirt.cs" t="Include" />
+          <e p="Door.cs" t="Include" />
+          <e p="ExpandingWall.cs" t="Include" />
+          <e p="Firefly.cs" t="Include" />
+          <e p="MagicWall.cs" t="Include" />
           <e p="Player.cs" t="Include" />
+          <e p="SteelWall.cs" t="Include" />
           <e p="World.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
@@ -62,9 +98,6 @@
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
         <e p="Remake.txt" t="Include" />
-        <e p="TileDefinition" t="Include">
-          <e p="World.cs" t="Include" />
-        </e>
         <e p="Utils" t="Include">
           <e p="Level.cs" t="Include" />
           <e p="LevelUtils.cs" t="Include" />

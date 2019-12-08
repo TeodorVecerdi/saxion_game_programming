@@ -32,6 +32,16 @@ namespace Game.Utils {
         public readonly int[,] OriginalTiles;
         public Vector2 PlayerStart;
 
+        public int this[Vector2 position] {
+          get => Tiles[(int) position.x, (int) position.y];
+          set => Tiles[(int) position.x, (int) position.y] = value;
+        }
+
+        public int this[int x, int y] {
+            get => Tiles[x, y];
+            set => Tiles[x, y] = value;
+        }
+
         public Level(string path) {
             var gameLevel = Loader.LoadGameLevel(path);
             RandomObjects = new List<(int, int)>();
