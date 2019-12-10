@@ -33,7 +33,7 @@ namespace GXPEngine {
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.Write("[LOG]");
             Console.ResetColor();
-            Console.Write(" " + GetString(message));
+            Console.Write(" " + GetString(message) + $" at {Time.now/1000f}");
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
         }
@@ -57,7 +57,7 @@ namespace GXPEngine {
             Console.Write("[WARN]");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write(" " + GetString(message));
+            Console.Write(" " + GetString(message) + $" at {Time.now/1000f}");
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
@@ -82,7 +82,7 @@ namespace GXPEngine {
             Console.Write("[ERROR]");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write(" " + GetString(message));
+            Console.Write(" " + GetString(message) + $" at {Time.now/1000f}");
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
