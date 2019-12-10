@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using GXPEngine.Core;
 
@@ -94,7 +95,7 @@ namespace GXPEngine {
 
 		public static float GetAxis(string axisName) {
 			if (!Axes.ContainsKey(axisName)) {
-				Debug.LogError($"Axis {axisName} does not exist.");
+				Console.Error.WriteLine($"Axis {axisName} does not exist.");
 				throw new KeyNotFoundException($"Axis {axisName} does not exist.");
 			}
 			var value = 0f;
@@ -104,7 +105,7 @@ namespace GXPEngine {
 		}
 		public static float GetAxisDown(string axisName) {
 			if (!Axes.ContainsKey(axisName)) {
-				Debug.LogError($"Axis {axisName} does not exist.");
+				Console.Error.WriteLine($"Axis {axisName} does not exist.");
 				throw new KeyNotFoundException($"Axis {axisName} does not exist.");
 			}
 			var value = 0f;

@@ -1,1 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<level name="Rooms" description="Pick up jewels, but you must move boulders to get all jewels" tiledLevelPath="data/Levels/TiledLevels/Level2.tmx"
+       width="40" height="22" magicWallMillingTime="20"
+       amoebaSlowGrowthTime="20" intialDiamondValue="20" extraDiamondValue="50"
+       randomSeed="3" diamondsNeeded="10" caveTime="150" color1="12811125"
+       color2="10178981" amoebaMaxSize="200">
+    <randomObjects>
+        <randomObject id="0"/>
+        <randomObject id="16"/>
+        <randomObject id="20"/>
+        <randomObject id="8"/>
+    </randomObjects>
+    <randomObjectProb>
+        <randomObjectProb prob="60"/>
+        <randomObjectProb prob="50"/>
+        <randomObjectProb prob="9"/>
+        <randomObjectProb prob="2"/>
+    </randomObjectProb>
+</level>
