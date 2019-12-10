@@ -13,28 +13,13 @@ namespace Game {
         public Program() : base(Globals.WIDTH, Globals.HEIGHT, Globals.FULLSCREEN, Globals.VSYNC,
             pPixelArt: Globals.PIXEL_ART) {
             ShowMouse(true);
-//            var t1 = new GameBackgroundTest(8, 8, 16, Texture2D.GetInstance("data/TileMap_World.png", true));
+            targetFps = 10;
             var level1 = new Level("data/Levels/GameLevels/Level1.xml");
-            var world = new World(level1, Texture2D.GetInstance("data/Levels/TiledSprites.png", true));
+            var world = new World(level1);
             world.name = "World";
-            Level.ActiveLevel = level1;
             Input.AddAxis("Horizontal", new List<int>{Key.A, Key.LEFT}, new List<int>{Key.D, Key.RIGHT});
             Input.AddAxis("Vertical", new List<int>{Key.W, Key.UP}, new List<int>{Key.S, Key.DOWN});
-//            Loader.LoadTileset("data/Levels/Tilesets/Main.tsx");
-//            var camera = new Camera(-4 * 16, -4 * 16, Globals.WIDTH, Globals.HEIGHT);
-//            var player = new Player(level1.PlayerStart);
-//            player.AddChild(camera);
-            string s = "";
-            foreach (var tilesKey in Level.Tileset.Tiles.Keys) {
-                s += tilesKey + " ";
-            }
-            Debug.Log(s);
-//            t1.AddChild(canvas);
-//            Debug.Log(map);
             AddChild(world);
-//            AddChild(player);
-
-//            AddChild(t1);
         }
 
         public static void Main(string[] args) {
@@ -54,7 +39,6 @@ namespace Game {
             Row = row;
         }
     }
-
     public class TestSerialize {
         public int Columns;
         public int Rows;

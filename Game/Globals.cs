@@ -1,8 +1,8 @@
 namespace Game {
     public static class Globals {
         public const float ASPECT_RATIO = 1.7777777f;
-        public const bool USE_ASPECT_RATIO = false;
-        public const int WIDTH = 1048;
+        public const bool USE_ASPECT_RATIO = true;
+        public const int WIDTH = 1280;
         private const int H_MAIN = 786;
         private const int H_ASPECT = (int) (WIDTH / ASPECT_RATIO);
         public const bool FULLSCREEN = false;

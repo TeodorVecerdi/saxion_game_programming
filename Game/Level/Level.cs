@@ -7,7 +7,6 @@ using GXPEngine.Core;
 
 namespace Game.Utils {
     public class Level {
-        public static Level ActiveLevel = null;
         public static TiledTileset Tileset = new TiledTileset(Loader.LoadTileset("data/Levels/Tilesets/Main.tsx"), "data/Levels/Tilesets/Main.xml");
 
         #region GameLevel Variables

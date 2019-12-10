@@ -170,6 +170,8 @@ namespace Game.Utils {
             [XmlAttribute(AttributeName = "id")] public int Id { get; set; }
             [XmlAttribute(AttributeName = "passable")]
             public int Passable { get; set; }
+            [XmlAttribute(AttributeName = "rounded")]
+            public int Rounded { get; set; }
             [XmlAttribute(AttributeName = "canFall")]
             public int CanFall { get; set; }
         }
@@ -188,13 +190,16 @@ namespace Game.Utils {
             public int Id;
             public string Name;
             public bool Passable;
+            public bool Rounded;
             public bool CanFall;
             public Rectangle UV;
 
-            public Tile(int id, string name, bool passable, bool canFall) {
+            public Tile(int id, string name, bool passable, bool rounded, bool canFall) {
                 Id = id;
                 Name = name;
                 Passable = passable;
+                Rounded = rounded;
+                CanFall = canFall;
                 int col = id % 4;
                 int row = id / 4;
                 UV = new Rectangle(col * 0.25F, row * 0.25F, 0.25F, 0.25F);
@@ -210,7 +215,7 @@ namespace Game.Utils {
                 Debug.Log("Building tiles: " + tileset.Name);
                 foreach (var tile in tileset.Tile) {
                     var tile2 = xmlTiles.Tile.Find(xmlTile => xmlTile.Id == tile.Id);
-                    Tiles.Add(tile.Id, new Tile(tile.Id, tile.Type, tile2.Passable == 1, tile2.CanFall == 1));
+                    Tiles.Add(tile.Id, new Tile(tile.Id, tile.Type, tile2.Passable == 1, tile2.Rounded == 1, tile2.CanFall == 1));
                 }
             }
         }

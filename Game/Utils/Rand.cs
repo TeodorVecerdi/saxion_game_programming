@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GXPEngine;
-using Debug = GXPEngine.Debug;
 
 namespace Game.Utils {
     public static class Rand {

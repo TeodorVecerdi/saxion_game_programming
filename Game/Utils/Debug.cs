@@ -3,8 +3,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
+using GXPEngine;
 
-namespace GXPEngine {
+namespace Game.Utils {
     public class Debug {
         private const string LogFormat = " at {0}.{1}:{2} ({3}:line {2})";
 
@@ -16,6 +17,7 @@ namespace GXPEngine {
         }
 
         public static void Log(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+#if DEBUG
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
             var className = mth.ReflectedType?.Name;
@@ -33,12 +35,14 @@ namespace GXPEngine {
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.Write("[LOG]");
             Console.ResetColor();
-            Console.Write(" " + GetString(message) + $" at {Time.now/1000f}");
+            Console.Write(" " + GetString(message) + $" at {Time.now / 1000f}");
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
+#endif
         }
 
         public static void LogWarning(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+#if DEBUG
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
             var className = mth.ReflectedType?.Name;
@@ -57,13 +61,15 @@ namespace GXPEngine {
             Console.Write("[WARN]");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write(" " + GetString(message) + $" at {Time.now/1000f}");
+            Console.Write(" " + GetString(message) + $" at {Time.now / 1000f}");
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
+#endif
         }
 
         public static void LogError(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+#if DEBUG
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
             var className = mth.ReflectedType?.Name;
@@ -82,10 +88,11 @@ namespace GXPEngine {
             Console.Write("[ERROR]");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write(" " + GetString(message) + $" at {Time.now/1000f}");
+            Console.Write(" " + GetString(message) + $" at {Time.now / 1000f}");
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
+#endif
         }
     }
 }
