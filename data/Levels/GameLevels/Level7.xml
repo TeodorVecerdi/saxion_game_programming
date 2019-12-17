@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="Amoeba" description="Surround the amoeba with boulders. Pick up jewels when it suffocates"
+       tiledLevelPath="data/Levels/TiledLevels/Level7.tmx"
+       width="40" height="22" magicWallMillingTime="75"
+       amoebaSlowGrowthTime="75" intialDiamondValue="10" extraDiamondValue="20"
+       randomSeed="2" diamondsNeeded="15" caveTime="120" color1="6968320"
+       color2="12811125" amoebaMaxSize="200">
+    <randomObjects>
+        <randomObject id="0"/>
+        <randomObject id="16"/>
+        <randomObject id="8"/>
+        <randomObject id="0"/>
+    </randomObjects>
+    <randomObjectProb>
+        <randomObjectProb prob="100"/>
+        <randomObjectProb prob="40"/>
+        <randomObjectProb prob="2"/>
+        <randomObjectProb prob="0"/>
+    </randomObjectProb>
+</level>

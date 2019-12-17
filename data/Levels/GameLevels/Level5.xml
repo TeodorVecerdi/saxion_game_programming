@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="Guards" description="The jewels are there for grabbing, but they are guarded by the deadly fireflies"
+       tiledLevelPath="data/Levels/TiledLevels/Level5.tmx"
+       width="40" height="22" magicWallMillingTime="20"
+       amoebaSlowGrowthTime="20" intialDiamondValue="50" extraDiamondValue="90"
+       randomSeed="0" diamondsNeeded="4" caveTime="150" color1="6968320"
+       color2="12811125" amoebaMaxSize="200">
+    <randomObjects>
+        <randomObject id="0"/>
+        <randomObject id="0"/>
+        <randomObject id="0"/>
+        <randomObject id="0"/>
+    </randomObjects>
+    <randomObjectProb>
+        <randomObjectProb prob="0"/>
+        <randomObjectProb prob="0"/>
+        <randomObjectProb prob="0"/>
+        <randomObjectProb prob="0"/>
+    </randomObjectProb>
+</level>

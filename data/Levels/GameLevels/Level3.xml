@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="Maze" description="Pick up jewels. You must get every jewel to exit" tiledLevelPath="data/Levels/TiledLevels/Level3.tmx"
+       width="40" height="22" magicWallMillingTime="0"
+       amoebaSlowGrowthTime="0" intialDiamondValue="15" extraDiamondValue="0"
+       randomSeed="0" diamondsNeeded="24" caveTime="150" color1="6968320"
+       color2="10184505" amoebaMaxSize="200">
+    <randomObjects>
+        <randomObject id="2"/>
+        <randomObject id="16"/>
+        <randomObject id="20"/>
+        <randomObject id="0"/>
+    </randomObjects>
+    <randomObjectProb>
+        <randomObjectProb prob="100"/>
+        <randomObjectProb prob="50"/>
+        <randomObjectProb prob="9"/>
+        <randomObjectProb prob="0"/>
+    </randomObjectProb>
+</level>
