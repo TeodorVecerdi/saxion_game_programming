@@ -202,6 +202,30 @@ namespace GXPEngine.OpenGL {
         [DllImport("opengl32.dll", EntryPoint = "glLineWidth")]
         public static extern void LineWidth(float width);
 
+        /*[DllImport("opengl32.dll", EntryPoint = "glCreateShader")]
+        public static extern uint CreateShader(uint shaderType);
+
+        [DllImport("opengl32.dll", EntryPoint = "glShaderSource")]
+        public static extern void ShaderSource(uint shader, int count, string text, int length);
+
+        [DllImport("opengl32.dll", EntryPoint = "glCompileShader")]
+        public static extern void CompileShader(uint shader);
+
+        [DllImport("opengl32.dll", EntryPoint = "glCreateProgram")]
+        public static extern uint CreateProgram();
+
+        [DllImport("opengl32.dll", EntryPoint = "glAttachShader")]
+        public static extern void AttachShader(uint shaderProgram, uint shader);
+
+        [DllImport("opengl32.dll", EntryPoint = "glLinkProgram")]
+        public static extern void LinkProgram(uint shaderProgram);
+
+        [DllImport("opengl32.dll", EntryPoint = "glUseProgram")]
+        public static extern void UseProgram(uint shaderProgram);
+
+        [DllImport("opengl32.dll", EntryPoint = "glDeleteShader")]
+        public static extern void DeleteShader(uint shader);*/
+
         [DllImport("lib/glfw.dll")] public static extern void glfwSetTime(double time);
 
         [DllImport("lib/glfw.dll")] public static extern double glfwGetTime();

@@ -3,6 +3,8 @@ using GXPEngine.Core;
 
 namespace Game {
     public class Diamond : GameObject {
+        public bool IsFalling = false;
+        public bool UpdatedThisFrame = false;
         private int animationFrames = 8;
         private int currentFrame = 0;
         private float uvSize = 0.125f;

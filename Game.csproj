@@ -85,6 +85,11 @@
   <ItemGroup>
     <Content Include="data\Levels\GameLevels\Level1.xml" />
     <Content Include="data\Levels\GameLevels\Level2.xml" />
+    <Content Include="data\Levels\GameLevels\Level3.xml" />
+    <Content Include="data\Levels\GameLevels\Level4.xml" />
+    <Content Include="data\Levels\GameLevels\Level5.xml" />
+    <Content Include="data\Levels\GameLevels\Level6.xml" />
+    <Content Include="data\Levels\GameLevels\Level7.xml" />
     <Content Include="data\Levels\TiledLevels\Level1.tmx" />
     <Content Include="data\Levels\TiledLevels\Level10.tmx" />
     <Content Include="data\Levels\TiledLevels\Level11.tmx" />
