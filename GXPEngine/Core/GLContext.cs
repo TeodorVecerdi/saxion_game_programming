@@ -1,5 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Text;
+using GLFW;
 using GXPEngine.OpenGL;
 
 namespace GXPEngine.Core {
@@ -21,6 +27,8 @@ namespace GXPEngine.Core {
 
         public static int mouseX;
         public static int mouseY;
+        
+        private static GLFW.Window _window;
 
         private static double _realToLogicWidthRatio;
         private static double _realToLogicHeightRatio;
@@ -32,6 +40,19 @@ namespace GXPEngine.Core {
 
         private int _targetFrameRate = 60;
         private bool _vsyncEnabled;
+        
+        private PositionCallback windowPositionCallback;
+        private SizeCallback windowSizeCallback, framebufferSizeCallback;
+        private FocusCallback windowFocusCallback;
+        private WindowCallback closeCallback, windowRefreshCallback;
+        private FileDropCallback dropCallback;
+        private MouseCallback cursorPositionCallback, scrollCallback;
+        private MouseEnterCallback cursorEnterCallback;
+        private MouseButtonCallback mouseButtonCallback;
+        private CharModsCallback charModsCallback;
+        private KeyCallback keyCallback;
+        private WindowMaximizedCallback windowMaximizeCallback;
+        private WindowContentsScaleCallback windowContentScaleCallback;
 
         //------------------------------------------------------------------------------------------------------------------------
         //														RenderWindow()
@@ -73,31 +94,35 @@ namespace GXPEngine.Core {
             _realToLogicWidthRatio = (double) realWidth / width;
             _realToLogicHeightRatio = (double) realHeight / height;
             _vsyncEnabled = vSync;
-
-            GL.glfwInit();
-
-            GL.glfwOpenWindowHint(GL.GLFW_FSAA_SAMPLES, 8);
-            GL.glfwOpenWindow(realWidth, realHeight, 8, 8, 8, 8, 24, 0, fullScreen ? GL.GLFW_FULLSCREEN : GL.GLFW_WINDOWED);
-            GL.glfwSetWindowTitle(title);
-            GL.glfwSwapInterval(vSync);
-
-            GL.glfwSetKeyCallback(
-                (_key, _mode) => {
-                    var press = _mode == 1;
-                    if (press) keydown[_key] = true;
-                    else keyup[_key] = true;
-                    keys[_key] = press;
-                });
-
-            GL.glfwSetMouseButtonCallback(
-                (_button, _mode) => {
-                    var press = _mode == 1;
-                    if (press) mousehits[_button] = true;
-                    else mouseup[_button] = true;
-                    buttons[_button] = press;
-                });
-
-            GL.glfwSetWindowSizeCallback((newWidth, newHeight) => {
+            
+//            _window = new NativeWindow(width, height, title, fullScreen?Glfw.PrimaryMonitor:Monitor.None, GLFW.Window.None);
+//            return;
+            Glfw.Init();
+//            GL.glfwInit();
+            Glfw.WindowHint(Hint.Samples, 8);
+//            GL.glfwOpenWindowHint(GL.GLFW_FSAA_SAMPLES, 8);
+            _window = Glfw.CreateWindow(realWidth, realHeight, title, fullScreen ? Glfw.PrimaryMonitor : Monitor.None, GLFW.Window.None);
+            if (Glfw.GetClientApi(_window) != ClientApi.None)
+                Glfw.MakeContextCurrent(_window);
+//            BindCallbacks();
+//            Glfw.SwapInterval(vSync ? 1 : 0);
+//            GL.glfwOpenWindow(realWidth, realHeight, 8, 8, 8, 8, 24, 0, fullScreen ? GL.GLFW_FULLSCREEN : GL.GLFW_WINDOWED);
+//            GL.glfwSetWindowTitle(title);
+//            GL.glfwSwapInterval(vSync);
+            Glfw.SetKeyCallback(_window, (ptr, key, code, state, mods) => {
+                var press = state == InputState.Press;
+                if (press) keydown[(int) key] = true;
+                else keyup[(int) key] = true;
+                keys[(int) key] = press;
+            });
+            Glfw.SetMouseButtonCallback(_window, (ptr, button, state, modifiers) => {
+                var press = state == InputState.Press;
+                if (press) mousehits[(int) button] = true;
+                else mouseup[(int) button] = true;
+                buttons[(int) button] = press;
+            });
+            Glfw.SetWindowSizeCallback(_window, (ptr, newWidth, newHeight) => {
+//                Glfw.SetWindowSize(window, newWidth, newHeight);
                 GL.Viewport(0, 0, newWidth, newHeight);
                 GL.Enable(GL.MULTISAMPLE);
                 GL.Enable(GL.TEXTURE_2D);
@@ -122,6 +147,8 @@ namespace GXPEngine.Core {
 
                 if (Game.main != null) Game.main.RenderRange = new Rectangle(0, 0, WindowSize.instance.width, WindowSize.instance.height);
             });
+            Glfw.ShowWindow(_window);
+            
         }
 
         //------------------------------------------------------------------------------------------------------------------------
@@ -129,9 +156,11 @@ namespace GXPEngine.Core {
         //------------------------------------------------------------------------------------------------------------------------
         public void ShowCursor(bool enable) {
             if (enable)
-                GL.glfwEnable(GL.GLFW_MOUSE_CURSOR);
+                Glfw.SetInputMode(_window, InputMode.Cursor, (int)CursorMode.Normal);
+//                GL.glfwEnable(GL.GLFW_MOUSE_CURSOR);
             else
-                GL.glfwDisable(GL.GLFW_MOUSE_CURSOR);
+                Glfw.SetInputMode(_window, InputMode.Cursor, (int)CursorMode.Hidden);
+//                GL.glfwDisable(GL.GLFW_MOUSE_CURSOR);
         }
 
         //------------------------------------------------------------------------------------------------------------------------
@@ -157,8 +186,9 @@ namespace GXPEngine.Core {
         //														Close()
         //------------------------------------------------------------------------------------------------------------------------
         public void Close() {
-            GL.glfwCloseWindow();
-            GL.glfwTerminate();
+            Glfw.SetWindowShouldClose(_window, true);
+            Glfw.DestroyWindow(_window);
+            Glfw.Terminate();
             Environment.Exit(0);
         }
 
@@ -167,8 +197,10 @@ namespace GXPEngine.Core {
         //------------------------------------------------------------------------------------------------------------------------
         public void Run() {
             //Update();
-            GL.glfwSetTime(0.0);
+            Glfw.Time = 0.0;
+//            GL.glfwSetTime(0.0);
             do {
+                
                 if (_vsyncEnabled || Time.time - _lastFrameTime > 1000 / _targetFrameRate) {
                     _lastFrameTime = Time.time;
 
@@ -181,15 +213,30 @@ namespace GXPEngine.Core {
                     }
 
                     UpdateMouseInput();
+//                    Console.WriteLine($"Mouse: [{mouseX}, {mouseY}]");
                     _owner.Step();
 
                     ResetHitCounters();
                     Display();
 
                     Time.newFrame();
-                    GL.glfwPollEvents();
+                    Glfw.PollEvents();
+                    Glfw.SwapBuffers(_window);
+                    int err = GL.GetError();
+                    string description;
+                    var errorCode = Glfw.GetError(out description);
+                    if (errorCode != ErrorCode.None || err != 0) {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"GLFW: ErrCo: {errorCode}, description: {description}");
+                        Console.WriteLine($"GL: ErrCo: {err}");
+                        Console.ResetColor();
+                    }
+//                    GL.glfwPollEvents();
                 }
-            } while (GL.glfwGetWindowParam(GL.GLFW_ACTIVE) == 1);
+
+//            } while (GL.glfwGetWindowParam(GL.GLFW_ACTIVE) == 1);
+//            } while (Glfw.GetWindowAttribute(_window, WindowAttribute.Focused));
+            } while (!Glfw.WindowShouldClose(_window));
         }
 
         //------------------------------------------------------------------------------------------------------------------------
@@ -197,14 +244,13 @@ namespace GXPEngine.Core {
         //------------------------------------------------------------------------------------------------------------------------
         private void Display() {
             GL.Clear(GL.COLOR_BUFFER_BIT);
-
             GL.MatrixMode(GL.MODELVIEW);
             GL.LoadIdentity();
 
             _owner.Render(this);
-
-            GL.glfwSwapBuffers();
-            if (GetKey(Key.ESCAPE)) Close();
+//            Glfw.SwapBuffers(_window);
+//            GL.glfwSwapBuffers();
+            if (GetKey(Key.Escape)) Close();
         }
 
         //------------------------------------------------------------------------------------------------------------------------
@@ -233,6 +279,27 @@ namespace GXPEngine.Core {
         //														DrawQuad()
         //------------------------------------------------------------------------------------------------------------------------
         public void DrawQuad(float[] vertices, float[] uv) {
+            string vertex = @"#version 400\n
+in vec3 vp;
+void main() {
+    gl_Position = vec4(vp, 1.0);
+}";
+            string fragment = @"#version 400\n
+out vec4 frag_color;
+void main() {
+    frag_color = vec4(1.0, 1.0, 1.0, 1.0);
+}";
+            /*var vertex_shader = GL.CreateShader(GL.GL_VERTEX_SHADER);
+            GL.ShaderSource(vertex_shader, 1, vertex, vertex.Length);
+            GL.CompileShader(vertex_shader);
+            var fragment_shader = GL.CreateShader(GL.GL_FRAGMENT_SHADER);
+            GL.ShaderSource(fragment_shader, 1, fragment, fragment.Length);
+            GL.CompileShader(fragment_shader);
+            var program = GL.CreateProgram();
+            GL.AttachShader(program, fragment_shader);
+            GL.AttachShader(program, vertex_shader);
+            GL.LinkProgram(program);
+            GL.UseProgram(program);*/
             GL.EnableClientState(GL.TEXTURE_COORD_ARRAY);
             GL.EnableClientState(GL.VERTEX_ARRAY);
             GL.TexCoordPointer(2, GL.FLOAT, 0, uv);
@@ -343,9 +410,338 @@ namespace GXPEngine.Core {
         //														UpdateMouseInput()
         //------------------------------------------------------------------------------------------------------------------------
         public static void UpdateMouseInput() {
-            GL.glfwGetMousePos(out mouseX, out mouseY);
+            double mX, mY;
+            Glfw.GetCursorPosition(_window, out mX, out mY);
+            mouseX = (int) mX;
+            mouseY = (int) mY;
+//            GL.glfwGetMousePos(out mouseX, out mouseY);
             mouseX = (int) (mouseX / _realToLogicWidthRatio);
             mouseY = (int) (mouseY / _realToLogicHeightRatio);
         }
+        
+        /*private void BindCallbacks()
+        {
+            windowPositionCallback = (_, x, y) => OnPositionChanged(x, y);
+            windowSizeCallback = (_, w, h) => OnSizeChanged(w, h);
+            windowFocusCallback = (_, focusing) => OnFocusChanged(focusing);
+            closeCallback = _ => OnClosing();
+            dropCallback = (_, count, arrayPtr) => OnFileDrop(count, arrayPtr);
+            cursorPositionCallback = (_, x, y) => OnMouseMove(x, y);
+            cursorEnterCallback = (_, entering) => OnMouseEnter(entering);
+            mouseButtonCallback = (_, button, state, mod) => OnMouseButton(button, state, mod);
+            scrollCallback = (_, x, y) => OnMouseScroll(x, y);
+            charModsCallback = (_, cp, mods) => OnCharacterInput(cp, mods);
+            framebufferSizeCallback = (_, w, h) => OnFramebufferSizeChanged(w, h);
+            windowRefreshCallback = _ => Refreshed?.Invoke(this, EventArgs.Empty);
+            keyCallback = (_, key, code, state, mods) => OnKey(key, code, state, mods);
+            windowMaximizeCallback = (_, maximized) => OnMaximizeChanged(maximized);
+            windowContentScaleCallback = (_, x, y) => OnContentScaleChanged(x, y);
+
+            Glfw.SetWindowPositionCallback(_window, windowPositionCallback);
+            Glfw.SetWindowSizeCallback(_window, windowSizeCallback);
+            Glfw.SetWindowFocusCallback(_window, windowFocusCallback);
+            Glfw.SetCloseCallback(_window, closeCallback);
+            Glfw.SetDropCallback(_window, dropCallback);
+            Glfw.SetCursorPositionCallback(_window, cursorPositionCallback);
+            Glfw.SetCursorEnterCallback(_window, cursorEnterCallback);
+            Glfw.SetMouseButtonCallback(_window, mouseButtonCallback);
+            Glfw.SetScrollCallback(_window, scrollCallback);
+            Glfw.SetCharModsCallback(_window, charModsCallback);
+            Glfw.SetFramebufferSizeCallback(_window, framebufferSizeCallback);
+            Glfw.SetWindowRefreshCallback(_window, windowRefreshCallback);
+            Glfw.SetKeyCallback(_window, keyCallback);
+            Glfw.SetWindowMaximizeCallback(_window, windowMaximizeCallback);
+            Glfw.SetWindowContentScaleCallback(_window, windowContentScaleCallback);
+        }*/
+        /*
+
+         #region Delegates and Events
+         public event EventHandler<ContentScaleEventArgs> ContentScaleChanged;
+         protected virtual void OnContentScaleChanged(float xScale, float yScale)
+         {
+             ContentScaleChanged?.Invoke(this, new ContentScaleEventArgs(xScale, yScale));
+         }
+         
+         /// <summary>
+         ///     Occurs when the window is maximized or restored.
+         /// </summary>
+         public event EventHandler<MaximizeEventArgs> MaximizeChanged;
+         protected virtual void OnMaximizeChanged(bool maximized)
+         {
+             MaximizeChanged?.Invoke(this, new MaximizeEventArgs(maximized));
+         }
+
+
+        /// <summary>
+        ///     Occurs when the window receives character input.
+        /// </summary>
+        public event EventHandler<CharEventArgs> CharacterInput;
+
+        /// <summary>
+        ///     Occurs when the window is closed.
+        /// </summary>
+        public event EventHandler Closed;
+
+        /// <summary>
+        ///     Occurs when the form is closing, and provides subscribers means of canceling the action..
+        /// </summary>
+        public event CancelEventHandler Closing;
+
+        /// <summary>
+        ///     Occurs when the window is disposed.
+        /// </summary>
+        public event EventHandler Disposed;
+
+        /// <summary>
+        ///     Occurs when files are dropped onto the window client area with a drag-drop event.
+        /// </summary>
+        public event EventHandler<FileDropEventArgs> FileDrop;
+
+        /// <summary>
+        ///     Occurs when the window gains or loses focus.
+        /// </summary>
+        public event EventHandler FocusChanged;
+
+        /// <summary>
+        ///     Occurs when the size of the internal framebuffer is changed.
+        /// </summary>
+        public event EventHandler<SizeChangeEventArgs> FramebufferSizeChanged;
+
+        /// <summary>
+        ///     Occurs when a key is pressed, released, or repeated.
+        /// </summary>
+        public event EventHandler<KeyEventArgs> KeyAction;
+
+        /// <summary>
+        ///     Occurs when a key is pressed.
+        /// </summary>
+        public event EventHandler<KeyEventArgs> KeyPress;
+
+        /// <summary>
+        ///     Occurs when a key is released.
+        /// </summary>
+        public event EventHandler<KeyEventArgs> KeyRelease;
+
+        /// <summary>
+        ///     Occurs when a key is held long enough to raise a repeat event.
+        /// </summary>
+        public event EventHandler<KeyEventArgs> KeyRepeat;
+
+        /// <summary>
+        ///     Occurs when a mouse button is pressed or released.
+        /// </summary>
+        public event EventHandler<MouseButtonEventArgs> MouseButton;
+
+        /// <summary>
+        ///     Occurs when the mouse cursor enters the client area of the window.
+        /// </summary>
+        public event EventHandler MouseEnter;
+
+        /// <summary>
+        ///     Occurs when the mouse cursor leaves the client area of the window.
+        /// </summary>
+        public event EventHandler MouseLeave;
+
+        /// <summary>
+        ///     Occurs when mouse cursor is moved.
+        /// </summary>
+        public event EventHandler<MouseMoveEventArgs> MouseMoved;
+
+        /// <summary>
+        ///     Occurs when mouse is scrolled.
+        /// </summary>
+        public event EventHandler<MouseMoveEventArgs> MouseScroll;
+
+        /// <summary>
+        ///     Occurs when position of the <see cref="NativeWindow" /> is changed.
+        /// </summary>
+        public event EventHandler PositionChanged;
+
+        /// <summary>
+        ///     Occurs when window is refreshed.
+        /// </summary>
+        public event EventHandler Refreshed;
+
+        /// <summary>
+        ///     Occurs when size of the <see cref="NativeWindow" /> is changed.
+        /// </summary>
+        public event EventHandler<SizeChangeEventArgs> SizeChanged;
+
+        /// <summary>
+        ///     Raises the <see cref="CharacterInput" /> event.
+        /// </summary>
+        /// <param name="codePoint">The Unicode code point.</param>
+        /// <param name="mods">The modifier keys present.</param>
+        protected virtual void OnCharacterInput(uint codePoint, ModifierKeys mods)
+        {
+            CharacterInput?.Invoke(this, new CharEventArgs(codePoint, mods));
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="Closed" /> event.
+        /// </summary>
+        protected virtual void OnClosed()
+        {
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="Closing" /> event.
+        /// </summary>
+        protected virtual void OnClosing()
+        {
+            var args = new CancelEventArgs();
+            Closing?.Invoke(this, args);
+            if (args.Cancel)
+            {
+                Glfw.SetWindowShouldClose(_window, false);
+            }
+            else
+            {
+//                base.Close();
+                OnClosed();
+            }
+        }
+        
+        public static string PtrToStringUTF8(IntPtr ptr)
+        {
+            var length = 0;
+            while (Marshal.ReadByte(ptr, length) != 0)
+                length++;
+            var buffer = new byte[length];
+            Marshal.Copy(ptr, buffer, 0, length);
+            return Encoding.UTF8.GetString(buffer);
+        }
+        
+        private void OnFileDrop(int count, IntPtr pointer)
+        {
+            var paths = new string[count];
+            var offset = 0;
+            for (var i = 0; i < count; i++, offset += IntPtr.Size)
+            {
+                var ptr = new IntPtr(Marshal.ReadInt32(pointer + offset));
+                paths[i] = PtrToStringUTF8(ptr);
+            }
+
+            OnFileDrop(paths);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="FileDrop" /> event.
+        /// </summary>
+        /// <param name="paths">The filenames of the dropped files.</param>
+        protected virtual void OnFileDrop(string[] paths)
+        {
+            FileDrop?.Invoke(this, new FileDropEventArgs(paths));
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="FocusChanged" /> event.
+        /// </summary>
+        /// <param name="focusing"><c>true</c> if window is gaining focus, otherwise <c>false</c>.</param>
+        // ReSharper disable once UnusedParameter.Global
+        protected virtual void OnFocusChanged(bool focusing)
+        {
+            FocusChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="FramebufferSizeChanged" /> event.
+        /// </summary>
+        /// <param name="width">The new width.</param>
+        /// <param name="height">The new height.</param>
+        protected virtual void OnFramebufferSizeChanged(int width, int height)
+        {
+            FramebufferSizeChanged?.Invoke(this, new SizeChangeEventArgs(new Size(width, height)));
+        }
+
+        /// <summary>
+        ///     Raises the appropriate key events.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="scanCode">The scan code.</param>
+        /// <param name="state">The state of the key.</param>
+        /// <param name="mods">The modifier keys.</param>
+        /// <seealso cref="KeyPress" />
+        /// <seealso cref="KeyRelease" />
+        /// <seealso cref="KeyRepeat" />
+        /// <seealso cref="KeyAction" />
+        protected virtual void OnKey(Keys key, int scanCode, InputState state, ModifierKeys mods)
+        {
+            var args = new KeyEventArgs(key, scanCode, state, mods);
+            if (state.HasFlag(InputState.Press))
+                KeyPress?.Invoke(this, args);
+            else if (state.HasFlag(InputState.Release))
+                KeyRelease?.Invoke(this, args);
+            else
+                KeyRepeat?.Invoke(this, args);
+            KeyAction?.Invoke(this, args);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="MouseButton" /> event.
+        /// </summary>
+        /// <param name="button">The mouse button.</param>
+        /// <param name="state">The state of the mouse button.</param>
+        /// <param name="modifiers">The modifier keys.</param>
+        protected virtual void OnMouseButton(MouseButton button, InputState state, ModifierKeys modifiers)
+        {
+            MouseButton?.Invoke(this, new MouseButtonEventArgs(button, state, modifiers));
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="MouseEnter" /> and <see cref="MouseLeave" /> events.
+        /// </summary>
+        /// <param name="entering"><c>true</c> if mouse is entering window, otherwise <c>false</c> if it is leaving.</param>
+        protected virtual void OnMouseEnter(bool entering)
+        {
+            if (entering)
+                MouseEnter?.Invoke(this, EventArgs.Empty);
+            else
+                MouseLeave?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="MouseMoved" /> event.
+        /// </summary>
+        /// <param name="x">The new x-coordinate of the mouse.</param>
+        /// <param name="y">The new y-coordinate of the mouse.</param>
+        protected virtual void OnMouseMove(double x, double y)
+        {
+            MouseMoved?.Invoke(this, new MouseMoveEventArgs(x, y));
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="MouseScroll" /> event.
+        /// </summary>
+        /// <param name="x">The amount of the scroll on the x-axis.</param>
+        /// <param name="y">The amount of the scroll on the y-axis.</param>
+        protected virtual void OnMouseScroll(double x, double y)
+        {
+            MouseScroll?.Invoke(this, new MouseMoveEventArgs(x, y));
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="PositionChanged" /> event.
+        /// </summary>
+        /// <param name="x">The new position on the x-axis.</param>
+        /// <param name="y">The new position on the y-axis.</param>
+        [SuppressMessage("ReSharper", "UnusedParameter.Global")]
+        protected virtual void OnPositionChanged(double x, double y)
+        {
+            PositionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="SizeChanged" /> event.
+        /// </summary>
+        /// <param name="width">The new width.</param>
+        /// <param name="height">The new height.</param>
+        protected virtual void OnSizeChanged(int width, int height)
+        {
+            SizeChanged?.Invoke(this, new SizeChangeEventArgs(new Size(width, height)));
+        }
+
+        #endregion*/
     }
 }

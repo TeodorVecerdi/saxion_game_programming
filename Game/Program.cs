@@ -17,9 +17,14 @@ namespace Game {
             var level1 = new Level("data/Levels/GameLevels/Level1.xml");
             var world = new World(level1);
             world.name = "World";
-            Input.AddAxis("Horizontal", new List<int>{Key.A, Key.LEFT}, new List<int>{Key.D, Key.RIGHT});
-            Input.AddAxis("Vertical", new List<int>{Key.W, Key.UP}, new List<int>{Key.S, Key.DOWN});
-            AddChild(world);
+            Input.AddAxis("Horizontal", new List<int>{Key.A, Key.Left}, new List<int>{Key.D, Key.Right});
+            Input.AddAxis("Vertical", new List<int>{Key.W, Key.Up}, new List<int>{Key.S, Key.Down});
+            
+            var canvas = new EasyDraw(width, height, false);
+            canvas.Fill(255, 0, 255);
+            canvas.Rect(0, 0, 100, 100);
+            AddChild(canvas);
+//            AddChild(world);
         }
 
         public static void Main(string[] args) {

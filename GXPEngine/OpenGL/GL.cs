@@ -75,6 +75,8 @@ namespace GXPEngine.OpenGL {
         public const int FUNC_SUBTRACT = 0x800A;
         public const int FUNC_REVERSE_SUBTRACT = 0x800B;
         public const int GL_REPEAT = 0x2901;
+        public const int GL_FRAGMENT_SHADER = 0x8B30;
+        public const int GL_VERTEX_SHADER = 0x8B31;
 
         //----------------------------------------------------------------------------------------------------------------------
         //														GLFW
@@ -202,7 +204,7 @@ namespace GXPEngine.OpenGL {
         [DllImport("opengl32.dll", EntryPoint = "glLineWidth")]
         public static extern void LineWidth(float width);
 
-        /*[DllImport("opengl32.dll", EntryPoint = "glCreateShader")]
+        [DllImport("opengl32.dll", EntryPoint = "glCreateShader")]
         public static extern uint CreateShader(uint shaderType);
 
         [DllImport("opengl32.dll", EntryPoint = "glShaderSource")]
@@ -224,7 +226,7 @@ namespace GXPEngine.OpenGL {
         public static extern void UseProgram(uint shaderProgram);
 
         [DllImport("opengl32.dll", EntryPoint = "glDeleteShader")]
-        public static extern void DeleteShader(uint shader);*/
+        public static extern void DeleteShader(uint shader);
 
         [DllImport("lib/glfw.dll")] public static extern void glfwSetTime(double time);
 

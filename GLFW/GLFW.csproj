@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DefineConstants>TRACE;DEBUG</DefineConstants>
+      <Prefer32bit>false</Prefer32bit>
+      <DebugType>full</DebugType>
+      <WarningsAsErrors />
+      <NoWarn />
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DefineConstants>TRACE;RELEASE</DefineConstants>
+      <Prefer32bit>false</Prefer32bit>
+      <DebugType>pdbonly</DebugType>
+      <WarningsAsErrors />
+      <NoWarn />
+    </PropertyGroup>
+
+</Project>

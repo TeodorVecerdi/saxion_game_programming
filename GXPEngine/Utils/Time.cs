@@ -1,4 +1,5 @@
 using System;
+using GLFW;
 using GXPEngine.OpenGL;
 
 namespace GXPEngine {
@@ -19,7 +20,7 @@ namespace GXPEngine {
         /// <value>
         ///     The time.
         /// </value>
-        public static int time => (int) (GL.glfwGetTime() * 1000);
+        public static int time => (int) (Glfw.Time * 1000);
         /// <summary>
         ///     Returns the time in milliseconds that has passed since the previous frame
         /// </summary>
