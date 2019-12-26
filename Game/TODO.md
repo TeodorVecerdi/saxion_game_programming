@@ -6,10 +6,11 @@
 - [ ] Background flashes once collected enough diamonds
 - [x] Amoeba grows into empty spaces 
 - [ ] Amoeba turns into diamonds if contained, boulders otherwise when time done
-- [ ] Player collects diamond if diamond falls on player
+- [x] Player collects diamond if diamond falls on player
 - [ ] If ctrl is pressed do action without moving such as getting diamonds, pushing boulders or removing dirt
 - [x] Add boulder push mechanic
 - [ ] Add player animation
 - [ ] Add time left to score when finished
+- [x] Implement firefly follow wall AI
 ## Code changes 
 + [ ] convert public variables to private with getter where necessary

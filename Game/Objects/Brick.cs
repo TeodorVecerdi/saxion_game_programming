@@ -1,11 +1,23 @@
+using System;
+using System.Drawing;
+using Game.Utils;
 using GXPEngine;
 
 namespace Game {
     public class Brick : Sprite {
-        public Brick(Vector2 position) : this(position.x, position.y) { }
+        public Brick(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
-        public Brick(float x, float y) : base("data/tiles/brick.png", true) {
+        public Brick(float x, float y, int color1, int color2) : base("data/tiles/brick.png", true) {
             SetXY(x, y);
+            Bitmap source;
+            try {
+                source = new Bitmap("data/tiles/brick.png");
+                var target = Misc.ApplyLevelColor(source, color1, color2);
+                texture.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file \"data/tiles/brick.png\"");
+                throw e;
+            }
         }
     }
 }

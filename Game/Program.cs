@@ -14,7 +14,7 @@ namespace Game {
             pPixelArt: Globals.PIXEL_ART) {
             ShowMouse(true);
             targetFps = 25;
-            var level1 = new Level("data/Levels/GameLevels/Level1.xml");
+            var level1 = new Level("data/Levels/GameLevels/Level2.xml");
             var world = new World(level1);
             world.name = "World";
             Input.AddAxis("Horizontal", new List<int>{Key.A, Key.LEFT}, new List<int>{Key.D, Key.RIGHT});

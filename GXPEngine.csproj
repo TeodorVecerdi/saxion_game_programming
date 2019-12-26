@@ -63,6 +63,7 @@
     <Compile Include="GXPEngine\Managers\CollisionManager.cs" />
     <Compile Include="GXPEngine\Managers\UpdateManager.cs" />
     <Compile Include="GXPEngine\Math\Mathf.cs" />
+    <Compile Include="GXPEngine\Math\Vector2Int.cs" />
     <Compile Include="GXPEngine\Math\Vector2.cs" />
     <Compile Include="GXPEngine\Math\Vector3.cs" />
     <Compile Include="GXPEngine\OpenGL\GL.cs" />

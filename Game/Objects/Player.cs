@@ -1,22 +1,51 @@
+using System;
+using System.Drawing;
 using Game.Utils;
 using GXPEngine;
 using GXPEngine.Core;
 
 namespace Game {
     public class Player : Sprite {
-        private Texture2D activeTexture;
-        private readonly Camera mainCamera;
-        private readonly Texture2D playerRight;
+        private Camera mainCamera;
+        private Texture2D playerRight;
         private Texture2D playerLeft, playerDown;
-        private readonly World world;
+        private World world;
 
-        public Player(Vector2 position, World world) : base("data/playerDown.png", true) {
+        public Player(Vector2 position, World world, int color1, int color2) : base("data/playerDown.png", true) {
             SetXY(position.x, position.y);
             mainCamera = new Camera(0, -20, Globals.WIDTH, Globals.HEIGHT);
             playerRight = Texture2D.GetInstance("data/playerRight.png", true);
             playerLeft = Texture2D.GetInstance("data/playerLeft.png", true);
             playerDown = Texture2D.GetInstance("data/playerDown.png", true);
-            activeTexture = playerRight;
+            Bitmap source;
+            try {
+                source = new Bitmap("data/playerRight.png");
+                var target = Misc.ApplyLevelColor(source, color1, color2);
+                playerRight.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file data/playerRight.png");
+                throw e;
+            }
+            Bitmap source2;
+            try {
+                source2 = new Bitmap("data/playerLeft.png");
+                var target = Misc.ApplyLevelColor(source2, color1, color2);
+                playerLeft.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file data/playerLeft.png");
+                throw e;
+            }
+            Bitmap source3;
+            try {
+                source3 = new Bitmap("data/playerDown.png");
+                var target = Misc.ApplyLevelColor(source3, color1, color2);
+                playerDown.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file data/playerDown.png");
+                throw e;
+            }
+
+            _texture = playerDown;
             this.world = world;
             AddChild(mainCamera);
         }

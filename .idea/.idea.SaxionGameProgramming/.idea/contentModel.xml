@@ -11,6 +11,11 @@
           <e p="GameLevels" t="Include">
             <e p="Level1.xml" t="Include" />
             <e p="Level2.xml" t="Include" />
+            <e p="Level3.xml" t="Include" />
+            <e p="Level4.xml" t="Include" />
+            <e p="Level5.xml" t="Include" />
+            <e p="Level6.xml" t="Include" />
+            <e p="Level7.xml" t="Include" />
           </e>
           <e p="TiledLevels" t="Include">
             <e p="Level1.tmx" t="Include" />
@@ -48,11 +53,13 @@
           <e p="boulder.png" t="Include" />
           <e p="brick.png" t="Include" />
           <e p="butterfly.png" t="Include" />
+          <e p="butterflyAnimated.png" t="Include" />
           <e p="diamond.png" t="Include" />
           <e p="diamondAnimated.png" t="Include" />
           <e p="dirt.png" t="Include" />
           <e p="door.png" t="Include" />
           <e p="firefly.png" t="Include" />
+          <e p="fireflyAnimated.png" t="Include" />
           <e p="magicWall.png" t="Include" />
           <e p="steelWall.png" t="Include" />
         </e>
@@ -115,6 +122,7 @@
           <e p="Debug.cs" t="Include" />
           <e p="ListUtils.cs" t="Include" />
           <e p="Math.cs" t="Include" />
+          <e p="Misc.cs" t="Include" />
           <e p="Rand.cs" t="Include" />
           <e p="RandomNumberGenerator.cs" t="Include" />
           <e p="UITextures.cs" t="Include" />
@@ -158,6 +166,7 @@
         <e p="Math" t="Include">
           <e p="Mathf.cs" t="Include" />
           <e p="Vector2.cs" t="Include" />
+          <e p="Vector2Int.cs" t="Include" />
           <e p="Vector3.cs" t="Include" />
         </e>
         <e p="OpenGL" t="Include">

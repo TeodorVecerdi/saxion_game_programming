@@ -126,7 +126,8 @@ namespace GXPEngine.Core {
         //------------------------------------------------------------------------------------------------------------------------
         //														SetBitmap()
         //------------------------------------------------------------------------------------------------------------------------
-        private void SetBitmap(Bitmap bitmap) {
+//        private void SetBitmap(Bitmap bitmap) {
+        public void SetBitmap(Bitmap bitmap) {
             this.bitmap = bitmap;
             CreateGLTexture();
         }

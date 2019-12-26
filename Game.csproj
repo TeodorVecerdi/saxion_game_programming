@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,6 +68,7 @@
     <Compile Include="Game\Utils\Debug.cs" />
     <Compile Include="Game\Utils\ListUtils.cs" />
     <Compile Include="Game\Utils\Math.cs" />
+    <Compile Include="Game\Utils\Misc.cs" />
     <Compile Include="Game\Utils\Rand.cs" />
     <Compile Include="Game\Utils\RandomNumberGenerator.cs" />
     <Compile Include="Game\Program.cs" />
@@ -115,7 +117,9 @@
     <Content Include="data\playerDown.png" />
     <Content Include="data\playerLeft.png" />
     <Content Include="data\playerRight.png" />
+    <Content Include="data\tiles\butterflyAnimated.png" />
     <Content Include="data\tiles\diamondAnimated.png" />
+    <Content Include="data\tiles\fireflyAnimated.png" />
     <Content Include="data\tiles\steelWall.png" />
     <Content Include="data\tiles\door.png" />
     <Content Include="data\tiles\brick.png" />

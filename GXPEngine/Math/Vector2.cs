@@ -84,6 +84,13 @@ namespace GXPEngine {
         public float sqrMagnitude => x * x + y * y;
 
         /// <summary>
+        /// Returns a <see cref="GXPEngine.Vector2"/> perpendicular on the <paramref name="inDirection"/> parameter
+        /// </summary>
+        public static Vector2 Perpendicular(Vector2 inDirection) {
+            return new Vector2(-inDirection.y, inDirection.x);
+        }
+
+        /// <summary>
         ///     Converts a <see cref="GXPEngine.Vector3" /> to a Vector2.
         /// </summary>
         public static implicit operator Vector2(Vector3 v) {
