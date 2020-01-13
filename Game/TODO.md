@@ -9,8 +9,9 @@
 - [x] Player collects diamond if diamond falls on player
 - [ ] If ctrl is pressed do action without moving such as getting diamonds, pushing boulders or removing dirt
 - [x] Add boulder push mechanic
-- [ ] Add player animation
+- [x] Add player animation
 - [ ] Add time left to score when finished
 - [x] Implement firefly follow wall AI
 ## Code changes 
 + [ ] convert public variables to private with getter where necessary
++ [ ] general code cleanup; keep variables to correct name convention where necessary
