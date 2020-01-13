@@ -15,12 +15,12 @@ namespace Game {
 
         public Diamond(float x, float y, int color1, int color2) {
             SetXY(x, y);
-            mainTexture = Texture2D.GetInstance("data/tiles/diamondAnimated.png", true);
+            mainTexture = Texture2D.GetInstance("data/tiles/diamond.png", true);
             try {
-                var target = Misc.ApplyLevelColor("data/tiles/diamondAnimated.png", color1, color2);
+                var target = Misc.ApplyLevelColor("data/tiles/diamond.png", color1, color2);
                 mainTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file \"data/tiles/diamondAnimated.png\"");
+                Console.WriteLine("Could not find file \"data/tiles/diamond.png\"");
                 throw e;
             }
         }

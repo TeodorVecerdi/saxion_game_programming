@@ -17,6 +17,8 @@ namespace Game {
         public float TimeLeft;
         private int timeLeftToUpdate = 250;
         private readonly int timeToUpdate = 250;
+        private float timeLeftToMovePlayer = 3000f / 24f;
+        private float timeToMovePlayer = 3000f / 24f;
 
         public World(Level level) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
@@ -120,12 +122,22 @@ namespace Game {
 
             if (!Paused) {
                 timeLeftToUpdate -= Time.deltaTimeMs;
+                timeLeftToMovePlayer -= Time.deltaTimeMs;
                 TimeLeft -= Time.deltaTime;
             }
 
-            if (TimeLeft < 0f) TimeLeft = 0f;
-            var movement = new Vector2(Input.GetAxisDown("Horizontal"), Input.GetAxisDown("Vertical"));
-            if (!movement.Equals(Vector2.zero)) {
+            if (TimeLeft < 0f)
+                TimeLeft = 0f;
+
+            var movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if (timeLeftToMovePlayer < 0f && movement.Equals(Vector2.zero))
+                Player.SetIdle(true);
+            if (timeLeftToMovePlayer < 0f && !movement.Equals(Vector2.zero)) {
+                Player.SetIdle(false);
+                if (movement.x == -1)
+                    Player.CurrentDirection = -1;
+                else if (movement.x == 1)
+                    Player.CurrentDirection = 1;
                 var playerPositionGrid = WorldToGrid(new Vector2(Player.x, Player.y));
                 if (Level.Tileset.Tiles[Level[movement + playerPositionGrid]].Passable || Level[movement + playerPositionGrid] == 2 && (Objects[(int) (movement + playerPositionGrid).x, (int) (movement + playerPositionGrid).y] as Door).IsOpen) {
                     if (Level[movement + playerPositionGrid] == TileType.Diamond) CollectDiamond();
@@ -174,6 +186,7 @@ namespace Game {
             }
 
             if (timeLeftToUpdate < 0) timeLeftToUpdate += timeToUpdate;
+            if (timeLeftToMovePlayer < 0) timeLeftToMovePlayer += timeToMovePlayer;
         }
 
         public Vector2 WorldToGrid(Vector2 world) {

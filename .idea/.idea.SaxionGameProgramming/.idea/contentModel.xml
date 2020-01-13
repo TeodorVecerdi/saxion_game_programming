@@ -39,28 +39,27 @@
             <e p="Level8.tmx" t="Include" />
             <e p="Level9.tmx" t="Include" />
           </e>
-          <e p="TiledSprites.png" t="Include" />
           <e p="Tilesets" t="Include">
             <e p="Main.tsx" t="Include" />
             <e p="Main.xml" t="Include" />
           </e>
         </e>
-        <e p="playerDown.png" t="Include" />
-        <e p="playerLeft.png" t="Include" />
-        <e p="playerRight.png" t="Include" />
         <e p="tiles" t="Include">
           <e p="amoeba.png" t="Include" />
           <e p="boulder.png" t="Include" />
           <e p="brick.png" t="Include" />
           <e p="butterfly.png" t="Include" />
-          <e p="butterflyAnimated.png" t="Include" />
           <e p="diamond.png" t="Include" />
-          <e p="diamondAnimated.png" t="Include" />
           <e p="dirt.png" t="Include" />
           <e p="door.png" t="Include" />
           <e p="firefly.png" t="Include" />
-          <e p="fireflyAnimated.png" t="Include" />
           <e p="magicWall.png" t="Include" />
+          <e p="playerIdle.png" t="Include" />
+          <e p="playerIdleBlink.png" t="Include" />
+          <e p="playerIdleBlinkTap.png" t="Include" />
+          <e p="playerIdleTap.png" t="Include" />
+          <e p="playerLeft.png" t="Include" />
+          <e p="playerRight.png" t="Include" />
           <e p="steelWall.png" t="Include" />
         </e>
         <e p="UI" t="Include">

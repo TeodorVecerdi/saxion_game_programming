@@ -13,7 +13,7 @@ namespace Game {
         public Program() : base(Globals.WIDTH, Globals.HEIGHT, Globals.FULLSCREEN, Globals.VSYNC,
             pPixelArt: Globals.PIXEL_ART) {
             ShowMouse(true);
-            targetFps = 25;
+            targetFps = 24;
             var level1 = new Level("data/Levels/GameLevels/Level2.xml");
             var world = new World(level1);
             world.name = "World";

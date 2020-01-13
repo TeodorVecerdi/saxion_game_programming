@@ -4,50 +4,118 @@ using GXPEngine;
 using GXPEngine.Core;
 
 namespace Game {
-    public class Player : Sprite {
+    public class Player : GameObject {
+        private readonly int animationFrames = 8;
         private readonly Camera mainCamera;
+        private readonly Texture2D playerIdleBlinkTap;
+        private readonly Texture2D playerIdleBlink;
+        private readonly Texture2D playerIdleTap;
+        private readonly Texture2D playerIdle;
         private readonly Texture2D playerLeft;
-        private readonly Texture2D playerDown;
         private readonly Texture2D playerRight;
+        private readonly float uvSize = 0.125F;
         private readonly World world;
+        private int currentDirection = -1;
+        private int currentFrame;
+        private bool isIdle = true;
+        private bool idleTap;
+        private bool idleBlink;
+        private Texture2D mainTexture;
 
-        public Player(Vector2 position, World world, int color1, int color2) : base("data/playerDown.png", true) {
+        public Player(Vector2 position, World world, int color1, int color2) {
             SetXY(position.x, position.y);
             mainCamera = new Camera(0, -20, Globals.WIDTH, Globals.HEIGHT);
-            playerRight = Texture2D.GetInstance("data/playerRight.png", true);
-            playerLeft = Texture2D.GetInstance("data/playerLeft.png", true);
-            playerDown = Texture2D.GetInstance("data/playerDown.png", true);
+            playerRight = Texture2D.GetInstance("data/tiles/playerRight.png", true);
+            playerLeft = Texture2D.GetInstance("data/tiles/playerLeft.png", true);
+            playerIdleBlinkTap = Texture2D.GetInstance("data/tiles/playerIdleBlinkTap.png", true);
+            playerIdleBlink = Texture2D.GetInstance("data/tiles/playerIdleBlink.png", true);
+            playerIdleTap = Texture2D.GetInstance("data/tiles/playerIdleTap.png", true);
+            playerIdle = Texture2D.GetInstance("data/tiles/playerIdle.png", true);
             try {
-                var target = Misc.ApplyLevelColor("data/playerRight.png", color1, color2);
+                var target = Misc.ApplyLevelColor("data/tiles/playerRight.png", color1, color2);
                 playerRight.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file data/playerRight.png");
+                Console.WriteLine("Could not find file data/tiles/playerRight.png");
                 throw e;
             }
 
             try {
-                var target = Misc.ApplyLevelColor("data/playerLeft.png", color1, color2);
+                var target = Misc.ApplyLevelColor("data/tiles/playerLeft.png", color1, color2);
                 playerLeft.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file data/playerLeft.png");
+                Console.WriteLine("Could not find file data/tiles/playerLeft.png");
                 throw e;
             }
 
             try {
-                var target = Misc.ApplyLevelColor("data/playerDown.png", color1, color2);
-                playerDown.SetBitmap(target);
+                var target = Misc.ApplyLevelColor("data/tiles/playerIdleBlinkTap.png", color1, color2);
+                playerIdleBlinkTap.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file data/playerDown.png");
+                Console.WriteLine("Could not find file data/tiles/playerIdleBlinkTap.png");
                 throw e;
             }
 
-            _texture = playerDown;
+            try {
+                var target = Misc.ApplyLevelColor("data/tiles/playerIdleBlink.png", color1, color2);
+                playerIdleBlink.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file data/tiles/playerIdleBlink.png");
+                throw e;
+            }
+
+            try {
+                var target = Misc.ApplyLevelColor("data/tiles/playerIdleTap.png", color1, color2);
+                playerIdleTap.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file data/tiles/playerIdleTap.png");
+                throw e;
+            }
+
+            try {
+                var target = Misc.ApplyLevelColor("data/tiles/playerIdle.png", color1, color2);
+                playerIdle.SetBitmap(target);
+            } catch (Exception e) {
+                Console.WriteLine("Could not find file data/tiles/playerIdle.png");
+                throw e;
+            }
+
+            mainTexture = playerIdle;
             this.world = world;
             AddChild(mainCamera);
         }
 
+        public int CurrentDirection {
+            get => currentDirection;
+            set {
+                if (value != currentDirection) currentFrame = 0;
+                isIdle = false;
+                currentDirection = value;
+            }
+        }
+
+        private void Update() {
+            currentFrame += 1;
+            currentFrame %= animationFrames;
+
+            if (isIdle) {
+                if (idleBlink && idleTap) mainTexture = playerIdleBlinkTap;
+                else if (idleBlink) mainTexture = playerIdleBlink;
+                else if (idleTap) mainTexture = playerIdleTap;
+                else mainTexture = playerIdle;
+            } else {
+                if (currentDirection == -1) mainTexture = playerLeft;
+                if (currentDirection == 1) mainTexture = playerRight;
+            }
+        }
+
         protected override void RenderSelf(GLContext glContext) {
-            base.RenderSelf(glContext);
+            // RENDER PLAYER
+            float[] uv = {currentFrame * uvSize, 0, (currentFrame + 1) * uvSize, 0, (currentFrame + 1) * uvSize, 1, currentFrame * uvSize, 1};
+            mainTexture.Bind();
+            glContext.SetColor(0xff, 0xff, 0xff, 0xff);
+            glContext.DrawQuad(Globals.QUAD_VERTS, uv);
+            glContext.SetColor(0xff, 0xff, 0xff, 0xff);
+            mainTexture.Unbind();
             glContext.SetColor(255, 255, 255, 255);
 
             // DRAW UI
@@ -108,6 +176,14 @@ namespace Game {
                 0 - Globals.WIDTH / 2f + offset, 32 - Globals.HEIGHT / 2f + 20
             };
             glContext.DrawQuad(verts, Globals.QUAD_UV);
+        }
+
+        public void SetIdle(bool idle) {
+            isIdle = idle;
+            if (idle) {
+                idleBlink = Rand.RangeInclusive(1, 4) == 1 ? !idleBlink : idleBlink;
+                idleTap = Rand.RangeInclusive(1, 16) == 1 ? !idleTap : idleTap;
+            }
         }
     }
 }

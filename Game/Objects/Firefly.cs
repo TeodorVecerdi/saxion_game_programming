@@ -16,12 +16,12 @@ namespace Game {
 
         public Firefly(float x, float y, int color1, int color2) {
             SetXY(x, y);
-            mainTexture = Texture2D.GetInstance("data/tiles/fireflyAnimated.png", true);
+            mainTexture = Texture2D.GetInstance("data/tiles/firefly.png", true);
             try {
-                var target = Misc.ApplyLevelColor("data/tiles/fireflyAnimated.png", color1, color2);
+                var target = Misc.ApplyLevelColor("data/tiles/firefly.png", color1, color2);
                 mainTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file data/tiles/fireflyAnimated.png");
+                Console.WriteLine("Could not find file data/tiles/firefly.png");
                 throw;
             }
         }
