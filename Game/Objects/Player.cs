@@ -164,7 +164,7 @@ namespace Game {
             drawUINumber(UITextures.WHITES[s4], 15 * 64, glContext);
             drawUINumber(UITextures.WHITES[s3], 16 * 64, glContext);
             drawUINumber(UITextures.WHITES[s2], 17 * 64, glContext);
-            drawUINumber(UITextures.WHITES[s1], 118 * 64, glContext);
+            drawUINumber(UITextures.WHITES[s1], 18 * 64, glContext);
         }
 
         private void drawUINumber(Texture2D tex, float offset, GLContext glContext) {

@@ -2,7 +2,7 @@ using System;
 
 namespace Game.Utils {
     public static class TileType {
-        public static int
+        public const int
             Empty = 0,
             SteelWall = 1,
             Door = 2,
