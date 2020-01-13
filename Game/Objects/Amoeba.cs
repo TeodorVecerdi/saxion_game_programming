@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using Game.Utils;
 using GXPEngine;
 
@@ -10,10 +9,8 @@ namespace Game {
 
         public Amoeba(float x, float y, int color1, int color2) : base("data/tiles/amoeba.png", true, false) {
             SetXY(x, y);
-            Bitmap source;
             try {
-                source = new Bitmap("data/tiles/amoeba.png");
-                var target = Misc.ApplyLevelColor(source, color1, color2);
+                var target = Misc.ApplyLevelColor("data/tiles/amoeba.png", color1, color2);
                 texture.SetBitmap(target);
             } catch (Exception e) {
                 Console.WriteLine("Could not find file \"data/tiles/amoeba.png\"");

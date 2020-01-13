@@ -8,7 +8,12 @@ namespace Game.Utils {
         /// Applies the current level color to a Bitmap to be later used as a Texture2D
         /// Adapted from https://stackoverflow.com/a/17208320 by Adriano Repetti
         /// </summary>
-        public static unsafe Bitmap ApplyLevelColor(Bitmap source, int color1, int color2) {
+        public static unsafe Bitmap ApplyLevelColor(string sourcePath, int color1, int color2) {
+            if (BitmapCache.Cache.ContainsKey(sourcePath)) {
+                return BitmapCache.GetBitmap(sourcePath);
+            }
+
+            Bitmap source = new Bitmap(sourcePath);
             Color col1 = Color.FromArgb(0xff, (color1 >> 16) & 0xff, (color1 >> 8) & 0xff, (color1) & 0xff);
             Color col2 = Color.FromArgb(0xff, (color2 >> 16) & 0xff, (color2 >> 8) & 0xff, (color2) & 0xff);
             //a52a00 (165, 42, 0) -> color1
@@ -48,7 +53,7 @@ namespace Game.Utils {
                 if (sourceData != null) source.UnlockBits(sourceData);
                 if (targetData != null) target.UnlockBits(targetData);
             }
-
+            BitmapCache.AddToCache(sourcePath, target);
             return target;
         }
 

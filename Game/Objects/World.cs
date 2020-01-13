@@ -1,24 +1,22 @@
 using System;
 using Game.Utils;
 using GXPEngine;
-using Math = Game.Utils.Math;
-using Debug = Game.Utils.Debug;
 
 namespace Game {
     public class World : GameObject {
-        public int DiamondsCollected = 0;
-        public int Score = 0;
         public int CurrentDiamondValue;
-        public float TimeLeft;
+        public int DiamondsCollected;
+        public bool GotEnoughDiamonds;
         public Level Level;
         public GameObject[,] Objects;
+        public bool Paused;
         public Player Player;
-        public bool GotEnoughDiamonds;
-        public bool Paused = false;
 
         private Vector2 playerPosition = Vector2.negativeInfinity;
+        public int Score;
+        public float TimeLeft;
         private int timeLeftToUpdate = 250;
-        private int timeToUpdate = 250;
+        private readonly int timeToUpdate = 250;
 
         public World(Level level) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
@@ -26,6 +24,7 @@ namespace Game {
         }
 
         public void ResetLevel(Level level) {
+            BitmapCache.ClearCache();
             GetChildren().ForEach(child => child.LateDestroy());
             Objects = new GameObject[level.Width, level.Height];
             DiamondsCollected = 0;
@@ -116,19 +115,19 @@ namespace Game {
         }
 
         public void Update() {
-            if (Input.GetKeyDown(Key.SPACE)) {
+            if (Input.GetKeyDown(Key.SPACE))
                 Paused = !Paused;
-            }
 
             if (!Paused) {
                 timeLeftToUpdate -= Time.deltaTimeMs;
                 TimeLeft -= Time.deltaTime;
             }
+
             if (TimeLeft < 0f) TimeLeft = 0f;
             var movement = new Vector2(Input.GetAxisDown("Horizontal"), Input.GetAxisDown("Vertical"));
             if (!movement.Equals(Vector2.zero)) {
                 var playerPositionGrid = WorldToGrid(new Vector2(Player.x, Player.y));
-                if (Level.Tileset.Tiles[Level[movement + playerPositionGrid]].Passable || (Level[movement + playerPositionGrid] == 2 && (Objects[(int) (movement + playerPositionGrid).x, (int) (movement + playerPositionGrid).y] as Door).IsOpen)) {
+                if (Level.Tileset.Tiles[Level[movement + playerPositionGrid]].Passable || Level[movement + playerPositionGrid] == 2 && (Objects[(int) (movement + playerPositionGrid).x, (int) (movement + playerPositionGrid).y] as Door).IsOpen) {
                     if (Level[movement + playerPositionGrid] == TileType.Diamond) CollectDiamond();
                     MovePlayer(movement);
                 } else if (movement.y == 0 && Level[movement + playerPositionGrid] == TileType.Boulder && Level[movement + movement + playerPositionGrid] == TileType.Empty) {
@@ -148,17 +147,17 @@ namespace Game {
             if (timeLeftToUpdate < 0) {
                 for (var i = 0; i < Level.Width; i++)
                 for (var j = 0; j < Level.Height; j++)
-                    if (Level[i, j] == TileType.Diamond && !(Objects[i, j] as Diamond).UpdatedThisFrame) {
+                    if (Level[i, j] == TileType.Diamond && !(Objects[i, j] as Diamond).UpdatedThisFrame)
                         UpdateDiamond(i, j);
-                    } else if (Level[i, j] == TileType.Boulder && !(Objects[i, j] as Boulder).UpdatedThisFrame) {
+                    else if (Level[i, j] == TileType.Boulder && !(Objects[i, j] as Boulder).UpdatedThisFrame)
                         UpdateBoulder(i, j);
-                    } else if (Level[i, j] == TileType.Butterfly && !(Objects[i, j] as Butterfly).UpdatedThisFrame) {
+                    else if (Level[i, j] == TileType.Butterfly && !(Objects[i, j] as Butterfly).UpdatedThisFrame)
                         UpdateButterfly(i, j);
-                    } else if (Level[i, j] == TileType.Amoeba && !(Objects[i, j] as Amoeba).UpdatedThisFrame) {
+                    else if (Level[i, j] == TileType.Amoeba && !(Objects[i, j] as Amoeba).UpdatedThisFrame)
                         UpdateAmoeba(i, j);
-                    } else if (Level[i, j] == TileType.Firefly && !(Objects[i, j] as Firefly).UpdatedThisFrame) {
+                    else if (Level[i, j] == TileType.Firefly && !(Objects[i, j] as Firefly).UpdatedThisFrame)
                         UpdateFirefly(i, j);
-                    } else if (GotEnoughDiamonds && Level[i, j] == TileType.Door) {
+                    else if (GotEnoughDiamonds && Level[i, j] == TileType.Door) {
                         var door = Objects[i, j] as Door;
                         door.IsOpen = true;
                         door.Flash();
@@ -245,9 +244,8 @@ namespace Game {
                 Debug.LogError("YOU DED");
                 (Objects[i, j] as Boulder).IsFalling = false;
             } // not falling anymore 
-            else {
+            else
                 (Objects[i, j] as Boulder).IsFalling = false;
-            }
         }
 
         private void UpdateDiamond(int i, int j) {
@@ -288,11 +286,10 @@ namespace Game {
                 Level[i, j] = TileType.Empty;
                 Objects[i + 1, j + 1] = obj;
                 Level[i + 1, j + 1] = TileType.Diamond;
-            } else {
+            } else
                 (Objects[i, j] as Diamond).IsFalling = false;
-            }
         }
-        
+
         private void UpdateButterfly(int i, int j) {
             // Try to move down
             if (j < Level.Height - 1 && Level[i, j + 1] == 0) {
@@ -329,11 +326,10 @@ namespace Game {
                 Debug.LogError("YOU DED");
                 (Objects[i, j] as Butterfly).IsFalling = false;
             } // not falling anymore 
-            else {
+            else
                 (Objects[i, j] as Butterfly).IsFalling = false;
-            }
         }
-        
+
         private void UpdateAmoeba(int i, int j) {
             //grow up
             if (j > 0 && Level[i, j - 1] == TileType.Empty) {
@@ -371,11 +367,11 @@ namespace Game {
                 Objects[i + 1, j] = obj;
             }
         }
-        
+
         private void UpdateFirefly(int i, int j) {
             // Wall following algorithm loosely based on maze solving algorithm
             // from https://pdfs.semanticscholar.org/1466/06c92916071ed6f6ae98fb27229660570bd3.pdf 
-            Firefly firefly = (Firefly) Objects[i, j];
+            var firefly = (Firefly) Objects[i, j];
             var left = Misc.FollowWall.Vec2IntRotate90(firefly.direction);
             var back = Misc.FollowWall.Vec2IntRotate180(firefly.direction);
             var right = Misc.FollowWall.Vec2IntRotate270(firefly.direction);
@@ -386,31 +382,26 @@ namespace Game {
                 firefly.Move(firefly.direction.x * Globals.TILE_SIZE, firefly.direction.y * Globals.TILE_SIZE);
                 Objects[i, j] = null;
                 Level[i, j] = TileType.Empty;
-                if (Level[i + firefly.direction.x, j + firefly.direction.y] == TileType.Miner) {
+                if (Level[i + firefly.direction.x, j + firefly.direction.y] == TileType.Miner)
                     Debug.LogError("YOU DED");
-                }
 
                 Objects[i + firefly.direction.x, j + firefly.direction.y] = firefly;
                 Level[i + firefly.direction.x, j + firefly.direction.y] = TileType.Firefly;
                 i += firefly.direction.x;
                 j += firefly.direction.y;
             }
+
             // left  opening?
-            if (Level[i + left.x, j + left.y] == TileType.Empty || Level[i + left.x, j + left.y] == TileType.Miner) {
-                // turn left
+            if (Level[i + left.x, j + left.y] == TileType.Empty || Level[i + left.x, j + left.y] == TileType.Miner) // turn left
                 firefly.direction.Set(left);
-            }
 
             // front wall?
             else if (Level[i + firefly.direction.x, j + firefly.direction.y] != TileType.Miner && Level[i + firefly.direction.x, j + firefly.direction.y] != TileType.Empty) {
                 // right opening?
-                if (Level[i + right.x, j + right.y] == TileType.Empty || Level[i + right.x, j + right.y] == TileType.Miner) {
-                    // turn right
+                if (Level[i + right.x, j + right.y] == TileType.Empty || Level[i + right.x, j + right.y] == TileType.Miner) // turn right
                     firefly.direction.Set(right);
-                } else {
-                    // turn around
+                else // turn around
                     firefly.direction.Set(back);
-                }
             }
         }
     }

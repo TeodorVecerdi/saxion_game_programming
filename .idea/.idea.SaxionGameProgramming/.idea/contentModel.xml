@@ -119,6 +119,7 @@
         </e>
         <e p="TODO.md" t="Include" />
         <e p="Utils" t="Include">
+          <e p="BitmapCache.cs" t="Include" />
           <e p="Debug.cs" t="Include" />
           <e p="ListUtils.cs" t="Include" />
           <e p="Math.cs" t="Include" />

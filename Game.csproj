@@ -65,6 +65,7 @@
     <Compile Include="Game\Objects\SteelWall.cs" />
     <Compile Include="Game\Objects\World.cs" />
     <Compile Include="Game\Objects\Player.cs" />
+    <Compile Include="Game\Utils\BitmapCache.cs" />
     <Compile Include="Game\Utils\Debug.cs" />
     <Compile Include="Game\Utils\ListUtils.cs" />
     <Compile Include="Game\Utils\Math.cs" />
