@@ -19,7 +19,7 @@ namespace Game {
                 var target = Misc.ApplyLevelColor("data/tiles/amoeba.png", color1, color2);
                 mainTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file \"data/tiles/amoeba.png\"");
+                Console.WriteLine("Could not find file data/tiles/amoeba.png");
                 throw e;
             }
         }

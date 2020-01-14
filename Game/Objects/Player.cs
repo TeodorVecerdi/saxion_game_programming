@@ -7,19 +7,19 @@ namespace Game {
     public class Player : GameObject {
         private readonly int animationFrames = 8;
         private readonly Camera mainCamera;
-        private readonly Texture2D playerIdleBlinkTap;
-        private readonly Texture2D playerIdleBlink;
-        private readonly Texture2D playerIdleTap;
         private readonly Texture2D playerIdle;
+        private readonly Texture2D playerIdleBlink;
+        private readonly Texture2D playerIdleBlinkTap;
+        private readonly Texture2D playerIdleTap;
         private readonly Texture2D playerLeft;
         private readonly Texture2D playerRight;
         private readonly float uvSize = 0.125F;
         private readonly World world;
         private int currentDirection = -1;
         private int currentFrame;
-        private bool isIdle = true;
-        private bool idleTap;
         private bool idleBlink;
+        private bool idleTap;
+        private bool isIdle = true;
         private Texture2D mainTexture;
 
         public Player(Vector2 position, World world, int color1, int color2) {

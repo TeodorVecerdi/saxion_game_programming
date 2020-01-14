@@ -1,5 +1,3 @@
-using System;
-
 namespace Game.Utils {
     public static class TileType {
         public const int

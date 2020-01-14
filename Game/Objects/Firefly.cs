@@ -6,12 +6,12 @@ using GXPEngine.Core;
 namespace Game {
     public class Firefly : GameObject {
         private readonly int animationFrames = 8;
+        private readonly Texture2D mainTexture;
+        private readonly float uvSize = 0.125f;
         private int currentFrame;
         public Vector2Int direction = Vector2Int.left;
         public bool IsFalling = false;
-        private readonly Texture2D mainTexture;
         public bool UpdatedThisFrame = false;
-        private readonly float uvSize = 0.125f;
         public Firefly(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
         public Firefly(float x, float y, int color1, int color2) {
@@ -22,7 +22,7 @@ namespace Game {
                 mainTexture.SetBitmap(target);
             } catch (Exception e) {
                 Console.WriteLine("Could not find file data/tiles/firefly.png");
-                throw;
+                throw e;
             }
         }
 

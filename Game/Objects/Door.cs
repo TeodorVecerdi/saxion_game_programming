@@ -19,7 +19,7 @@ namespace Game {
                 var target = Misc.ApplyLevelColor("data/tiles/door.png", color1, color2);
                 doorTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file \"data/tiles/door.png\"");
+                Console.WriteLine("Could not find file data/tiles/door.png");
                 throw e;
             }
 
@@ -27,7 +27,7 @@ namespace Game {
                 var target = Misc.ApplyLevelColor("data/tiles/steelWall.png", color1, color2);
                 steelWallTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file \"data/tiles/steelWall.png\"");
+                Console.WriteLine("Could not find file data/tiles/steelWall.png");
                 throw e;
             }
 

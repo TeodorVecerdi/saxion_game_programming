@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using Game;
 using Game.Utils;
 using GXPEngine;
-using GXPEngine.Core;
 using Newtonsoft.Json;
 
 namespace Game {
@@ -17,8 +15,8 @@ namespace Game {
             var level1 = new Level("data/Levels/GameLevels/Level1.xml");
             var world = new World(level1);
             world.name = "World";
-            Input.AddAxis("Horizontal", new List<int>{Key.A, Key.LEFT}, new List<int>{Key.D, Key.RIGHT});
-            Input.AddAxis("Vertical", new List<int>{Key.W, Key.UP}, new List<int>{Key.S, Key.DOWN});
+            Input.AddAxis("Horizontal", new List<int> {Key.A, Key.LEFT}, new List<int> {Key.D, Key.RIGHT});
+            Input.AddAxis("Vertical", new List<int> {Key.W, Key.UP}, new List<int> {Key.S, Key.DOWN});
             AddChild(world);
         }
 
@@ -39,6 +37,7 @@ namespace Game {
             Row = row;
         }
     }
+
     public class TestSerialize {
         public int Columns;
         public int Rows;

@@ -20,7 +20,7 @@ namespace Game {
                 var target = Misc.ApplyLevelColor("data/tiles/butterfly.png", color1, color2);
                 mainTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file \"data/tiles/butterfly.png\"");
+                Console.WriteLine("Could not find file data/tiles/butterfly.png");
                 throw e;
             }
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Drawing;
 
 namespace Game.Utils {
-    public class BitmapCache {
+    public static class BitmapCache {
         public static readonly Hashtable Cache = new Hashtable();
 
         public static void AddToCache(string key, Bitmap obj) {
@@ -18,6 +18,8 @@ namespace Game.Utils {
             return null;
         }
 
-        public static void ClearCache() => Cache.Clear();
+        public static void ClearCache() {
+            Cache.Clear();
+        }
     }
 }

@@ -1,12 +1,14 @@
 using System;
-using System.Security.AccessControl;
 using Game.Utils;
 using GXPEngine;
+using _NOPE = System.Diagnostics;
 
 namespace Game {
     public class World : GameObject {
+        private readonly int timeToUpdate = 250;
         public int CurrentDiamondValue;
         public int DiamondsCollected;
+        private bool finishedAmoeba;
         public bool GotEnoughDiamonds;
         public Level Level;
         public GameObject[,] Objects;
@@ -16,11 +18,9 @@ namespace Game {
         private Vector2 playerPosition = Vector2.negativeInfinity;
         public int Score;
         public float TimeLeft;
-        private int timeLeftToUpdate = 250;
-        private readonly int timeToUpdate = 250;
         private float timeLeftToMovePlayer = 3000f / 24f;
-        private float timeToMovePlayer = 3000f / 24f;
-        private bool finishedAmoeba;
+        private int timeLeftToUpdate = 250;
+        private readonly float timeToMovePlayer = 3000f / 24f;
 
         public World(Level level) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
@@ -154,7 +154,8 @@ namespace Game {
                         RemoveChild(dirt);
                         Level[movement + playerPositionGrid] = TileType.Empty;
                     }
-                    if(!Input.GetKey(Key.LEFT_CTRL) && !Input.GetKey(Key.RIGHT_CTRL))
+
+                    if (!Input.GetKey(Key.LEFT_CTRL) && !Input.GetKey(Key.RIGHT_CTRL))
                         MovePlayer(movement);
                 } else if (movement.y == 0 && Level[movement + playerPositionGrid] == TileType.Boulder && Level[movement + movement + playerPositionGrid] == TileType.Empty) {
                     var objLocation = movement + playerPositionGrid;
@@ -166,13 +167,13 @@ namespace Game {
                     Level[(int) objLocation.x, (int) objLocation.y] = TileType.Empty;
                     Objects[(int) newLocation.x, (int) newLocation.y] = obj;
                     Level[(int) newLocation.x, (int) newLocation.y] = TileType.Boulder;
-                    if(!Input.GetKey(Key.LEFT_CTRL) && !Input.GetKey(Key.RIGHT_CTRL))
+                    if (!Input.GetKey(Key.LEFT_CTRL) && !Input.GetKey(Key.RIGHT_CTRL))
                         MovePlayer(movement);
                 }
             }
 
             if (timeLeftToUpdate < 0) {
-                bool amoebaExpandedThisUpdate = false;
+                var amoebaExpandedThisUpdate = false;
                 for (var i = 0; i < Level.Width; i++)
                 for (var j = 0; j < Level.Height; j++)
                     if (Level[i, j] == TileType.Diamond && !(Objects[i, j] as Diamond).UpdatedThisFrame)
@@ -181,9 +182,9 @@ namespace Game {
                         UpdateBoulder(i, j);
                     else if (Level[i, j] == TileType.Butterfly && !(Objects[i, j] as Butterfly).UpdatedThisFrame)
                         UpdateButterfly(i, j);
-                    else if (Level[i, j] == TileType.Amoeba && !(Objects[i, j] as Amoeba).UpdatedThisFrame) {
+                    else if (Level[i, j] == TileType.Amoeba && !(Objects[i, j] as Amoeba).UpdatedThisFrame)
                         amoebaExpandedThisUpdate |= UpdateAmoeba(i, j);
-                    } else if (Level[i, j] == TileType.Firefly && !(Objects[i, j] as Firefly).UpdatedThisFrame)
+                    else if (Level[i, j] == TileType.Firefly && !(Objects[i, j] as Firefly).UpdatedThisFrame)
                         UpdateFirefly(i, j);
                     else if (GotEnoughDiamonds && Level[i, j] == TileType.Door) {
                         var door = Objects[i, j] as Door;
@@ -191,24 +192,27 @@ namespace Game {
                         door.Flash();
                     }
 
-                if (!finishedAmoeba && Level.CaveTime - TimeLeft >= Level.AmoebaSlowGrowthTime) { //transform amoeba
+                if (!finishedAmoeba && Level.CaveTime - TimeLeft >= Level.AmoebaSlowGrowthTime) {
+                    //transform amoeba
                     for (var i = 0; i < Level.Width; i++)
                     for (var j = 0; j < Level.Height; j++)
                         if (Level[i, j] == TileType.Amoeba) {
-                            RemoveChild(Objects[i,j]);
+                            RemoveChild(Objects[i, j]);
                             Objects[i, j] = null;
                             if (amoebaExpandedThisUpdate) {
-                                Objects[i,j] = new Boulder(i*Globals.TILE_SIZE, j * Globals.TILE_SIZE, Level.Color1, Level.Color2);
+                                Objects[i, j] = new Boulder(i * Globals.TILE_SIZE, j * Globals.TILE_SIZE, Level.Color1, Level.Color2);
                                 Level[i, j] = TileType.Boulder;
                             } else {
-                                Objects[i,j] = new Diamond(i*Globals.TILE_SIZE, j * Globals.TILE_SIZE, Level.Color1, Level.Color2);
+                                Objects[i, j] = new Diamond(i * Globals.TILE_SIZE, j * Globals.TILE_SIZE, Level.Color1, Level.Color2);
                                 Level[i, j] = TileType.Diamond;
                             }
-                            AddChild(Objects[i,j]);
+
+                            AddChild(Objects[i, j]);
                         }
 
                     finishedAmoeba = true;
                 }
+
                 for (var i = 0; i < Level.Width; i++)
                 for (var j = 0; j < Level.Height; j++) {
                     if (Level[i, j] == TileType.Boulder) (Objects[i, j] as Boulder).UpdatedThisFrame = false;
@@ -244,7 +248,7 @@ namespace Game {
             if (Level[(int) (Player.x / Globals.TILE_SIZE + movement.x), (int) (Player.y / Globals.TILE_SIZE + movement.y)] == TileType.Door) {
                 Debug.LogWarning("YOU WON BYE");
                 Score += (int) TimeLeft;
-                ResetLevel(new Level("data/Levels/GameLevels/Level2.xml"));
+                ResetLevel(new Level(Level.NextLevelPath));
             }
 
             Objects[(int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)] = null;
@@ -379,7 +383,8 @@ namespace Game {
         }
 
         private bool UpdateAmoeba(int i, int j) {
-            bool expanded = false;
+            var expanded = false;
+
             //grow up
             if (j > 0 && Level[i, j - 1] == TileType.Empty) {
                 Level[i, j - 1] = TileType.Amoeba;

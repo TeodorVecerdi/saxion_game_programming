@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using GXPEngine;
 
 namespace Game.Utils {
     public static class Rand {
-        private static Stack<ulong> stateStack = new Stack<ulong>();
-        private static RandomNumberGenerator random = new RandomNumberGenerator();
-        private static uint iterations = 0;
-        private static List<int> tmpRange = new List<int>();
+        private static readonly Stack<ulong> stateStack = new Stack<ulong>();
+        private static readonly RandomNumberGenerator random = new RandomNumberGenerator();
+        private static uint iterations;
+        private static readonly List<int> tmpRange = new List<int>();
 
         static Rand() {
             random.seed = (uint) DateTime.Now.GetHashCode();
@@ -49,16 +48,16 @@ namespace Game.Utils {
 
         public static Vector3 InsideUnitCircleVec3 {
             get {
-                Vector2 insideUnitCircle = InsideUnitCircle;
+                var insideUnitCircle = InsideUnitCircle;
                 return new Vector3(insideUnitCircle.x, 0.0f, insideUnitCircle.y);
             }
         }
 
         private static ulong StateCompressed {
-            get => random.seed | (ulong) iterations << 32;
+            get => random.seed | ((ulong) iterations << 32);
             set {
                 random.seed = (uint) (value & uint.MaxValue);
-                iterations = (uint) (value >> 32 & uint.MaxValue);
+                iterations = (uint) ((value >> 32) & uint.MaxValue);
             }
         }
 
@@ -75,7 +74,7 @@ namespace Game.Utils {
         }
 
         public static float GaussianAsymmetric(float centerX = 0.0f, float lowerWidthFactor = 1f, float upperWidthFactor = 1f) {
-            float num = Mathf.Sqrt(-2f * Mathf.Log(Value)) * Mathf.Sin(6.283185f * Value);
+            var num = Mathf.Sqrt(-2f * Mathf.Log(Value)) * Mathf.Sin(6.283185f * Value);
             if (num <= 0.0)
                 return num * lowerWidthFactor + centerX;
             return num * upperWidthFactor + centerX;
@@ -109,35 +108,35 @@ namespace Game.Utils {
 
         public static bool ChanceSeeded(float chance, int specialSeed) {
             PushState(specialSeed);
-            bool flag = Chance(chance);
+            var flag = Chance(chance);
             PopState();
             return flag;
         }
 
         public static float ValueSeeded(int specialSeed) {
             PushState(specialSeed);
-            float num = Value;
+            var num = Value;
             PopState();
             return num;
         }
 
         public static float RangeSeeded(float min, float max, int specialSeed) {
             PushState(specialSeed);
-            float num = Range(min, max);
+            var num = Range(min, max);
             PopState();
             return num;
         }
 
         public static int RangeSeeded(int min, int max, int specialSeed) {
             PushState(specialSeed);
-            int num = Range(min, max);
+            var num = Range(min, max);
             PopState();
             return num;
         }
 
         public static int RangeInclusiveSeeded(int min, int max, int specialSeed) {
             PushState(specialSeed);
-            int num = RangeInclusive(min, max);
+            var num = RangeInclusive(min, max);
             PopState();
             return num;
         }
@@ -149,7 +148,7 @@ namespace Game.Utils {
         }
 
         public static T Element<T>(T a, T b, T c) {
-            float num = Value;
+            var num = Value;
             if (num < 0.333330005407333)
                 return a;
             if (num < 0.666660010814667)
@@ -158,7 +157,7 @@ namespace Game.Utils {
         }
 
         public static T Element<T>(T a, T b, T c, T d) {
-            float num = Value;
+            var num = Value;
             if (num < 0.25)
                 return a;
             if (num < 0.5)
@@ -169,7 +168,7 @@ namespace Game.Utils {
         }
 
         public static T Element<T>(T a, T b, T c, T d, T e) {
-            float num = Value;
+            var num = Value;
             if (num < 0.200000002980232)
                 return a;
             if (num < 0.400000005960464)
@@ -182,7 +181,7 @@ namespace Game.Utils {
         }
 
         public static T Element<T>(T a, T b, T c, T d, T e, T f) {
-            float num = Value;
+            var num = Value;
             if (num < 0.166659995913506)
                 return a;
             if (num < 0.333330005407333)
@@ -279,13 +278,13 @@ namespace Game.Utils {
                 return false;
             }
 
-            double num1 = checkDuration / (mtb * (double) mtbUnit);
+            var num1 = checkDuration / (mtb * (double) mtbUnit);
             if (num1 <= 0.0) {
                 Debug.LogError("chancePerCheck is " + num1 + ". mtb=" + mtb + ", mtbUnit=" + mtbUnit + ", checkDuration=" + checkDuration);
                 return false;
             }
 
-            double num2 = 1.0;
+            var num2 = 1.0;
             if (num1 < 0.0001) {
                 while (num1 < 0.0001) {
                     num1 *= 8.0;
@@ -304,15 +303,15 @@ namespace Game.Utils {
         }*/
 
         public static bool TryRangeInclusiveWhere(int from, int to, Predicate<int> predicate, out int value) {
-            int num1 = to - from + 1;
+            var num1 = to - from + 1;
             if (num1 <= 0) {
                 value = 0;
                 return false;
             }
 
-            int num2 = Mathf.Max(Mathf.RoundToInt(Mathf.Sqrt(num1)), 5);
-            for (int index = 0; index < num2; ++index) {
-                int num3 = RangeInclusive(from, to);
+            var num2 = Mathf.Max(Mathf.RoundToInt(Mathf.Sqrt(num1)), 5);
+            for (var index = 0; index < num2; ++index) {
+                var num3 = RangeInclusive(from, to);
                 if (predicate(num3)) {
                     value = num3;
                     return true;
@@ -320,16 +319,15 @@ namespace Game.Utils {
             }
 
             tmpRange.Clear();
-            for (int index = from; index <= to; ++index)
+            for (var index = from; index <= to; ++index)
                 tmpRange.Add(index);
             tmpRange.Shuffle();
-            int index1 = 0;
-            for (int count = tmpRange.Count; index1 < count; ++index1) {
+            var index1 = 0;
+            for (var count = tmpRange.Count; index1 < count; ++index1)
                 if (predicate(tmpRange[index1])) {
                     value = tmpRange[index1];
                     return true;
                 }
-            }
 
             value = 0;
             return false;

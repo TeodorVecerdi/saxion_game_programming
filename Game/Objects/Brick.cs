@@ -12,7 +12,7 @@ namespace Game {
                 var target = Misc.ApplyLevelColor("data/tiles/brick.png", color1, color2);
                 texture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file \"data/tiles/brick.png\"");
+                Console.WriteLine("Could not find file data/tiles/brick.png");
                 throw e;
             }
         }

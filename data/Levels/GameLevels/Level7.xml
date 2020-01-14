@@ -4,7 +4,7 @@
        width="40" height="22" magicWallMillingTime="75"
        amoebaSlowGrowthTime="75" intialDiamondValue="10" extraDiamondValue="20"
        randomSeed="2" diamondsNeeded="15" caveTime="120" color1="6968320"
-       color2="12811125" amoebaMaxSize="200">
+       color2="12811125" amoebaMaxSize="200" nextLevelPath="data/Levels/GameLevels/Level1.xml">
     <randomObjects>
         <randomObject id="0"/>
         <randomObject id="16"/>
