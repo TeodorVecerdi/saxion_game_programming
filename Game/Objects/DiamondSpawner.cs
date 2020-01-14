@@ -4,30 +4,31 @@ using GXPEngine;
 using GXPEngine.Core;
 
 namespace Game {
-    public class Firefly : GameObject {
-        private const int animationFrames = 8;
-        private const float uvSize = 0.125f;
+    public class DiamondSpawner : GameObject {
+        private readonly int animationFrames = 5;
         private readonly Texture2D mainTexture;
+        private readonly float uvSize = 0.2F;
         private int currentFrame;
-        public Vector2Int Direction = Vector2Int.left;
         public bool UpdatedThisFrame = false;
-        public Firefly(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
+        public bool Done = false;
+        public DiamondSpawner(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
-        public Firefly(float x, float y, int color1, int color2) {
+        public DiamondSpawner(float x, float y, int color1, int color2) {
             SetXY(x, y);
-            mainTexture = Texture2D.GetInstance("data/tiles/firefly.png", true);
+            mainTexture = Texture2D.GetInstance("data/tiles/diamondSpawner.png");
             try {
-                var target = Misc.ApplyLevelColor("data/tiles/firefly.png", color1, color2);
+                var target = Misc.ApplyLevelColor("data/tiles/diamondSpawner.png", color1, color2);
                 mainTexture.SetBitmap(target);
             } catch (Exception e) {
-                Console.WriteLine("Could not find file data/tiles/firefly.png");
+                Console.WriteLine("Could not find file data/tiles/diamondSpawner.png");
                 throw e;
             }
         }
 
         private void Update() {
-            currentFrame += 1;
-            currentFrame %= animationFrames;
+            if(!Done)
+                currentFrame += 1;
+            if (currentFrame >= animationFrames) Done = true;
         }
 
         protected override void RenderSelf(GLContext glContext) {

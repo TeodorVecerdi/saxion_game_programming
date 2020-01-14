@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Game.Utils;
 using GXPEngine;
-using _NOPE = System.Diagnostics;
 
 namespace Game {
     public class World : GameObject {
+        private readonly float timeToMovePlayer = 3000f / 24f;
         private readonly int timeToUpdate = 250;
         public int CurrentDiamondValue;
         public int DiamondsCollected;
@@ -20,7 +21,6 @@ namespace Game {
         public float TimeLeft;
         private float timeLeftToMovePlayer = 3000f / 24f;
         private int timeLeftToUpdate = 250;
-        private readonly float timeToMovePlayer = 3000f / 24f;
 
         public World(Level level) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
@@ -295,8 +295,37 @@ namespace Game {
             else if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Miner && (Objects[i, j] as Boulder).IsFalling) {
                 Debug.LogError("YOU DED");
                 (Objects[i, j] as Boulder).IsFalling = false;
-            } // not falling anymore 
-            else
+            } //turn butterfly into diamonds 
+            else if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Butterfly && (Objects[i, j] as Boulder).IsFalling) {
+                List<ValueTuple<int, int>> validSpotsForDiamondSpawning = new List<(int, int)> {ValueTuple.Create(i, j), ValueTuple.Create(i, j + 1)};
+                if (i > 2) {
+                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j));
+                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j + 1));
+                    if (j < Level.Height - 2) {
+                        validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j + 2));
+                    }
+                }
+
+                if (i < Level.Width - 2) {
+                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i + 1, j));
+                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i + 1, j + 1));
+                    if (j < Level.Height - 2) {
+                        validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j + 2));
+                    }
+                }
+
+                if (j < Level.Height - 2) {
+                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i, j + 2));
+                }
+                foreach (var diamondSpawningSpot in validSpotsForDiamondSpawning) {
+                    var obj = Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2];
+                    RemoveChild(obj);
+                    Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = null;
+                    Level[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = TileType.DiamondSpawner;
+                    Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = new DiamondSpawner();
+                    //TODO: FINISH THIS SHIT
+                }
+            } else // not falling anymore
                 (Objects[i, j] as Boulder).IsFalling = false;
         }
 
@@ -343,43 +372,40 @@ namespace Game {
         }
 
         private void UpdateButterfly(int i, int j) {
-            // Try to move down
-            if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Empty) {
-                var obj = Objects[i, j] as Butterfly;
-                obj.UpdatedThisFrame = true;
-                obj.IsFalling = true;
-                obj.Move(0, Globals.TILE_SIZE);
+            // Wall following algorithm loosely based on maze solving algorithm
+            // from https://pdfs.semanticscholar.org/1466/06c92916071ed6f6ae98fb27229660570bd3.pdf 
+            var butterfly = (Butterfly) Objects[i, j];
+            var left = Misc.FollowWall.Vec2IntRotate90(butterfly.Direction);
+            var back = Misc.FollowWall.Vec2IntRotate180(butterfly.Direction);
+            var right = Misc.FollowWall.Vec2IntRotate270(butterfly.Direction);
+
+            // move forward
+            if (Level[i + butterfly.Direction.x, j + butterfly.Direction.y] == TileType.Empty || Level[i + butterfly.Direction.x, j + butterfly.Direction.y] == TileType.Miner) {
+                butterfly.UpdatedThisFrame = true;
+                butterfly.Move(butterfly.Direction.x * Globals.TILE_SIZE, butterfly.Direction.y * Globals.TILE_SIZE);
                 Objects[i, j] = null;
                 Level[i, j] = TileType.Empty;
-                Objects[i, j + 1] = obj;
-                Level[i, j + 1] = TileType.Butterfly;
-            } //try to move left
-            else if (j < Level.Height - 1 && i > 0 && Level[i - 1, j + 1] == TileType.Empty && Level.Tileset.Tiles[Level[i, j + 1]].Rounded && Level[i - 1, j] == TileType.Empty) {
-                var obj = Objects[i, j] as Butterfly;
-                obj.UpdatedThisFrame = true;
-                obj.IsFalling = true;
-                obj.Move(-Globals.TILE_SIZE, Globals.TILE_SIZE);
-                Objects[i, j] = null;
-                Level[i, j] = TileType.Empty;
-                Objects[i - 1, j + 1] = obj;
-                Level[i - 1, j + 1] = TileType.Butterfly;
-            } //try to move right 
-            else if (j < Level.Height - 1 && i < Level.Width - 1 && Level[i + 1, j + 1] == TileType.Empty && Level.Tileset.Tiles[Level[i, j + 1]].Rounded && Level[i + 1, j] == TileType.Empty) {
-                var obj = Objects[i, j] as Butterfly;
-                obj.UpdatedThisFrame = true;
-                obj.IsFalling = true;
-                obj.Move(Globals.TILE_SIZE, Globals.TILE_SIZE);
-                Objects[i, j] = null;
-                Level[i, j] = TileType.Empty;
-                Objects[i + 1, j + 1] = obj;
-                Level[i + 1, j + 1] = TileType.Butterfly;
-            } //try to kill player 
-            else if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Miner && (Objects[i, j] as Butterfly).IsFalling) {
-                Debug.LogError("YOU DED");
-                (Objects[i, j] as Butterfly).IsFalling = false;
-            } // not falling anymore 
-            else
-                (Objects[i, j] as Butterfly).IsFalling = false;
+                if (Level[i + butterfly.Direction.x, j + butterfly.Direction.y] == TileType.Miner)
+                    Debug.LogError("YOU DED");
+
+                Objects[i + butterfly.Direction.x, j + butterfly.Direction.y] = butterfly;
+                Level[i + butterfly.Direction.x, j + butterfly.Direction.y] = TileType.Firefly;
+                i += butterfly.Direction.x;
+                j += butterfly.Direction.y;
+            }
+
+            // left  opening?
+            if (Level[i + left.x, j + left.y] == TileType.Empty || Level[i + left.x, j + left.y] == TileType.Miner) // turn left
+                butterfly.Direction.Set(left);
+
+            // front wall?
+            else if (Level[i + butterfly.Direction.x, j + butterfly.Direction.y] != TileType.Miner && Level[i + butterfly.Direction.x, j + butterfly.Direction.y] != TileType.Empty) {
+                // right opening?
+                if (Level[i + right.x, j + right.y] == TileType.Empty || Level[i + right.x, j + right.y] == TileType.Miner) // turn right
+                    butterfly.Direction.Set(right);
+                else // turn around
+                    butterfly.Direction.Set(back);
+            }
         }
 
         private bool UpdateAmoeba(int i, int j) {
@@ -432,36 +458,36 @@ namespace Game {
             // Wall following algorithm loosely based on maze solving algorithm
             // from https://pdfs.semanticscholar.org/1466/06c92916071ed6f6ae98fb27229660570bd3.pdf 
             var firefly = (Firefly) Objects[i, j];
-            var left = Misc.FollowWall.Vec2IntRotate90(firefly.direction);
-            var back = Misc.FollowWall.Vec2IntRotate180(firefly.direction);
-            var right = Misc.FollowWall.Vec2IntRotate270(firefly.direction);
+            var left = Misc.FollowWall.Vec2IntRotate90(firefly.Direction);
+            var back = Misc.FollowWall.Vec2IntRotate180(firefly.Direction);
+            var right = Misc.FollowWall.Vec2IntRotate270(firefly.Direction);
 
             // move forward
-            if (Level[i + firefly.direction.x, j + firefly.direction.y] == TileType.Empty || Level[i + firefly.direction.x, j + firefly.direction.y] == TileType.Miner) {
+            if (Level[i + firefly.Direction.x, j + firefly.Direction.y] == TileType.Empty || Level[i + firefly.Direction.x, j + firefly.Direction.y] == TileType.Miner) {
                 firefly.UpdatedThisFrame = true;
-                firefly.Move(firefly.direction.x * Globals.TILE_SIZE, firefly.direction.y * Globals.TILE_SIZE);
+                firefly.Move(firefly.Direction.x * Globals.TILE_SIZE, firefly.Direction.y * Globals.TILE_SIZE);
                 Objects[i, j] = null;
                 Level[i, j] = TileType.Empty;
-                if (Level[i + firefly.direction.x, j + firefly.direction.y] == TileType.Miner)
+                if (Level[i + firefly.Direction.x, j + firefly.Direction.y] == TileType.Miner)
                     Debug.LogError("YOU DED");
 
-                Objects[i + firefly.direction.x, j + firefly.direction.y] = firefly;
-                Level[i + firefly.direction.x, j + firefly.direction.y] = TileType.Firefly;
-                i += firefly.direction.x;
-                j += firefly.direction.y;
+                Objects[i + firefly.Direction.x, j + firefly.Direction.y] = firefly;
+                Level[i + firefly.Direction.x, j + firefly.Direction.y] = TileType.Firefly;
+                i += firefly.Direction.x;
+                j += firefly.Direction.y;
             }
 
             // left  opening?
             if (Level[i + left.x, j + left.y] == TileType.Empty || Level[i + left.x, j + left.y] == TileType.Miner) // turn left
-                firefly.direction.Set(left);
+                firefly.Direction.Set(left);
 
             // front wall?
-            else if (Level[i + firefly.direction.x, j + firefly.direction.y] != TileType.Miner && Level[i + firefly.direction.x, j + firefly.direction.y] != TileType.Empty) {
+            else if (Level[i + firefly.Direction.x, j + firefly.Direction.y] != TileType.Miner && Level[i + firefly.Direction.x, j + firefly.Direction.y] != TileType.Empty) {
                 // right opening?
                 if (Level[i + right.x, j + right.y] == TileType.Empty || Level[i + right.x, j + right.y] == TileType.Miner) // turn right
-                    firefly.direction.Set(right);
+                    firefly.Direction.Set(right);
                 else // turn around
-                    firefly.direction.Set(back);
+                    firefly.Direction.Set(back);
             }
         }
     }

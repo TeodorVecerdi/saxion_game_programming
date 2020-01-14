@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\TeodorVecerdi\.Rider2019.2\config\consoles\ide" t="IncludeRecursive" />
-    <e p="C:\Users\TeodorVecerdi\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\TeodorVecerdi\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_SaxionGameProgramming.264599355.00" t="ExcludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\.Rider2019.3\config\consoles\ide" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_SaxionGameProgramming.264599355.00" t="ExcludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.dom.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.dom.iterable.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.collection.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.core.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.generator.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.promise.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2016.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2016.full.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.full.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.intl.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.object.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.string.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2018.asynciterable.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2018.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2018.full.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2018.intl.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2018.promise.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2018.regexp.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2019.array.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2019.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2019.full.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2019.object.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2019.string.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2019.symbol.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2020.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2020.full.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2020.string.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es2020.symbol.wellknown.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es5.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es6.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.es7.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.array.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.bigint.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.full.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.intl.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.promise.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.esnext.symbol.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.scripthost.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.webworker.d.ts" t="IncludeRecursive" />
+    <e p="C:\Users\TeodorVecerdi\AppData\local\JetBrains\Toolbox\apps\Rider\ch-0\192.7317.11\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external\lib.webworker.importscripts.d.ts" t="IncludeRecursive" />
     <e p="C:\Users\TeodorVecerdi\Desktop\Development\DOTNET\SaxionGameProgramming" t="IncludeRecursive">
       <e p="bin" t="ExcludeRecursive" />
       <e p="data" t="Include">
@@ -50,6 +103,7 @@
           <e p="brick.png" t="Include" />
           <e p="butterfly.png" t="Include" />
           <e p="diamond.png" t="Include" />
+          <e p="diamondSpawner.png" t="Include" />
           <e p="dirt.png" t="Include" />
           <e p="door.png" t="Include" />
           <e p="firefly.png" t="Include" />
@@ -103,6 +157,7 @@
           <e p="Brick.cs" t="Include" />
           <e p="Butterfly.cs" t="Include" />
           <e p="Diamond.cs" t="Include" />
+          <e p="DiamondSpawner.cs" t="Include" />
           <e p="Dirt.cs" t="Include" />
           <e p="Door.cs" t="Include" />
           <e p="ExpandingWall.cs" t="Include" />

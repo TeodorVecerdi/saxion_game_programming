@@ -57,6 +57,7 @@
     <Compile Include="Game\Objects\Brick.cs" />
     <Compile Include="Game\Objects\Butterfly.cs" />
     <Compile Include="Game\Objects\Diamond.cs" />
+    <Compile Include="Game\Objects\DiamondSpawner.cs" />
     <Compile Include="Game\Objects\Dirt.cs" />
     <Compile Include="Game\Objects\Door.cs" />
     <Compile Include="Game\Objects\ExpandingWall.cs" />
@@ -117,6 +118,7 @@
     <Content Include="data\tiles\amoeba.png" />
     <Content Include="data\tiles\butterfly.png" />
     <Content Include="data\tiles\diamond.png" />
+    <Content Include="data\tiles\diamondSpawner.png" />
     <Content Include="data\tiles\firefly.png" />
     <Content Include="data\tiles\magicWall.png" />
     <Content Include="data\tiles\playerIdle.png" />

@@ -14,5 +14,7 @@ namespace Game.Utils {
             Butterfly = 10,
             Miner = 11,
             ExpandingWall = 12;
+
+        public const int DiamondSpawner = 0xff00;
     }
 }

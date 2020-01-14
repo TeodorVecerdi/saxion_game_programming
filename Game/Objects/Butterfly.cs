@@ -5,11 +5,11 @@ using GXPEngine.Core;
 
 namespace Game {
     public class Butterfly : GameObject {
-        private readonly int animationFrames = 8;
+        private const int animationFrames = 8;
+        private const float uvSize = 0.125f;
         private readonly Texture2D mainTexture;
-        private readonly float uvSize = 0.125f;
         private int currentFrame;
-        public bool IsFalling = false;
+        public Vector2Int Direction = Vector2Int.left;
         public bool UpdatedThisFrame = false;
         public Butterfly(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 

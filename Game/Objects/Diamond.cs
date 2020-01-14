@@ -26,7 +26,7 @@ namespace Game {
         }
 
         private void Update() {
-            currentFrame -= -1;
+            currentFrame += 1;
             currentFrame %= animationFrames;
         }
 
