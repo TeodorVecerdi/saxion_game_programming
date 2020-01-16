@@ -156,6 +156,7 @@
           <e p="Boulder.cs" t="Include" />
           <e p="Brick.cs" t="Include" />
           <e p="Butterfly.cs" t="Include" />
+          <e p="Camera.cs" t="Include" />
           <e p="Diamond.cs" t="Include" />
           <e p="DiamondSpawner.cs" t="Include" />
           <e p="Dirt.cs" t="Include" />

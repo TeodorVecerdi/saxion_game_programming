@@ -56,6 +56,7 @@
     <Compile Include="Game\Objects\Boulder.cs" />
     <Compile Include="Game\Objects\Brick.cs" />
     <Compile Include="Game\Objects\Butterfly.cs" />
+    <Compile Include="Game\Objects\Camera.cs" />
     <Compile Include="Game\Objects\Diamond.cs" />
     <Compile Include="Game\Objects\DiamondSpawner.cs" />
     <Compile Include="Game\Objects\Dirt.cs" />

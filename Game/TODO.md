@@ -4,14 +4,12 @@
 - [ ] Animate time getting added to player score at the end of room
 - [ ] Background flashes once collected enough diamonds
 - [ ] Player is able to move diagonally by pressing W&A or another combination of keys enabling sneaky and cheaty behaviour
-- [ ] Implement camera behaviour
 - [ ] Add sound
-- [ ] Implement butterfly AI
-- [ ] Add object for spawning diamonds (eg after butterfly explosion); also add to TileType
+- [ ] Use diamond spawner for butterfly instead of spawning diamonds directly 
 
 <span><b>Butterfly AI Description</b></span>
-- [ ] Movement behaviour same as firefly (wall follow)
-- [ ] When a boulder falls on butterfly it turns a 3x3 area into diamonds.
+- [x] Movement behaviour same as firefly (wall follow)
+- [x] When a boulder falls on butterfly it turns a 3x3 area into diamonds.
 
 <span><b>Code Changes</b></span>
 + [ ] convert public variables to private with getter where necessary
@@ -31,3 +29,6 @@
 - [x] Add player animation
 - [x] Add time left to score when finished
 - [x] Implement firefly follow wall AI
+- [x] Implement camera behaviour
+- [x] Implement butterfly AI
+- [x] Add object for spawning diamonds (eg after butterfly explosion); also add to TileType
