@@ -1,15 +1,14 @@
 <h4>TODO</h4>
 
 <span><b>General</b></span>
-- [ ] Animate time getting added to player score at the end of room
-- [ ] Background flashes once collected enough diamonds
-- [ ] Player is able to move diagonally by pressing W&A or another combination of keys enabling sneaky and cheaty behaviour
-- [ ] Add sound
-- [ ] Use diamond spawner for butterfly instead of spawning diamonds directly 
+- [ ] <span style="color: lime">Add sound
+- [ ] <span style="color: lime">Implement player death
+- [ ] <span style="color: red">Player is able to move diagonally by pressing W&A or another combination of keys enabling sneaky and cheaty behaviour
+- [ ] <span style="color: darkgreen">Use diamond spawner for butterfly instead of spawning diamonds directly 
+- [ ] <span style="color: darkgreen">Background flashes once collected enough diamonds
+- [ ] <span style="color: darkgreen">Animate time getting added to player score at the end of room
 
-<span><b>Butterfly AI Description</b></span>
-- [x] Movement behaviour same as firefly (wall follow)
-- [x] When a boulder falls on butterfly it turns a 3x3 area into diamonds.
+
 
 <span><b>Code Changes</b></span>
 + [ ] convert public variables to private with getter where necessary
@@ -17,6 +16,11 @@
 
 <hr/>
 <h4>DONE</h4>
+
+<span><b>Butterfly AI Description</b></span>
+- [x] Movement behaviour same as firefly (wall follow)
+- [x] When a boulder falls on butterfly it turns a 3x3 area into diamonds.
+<hr/>
 
 - [x] Separate GameObjects for different tile types (40*22 = 880 objects max incl. the player)
 - [x] Implement falling for diamond and butterfly

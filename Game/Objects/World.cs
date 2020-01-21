@@ -5,23 +5,23 @@ using GXPEngine;
 
 namespace Game {
     public class World : GameObject {
-        private readonly float timeToMovePlayer = 3000f / 24f;
-        private readonly int timeToUpdate = 250;
         public int CurrentDiamondValue;
         public int DiamondsCollected;
-        private bool finishedAmoeba;
+        public int Score;
+        public float TimeLeft;
         public bool GotEnoughDiamonds;
+        public bool Paused;
         public Level Level;
         public Camera Camera;
         public GameObject[,] Objects;
-        public bool Paused;
         public Player Player;
-
-        private Vector2 playerPosition = Vector2.negativeInfinity;
-        public int Score;
-        public float TimeLeft;
-        private float timeLeftToMovePlayer = 3000f / 24f;
+        
+        private readonly int timeToUpdate = 250;
+        private readonly float timeToMovePlayer = 3000f / 24f;
         private int timeLeftToUpdate = 250;
+        private float timeLeftToMovePlayer = 3000f / 24f;
+        private bool isAmoebaFinished;
+        private Vector2 playerPosition = Vector2.negativeInfinity;
 
         public World(Level level) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
@@ -135,7 +135,8 @@ namespace Game {
 
             if (TimeLeft < 0f)
                 TimeLeft = 0f;
-
+            
+            #region Player Movement
             var movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (timeLeftToMovePlayer < 0f && movement.Equals(Vector2.zero))
                 Player.SetIdle(true);
@@ -176,7 +177,10 @@ namespace Game {
                         MovePlayer(movement);
                 }
             }
+            #endregion
 
+            #region World Update
+            
             if (timeLeftToUpdate < 0) {
                 var amoebaExpandedThisUpdate = false;
                 for (var i = 0; i < Level.Width; i++)
@@ -200,7 +204,7 @@ namespace Game {
                         door.Flash();
                     }
 
-                if (!finishedAmoeba && Level.CaveTime - TimeLeft >= Level.AmoebaSlowGrowthTime) {
+                if (!isAmoebaFinished && Level.CaveTime - TimeLeft >= Level.AmoebaSlowGrowthTime) {
                     //transform amoeba
                     for (var i = 0; i < Level.Width; i++)
                     for (var j = 0; j < Level.Height; j++)
@@ -218,7 +222,7 @@ namespace Game {
                             AddChild(Objects[i, j]);
                         }
 
-                    finishedAmoeba = true;
+                    isAmoebaFinished = true;
                 }
 
                 for (var i = 0; i < Level.Width; i++)
@@ -231,6 +235,7 @@ namespace Game {
                     if (Level[i, j] == TileType.DiamondSpawner) (Objects[i, j] as DiamondSpawner).UpdatedThisFrame = false;
                 }
             }
+            #endregion
             Camera.SetPosition(UpdateCamera((int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)));
             if (timeLeftToUpdate < 0) timeLeftToUpdate += timeToUpdate;
             if (timeLeftToMovePlayer < 0) timeLeftToMovePlayer += timeToMovePlayer;
@@ -270,6 +275,8 @@ namespace Game {
         }
 
         private Vector2 UpdateCamera(float x, float y) {
+            // "Inspired" from C implementation of Boulder Dash by drh0use1
+            // https://github.com/drh0use1/Boulder-Dash-C-Implementation
             Vector2 cameraPosition = Vector2.zero;
             float x_radius = 1.3789f; // MAGIC NUMBERS, JUST DON'T TOUCH THEM
             float y_radius = 1.46f;
@@ -285,7 +292,7 @@ namespace Game {
         }
 
         private void UpdateDiamondSpawner(int i, int j) {
-            
+            //TODO: Implement diamond spawner instead of directly spawning diamonds when a butterfly explodes
         }
 
         private void UpdateBoulder(int i, int j) {
