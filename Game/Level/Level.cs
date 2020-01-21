@@ -7,10 +7,12 @@ namespace Game.Utils {
         public static TiledTileset Tileset = new TiledTileset(Loader.LoadTileset("data/Levels/Tilesets/Main.tsx"), "data/Levels/Tilesets/Main.xml");
         public readonly int[,] OriginalTiles;
         public Vector2 PlayerStart;
+        public string LevelPath;
 
         public int[,] Tiles;
 
         public Level(string path) {
+            LevelPath = path;
             var gameLevel = Loader.LoadGameLevel(path);
             RandomObjects = new List<(int, int)>();
             for (var i = 0; i < gameLevel.RandomObject.Count; i++)

@@ -224,6 +224,8 @@ namespace Game {
 
         private void KillPlayer(int i, int j) {
             Debug.LogError($"YOU DED at [{i}, {j}]");
+            Debug.LogError($"TODO: DO A PROPER DEATH");
+            ResetLevel(new Level(Level.LevelPath));
         }
 
         private Vector2 UpdateCamera(float x, float y) {
