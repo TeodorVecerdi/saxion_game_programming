@@ -69,7 +69,6 @@
     <Compile Include="Game\Objects\Player.cs" />
     <Compile Include="Game\Utils\BitmapCache.cs" />
     <Compile Include="Game\Utils\Debug.cs" />
-    <Compile Include="Game\Utils\ListUtils.cs" />
     <Compile Include="Game\Utils\Math.cs" />
     <Compile Include="Game\Utils\Misc.cs" />
     <Compile Include="Game\Utils\Rand.cs" />
@@ -116,6 +115,12 @@
     <Content Include="data\Levels\TiledLevels\Level8.tmx" />
     <Content Include="data\Levels\TiledLevels\Level9.tmx" />
     <Content Include="data\Levels\Tilesets\Main.xml" />
+    <Content Include="data\sounds\boulder_end.wav" />
+    <Content Include="data\sounds\boulder_start.wav" />
+    <Content Include="data\sounds\enough_diamonds.wav" />
+    <Content Include="data\sounds\move_dirt.wav" />
+    <Content Include="data\sounds\move_empty.wav" />
+    <Content Include="data\sounds\pickup_diamond.wav" />
     <Content Include="data\tiles\amoeba.png" />
     <Content Include="data\tiles\butterfly.png" />
     <Content Include="data\tiles\diamond.png" />

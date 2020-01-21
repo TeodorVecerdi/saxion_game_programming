@@ -97,6 +97,14 @@
             <e p="Main.xml" t="Include" />
           </e>
         </e>
+        <e p="sounds" t="Include">
+          <e p="boulder_end.wav" t="Include" />
+          <e p="boulder_start.wav" t="Include" />
+          <e p="enough_diamonds.wav" t="Include" />
+          <e p="move_dirt.wav" t="Include" />
+          <e p="move_empty.wav" t="Include" />
+          <e p="pickup_diamond.wav" t="Include" />
+        </e>
         <e p="tiles" t="Include">
           <e p="amoeba.png" t="Include" />
           <e p="boulder.png" t="Include" />
@@ -176,7 +184,6 @@
         <e p="Utils" t="Include">
           <e p="BitmapCache.cs" t="Include" />
           <e p="Debug.cs" t="Include" />
-          <e p="ListUtils.cs" t="Include" />
           <e p="Math.cs" t="Include" />
           <e p="Misc.cs" t="Include" />
           <e p="Rand.cs" t="Include" />

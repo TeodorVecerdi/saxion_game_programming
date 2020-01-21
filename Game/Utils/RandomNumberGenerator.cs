@@ -1,6 +1,9 @@
 using System;
 
 namespace Game.Utils {
+    /// <summary>
+    /// Taken from source code of game Rimworld by Ludeon Studios
+    /// </summary>
     public class RandomNumberGenerator {
         private const uint Prime1 = 2654435761;
         private const uint Prime2 = 2246822519;

@@ -15,17 +15,31 @@ namespace Game {
         public Camera Camera;
         public GameObject[,] Objects;
         public Player Player;
-        
+
+        private Sound boulderStart, boulderEnd, enoughDiamonds, moveDirt, moveEmpty, pickupDiamond;
         private readonly int timeToUpdate = 250;
-        private readonly float timeToMovePlayer = 3000f / 24f;
+        private readonly float timeToMovePlayer = 166.6667F;
         private int timeLeftToUpdate = 250;
-        private float timeLeftToMovePlayer = 3000f / 24f;
+        private float timeLeftToMovePlayer = 125F;
         private bool isAmoebaFinished;
+        private bool loadedSounds;
         private Vector2 playerPosition = Vector2.negativeInfinity;
 
         public World(Level level) {
             if (game == null) throw new Exception("GameObjects cannot be created before creating a Game instance.");
+            if (!loadedSounds)
+                LoadSounds();
             ResetLevel(level);
+        }
+
+        private void LoadSounds() {
+            boulderStart = new Sound("data/sounds/boulder_start.wav");
+            boulderEnd = new Sound("data/sounds/boulder_end.wav");
+            enoughDiamonds = new Sound("data/sounds/enough_diamonds.wav");
+            moveDirt = new Sound("data/sounds/move_dirt.wav");
+            moveEmpty = new Sound("data/sounds/move_empty.wav");
+            pickupDiamond = new Sound("data/sounds/pickup_diamond.wav");
+            loadedSounds = true;
         }
 
         public void ResetLevel(Level level) {
@@ -135,7 +149,7 @@ namespace Game {
 
             if (TimeLeft < 0f)
                 TimeLeft = 0f;
-            
+
             #region Player Movement
             var movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (timeLeftToMovePlayer < 0f && movement.Equals(Vector2.zero))
@@ -159,11 +173,13 @@ namespace Game {
                         var dirt = Objects[dirtPos.x, dirtPos.y];
                         RemoveChild(dirt);
                         Level[movement + playerPositionGrid] = TileType.Empty;
+                        moveDirt.Play();
                     }
 
                     if (!Input.GetKey(Key.LEFT_CTRL) && !Input.GetKey(Key.RIGHT_CTRL))
                         MovePlayer(movement);
                 } else if (movement.y == 0 && Level[movement + playerPositionGrid] == TileType.Boulder && Level[movement + movement + playerPositionGrid] == TileType.Empty) {
+                    boulderEnd.Play();
                     var objLocation = movement + playerPositionGrid;
                     var newLocation = movement + movement + playerPositionGrid;
                     var obj = Objects[(int) objLocation.x, (int) objLocation.y] as Boulder;
@@ -180,7 +196,6 @@ namespace Game {
             #endregion
 
             #region World Update
-            
             if (timeLeftToUpdate < 0) {
                 var amoebaExpandedThisUpdate = false;
                 for (var i = 0; i < Level.Width; i++)
@@ -197,8 +212,7 @@ namespace Game {
                         UpdateFirefly(i, j);
                     else if (Level[i, j] == TileType.DiamondSpawner && !(Objects[i, j] as DiamondSpawner).UpdatedThisFrame) {
                         UpdateDiamondSpawner(i, j);
-                    }
-                    else if (GotEnoughDiamonds && Level[i, j] == TileType.Door) {
+                    } else if (GotEnoughDiamonds && Level[i, j] == TileType.Door) {
                         var door = Objects[i, j] as Door;
                         door.IsOpen = true;
                         door.Flash();
@@ -236,6 +250,7 @@ namespace Game {
                 }
             }
             #endregion
+
             Camera.SetPosition(UpdateCamera((int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)));
             if (timeLeftToUpdate < 0) timeLeftToUpdate += timeToUpdate;
             if (timeLeftToMovePlayer < 0) timeLeftToMovePlayer += timeToMovePlayer;
@@ -252,19 +267,23 @@ namespace Game {
         private void CollectDiamond() {
             DiamondsCollected++;
             Score += CurrentDiamondValue;
-            if (DiamondsCollected >= Level.DiamondsNeeded) {
+            pickupDiamond.Play();
+            if (DiamondsCollected >= Level.DiamondsNeeded && !GotEnoughDiamonds) {
+                enoughDiamonds.Play();
                 GotEnoughDiamonds = true;
                 CurrentDiamondValue = Level.ExtraDiamondValue;
             }
         }
 
         private void MovePlayer(Vector2 movement) {
-            if (Level[(int) (Player.x / Globals.TILE_SIZE + movement.x), (int) (Player.y / Globals.TILE_SIZE + movement.y)] == TileType.Door) {
-                Debug.LogWarning("YOU WON BYE");
+            var tile = Level[(int) (Player.x / Globals.TILE_SIZE + movement.x), (int) (Player.y / Globals.TILE_SIZE + movement.y)];
+            if (tile == TileType.Door) {
                 Score += (int) TimeLeft;
                 ResetLevel(new Level(Level.NextLevelPath));
             }
-
+            else if (tile == TileType.Dirt) moveDirt.Play();
+            else if (tile == TileType.Empty) moveEmpty.Play();
+            
             Objects[(int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)] = null;
             Level[(int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)] = TileType.Empty;
             Player.Move(movement * Globals.TILE_SIZE);
@@ -274,8 +293,12 @@ namespace Game {
             Level[(int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)] = TileType.Miner;
         }
 
+        private void KillPlayer(int i, int j) {
+            Debug.LogError($"YOU DED at [{i}, {j}]");
+        }
+
         private Vector2 UpdateCamera(float x, float y) {
-            // "Inspired" from C implementation of Boulder Dash by drh0use1
+            // "Inspired" from C implementation of Boulder Dash by Ahmed Semih Özmekik
             // https://github.com/drh0use1/Boulder-Dash-C-Implementation
             Vector2 cameraPosition = Vector2.zero;
             float x_radius = 1.3789f; // MAGIC NUMBERS, JUST DON'T TOUCH THEM
@@ -299,6 +322,8 @@ namespace Game {
             // Try to move down
             if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Empty) {
                 var obj = Objects[i, j] as Boulder;
+                System.Diagnostics.Debug.Assert(obj != null, $"Boulder at [{i}, {j}] should never be null");
+                if (!obj.IsFalling) boulderStart.Play();
                 obj.UpdatedThisFrame = true;
                 obj.IsFalling = true;
                 obj.Move(0, Globals.TILE_SIZE);
@@ -309,6 +334,8 @@ namespace Game {
             } //try to move left
             else if (j < Level.Height - 1 && i > 0 && Level[i - 1, j + 1] == TileType.Empty && Level.Tileset.Tiles[Level[i, j + 1]].Rounded && Level[i - 1, j] == TileType.Empty) {
                 var obj = Objects[i, j] as Boulder;
+                System.Diagnostics.Debug.Assert(obj != null, $"Boulder at [{i}, {j}] should never be null");
+                if (!obj.IsFalling) boulderStart.Play();
                 obj.UpdatedThisFrame = true;
                 obj.IsFalling = true;
                 obj.Move(-Globals.TILE_SIZE, Globals.TILE_SIZE);
@@ -319,6 +346,8 @@ namespace Game {
             } //try to move right 
             else if (j < Level.Height - 1 && i < Level.Width - 1 && Level[i + 1, j + 1] == TileType.Empty && Level.Tileset.Tiles[Level[i, j + 1]].Rounded && Level[i + 1, j] == TileType.Empty) {
                 var obj = Objects[i, j] as Boulder;
+                System.Diagnostics.Debug.Assert(obj != null, $"Boulder at [{i}, {j}] should never be null");
+                if (!obj.IsFalling) boulderStart.Play();
                 obj.UpdatedThisFrame = true;
                 obj.IsFalling = true;
                 obj.Move(Globals.TILE_SIZE, Globals.TILE_SIZE);
@@ -328,7 +357,7 @@ namespace Game {
                 Level[i + 1, j + 1] = TileType.Boulder;
             } //try to kill player 
             else if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Miner && (Objects[i, j] as Boulder).IsFalling) {
-                Debug.LogError("YOU DED");
+                KillPlayer(i, j + 1);
                 (Objects[i, j] as Boulder).IsFalling = false;
             } //turn butterfly into diamonds 
             else if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Butterfly && (Objects[i, j] as Boulder).IsFalling) {
@@ -353,23 +382,31 @@ namespace Game {
                     validSpotsForDiamondSpawning.Add(ValueTuple.Create(i, j + 2));
                 }
 
-                
                 foreach (var diamondSpawningSpot in validSpotsForDiamondSpawning) {
                     var obj = Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2];
                     if (obj != null && Level[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] != TileType.Miner) {
                         RemoveChild(obj);
                         Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = null;
                     }
+
                     //TODO: MAYBE USE THE DIAMOND SPAWNER INSTEAD OF STRAIGHT UP DIAMONDS
                     // Level[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = TileType.DiamondSpawner;
                     // Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = new DiamondSpawner(diamondSpawningSpot.Item1 * Globals.TILE_SIZE, diamondSpawningSpot.Item2 * Globals.TILE_SIZE, Level.Color1, Level.Color2);
-                    Level[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = TileType.Diamond;
-                    Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = new Diamond(diamondSpawningSpot.Item1 * Globals.TILE_SIZE, diamondSpawningSpot.Item2 * Globals.TILE_SIZE, Level.Color1, Level.Color2);
-                    AddChild(Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2]);
+                    if (Level[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] != TileType.Miner) {
+                        Level[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = TileType.Diamond;
+                        Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2] = new Diamond(diamondSpawningSpot.Item1 * Globals.TILE_SIZE, diamondSpawningSpot.Item2 * Globals.TILE_SIZE, Level.Color1, Level.Color2);
+                        AddChild(Objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2]);
+                    } else {
+                        CollectDiamond();
+                    }
                 }
-            
-            } else // not falling anymore
-                (Objects[i, j] as Boulder).IsFalling = false;
+            } else {// not falling anymore
+                var obj = Objects[i, j] as Boulder;
+                System.Diagnostics.Debug.Assert(obj != null, $"Boulder at [{i}, {j}] should never be null");
+                if(obj.IsFalling)
+                    boulderEnd.Play();
+                obj.IsFalling = false;
+            }
         }
 
         private void UpdateDiamond(int i, int j) {
@@ -429,7 +466,7 @@ namespace Game {
                 Objects[i, j] = null;
                 Level[i, j] = TileType.Empty;
                 if (Level[i + butterfly.Direction.x, j + butterfly.Direction.y] == TileType.Miner)
-                    Debug.LogError("YOU DED");
+                    KillPlayer(i + butterfly.Direction.x, j + butterfly.Direction.y);
 
                 Objects[i + butterfly.Direction.x, j + butterfly.Direction.y] = butterfly;
                 Level[i + butterfly.Direction.x, j + butterfly.Direction.y] = TileType.Butterfly;
@@ -512,7 +549,7 @@ namespace Game {
                 Objects[i, j] = null;
                 Level[i, j] = TileType.Empty;
                 if (Level[i + firefly.Direction.x, j + firefly.Direction.y] == TileType.Miner)
-                    Debug.LogError("YOU DED");
+                    KillPlayer(i + firefly.Direction.x, j + firefly.Direction.y);
 
                 Objects[i + firefly.Direction.x, j + firefly.Direction.y] = firefly;
                 Level[i + firefly.Direction.x, j + firefly.Direction.y] = TileType.Firefly;

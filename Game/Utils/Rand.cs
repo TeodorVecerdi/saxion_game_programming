@@ -4,6 +4,9 @@ using System.Linq;
 using GXPEngine;
 
 namespace Game.Utils {
+    /// <summary>
+    /// Taken from source code of game Rimworld by Ludeon Studios
+    /// </summary>
     public static class Rand {
         private static readonly Stack<ulong> stateStack = new Stack<ulong>();
         private static readonly RandomNumberGenerator random = new RandomNumberGenerator();
@@ -208,58 +211,6 @@ namespace Game.Utils {
             StateCompressed = stateStack.Pop();
         }
 
-        /*public static float ByCurve(SimpleCurve curve) {
-            if (curve.PointsCount < 3)
-                throw new ArgumentException("curve has < 3 points");
-            if ((double) curve[0].y != 0.0 || (double) curve[curve.PointsCount - 1].y != 0.0)
-                throw new ArgumentException("curve has start/end point with y != 0");
-            float max = 0.0f;
-            for (int index = 0; index < curve.PointsCount - 1; ++index) {
-                if ((double) curve[index].y < 0.0)
-                    throw new ArgumentException("curve has point with y < 0");
-                max += (float) (((double) curve[index + 1].x - (double) curve[index].x) *
-                                ((double) curve[index].y + (double) curve[index + 1].y));
-            }
-
-            float num1 = Range(0.0f, max);
-            for (int index = 0; index < curve.PointsCount - 1; ++index) {
-                float num2 = (float) (((double) curve[index + 1].x - (double) curve[index].x) *
-                                      ((double) curve[index].y + (double) curve[index + 1].y));
-                if (num2 < (double) num1) {
-                    num1 -= num2;
-                }
-                else {
-                    float num3 = curve[index + 1].x - curve[index].x;
-                    float y1 = curve[index].y;
-                    float y2 = curve[index + 1].y;
-                    float num4 = num1 / (y1 + y2);
-                    if (Range(0.0f, (float) ((y1 + (double) y2) / 2.0)) >
-                        (double) Mathf.Lerp(y1, y2, num4 / num3))
-                        num4 = num3 - num4;
-                    return num4 + curve[index].x;
-                }
-            }
-
-            throw new Exception("Reached end of Rand.ByCurve without choosing a point.");
-        }
-
-        public static float ByCurveAverage(SimpleCurve curve) {
-            float num1 = 0.0f;
-            float num2 = 0.0f;
-            for (int index = 0; index < curve.PointsCount - 1; ++index) {
-                num1 += (float) (((double) curve[index + 1].x - (double) curve[index].x) *
-                                 ((double) curve[index].y + (double) curve[index + 1].y));
-                num2 += (float) (((double) curve[index + 1].x - (double) curve[index].x) *
-                                 ((double) curve[index].x *
-                                  (2.0 * (double) curve[index].y + (double) curve[index + 1].y) +
-                                  (double) curve[index + 1].x *
-                                  ((double) curve[index].y + 2.0 * (double) curve[index + 1].y)));
-            }
-
-            return (float) (num2 / (double) num1 / 3.0);
-        }
-*/
-
         public static bool MTBEventOccurs(float mtb, float mtbUnit, float checkDuration) {
             if (double.IsPositiveInfinity(mtb))
                 return false;
@@ -296,41 +247,6 @@ namespace Game.Utils {
             }
 
             return Value < num1;
-        }
-
-        /*public static int RandSeedForHour(this Thing t, int salt) {
-            return Gen.HashCombineInt(Gen.HashCombineInt(t.HashOffset(), Find.TickManager.TicksAbs / 2500), salt);
-        }*/
-
-        public static bool TryRangeInclusiveWhere(int from, int to, Predicate<int> predicate, out int value) {
-            var num1 = to - from + 1;
-            if (num1 <= 0) {
-                value = 0;
-                return false;
-            }
-
-            var num2 = Mathf.Max(Mathf.RoundToInt(Mathf.Sqrt(num1)), 5);
-            for (var index = 0; index < num2; ++index) {
-                var num3 = RangeInclusive(from, to);
-                if (predicate(num3)) {
-                    value = num3;
-                    return true;
-                }
-            }
-
-            tmpRange.Clear();
-            for (var index = from; index <= to; ++index)
-                tmpRange.Add(index);
-            tmpRange.Shuffle();
-            var index1 = 0;
-            for (var count = tmpRange.Count; index1 < count; ++index1)
-                if (predicate(tmpRange[index1])) {
-                    value = tmpRange[index1];
-                    return true;
-                }
-
-            value = 0;
-            return false;
         }
     }
 }

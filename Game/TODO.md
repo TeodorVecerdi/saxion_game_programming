@@ -1,7 +1,6 @@
 <h4>TODO</h4>
 
 <span><b>General</b></span>
-- [ ] <span style="color: lime">Add sound
 - [ ] <span style="color: lime">Implement player death
 - [ ] <span style="color: red">Player is able to move diagonally by pressing W&A or another combination of keys enabling sneaky and cheaty behaviour
 - [ ] <span style="color: darkgreen">Use diamond spawner for butterfly instead of spawning diamonds directly 
@@ -22,6 +21,7 @@
 - [x] When a boulder falls on butterfly it turns a 3x3 area into diamonds.
 <hr/>
 
+- [x] <span style="color: none">Add sound
 - [x] Separate GameObjects for different tile types (40*22 = 880 objects max incl. the player)
 - [x] Implement falling for diamond and butterfly
 - [x] Make door flash once revealed
