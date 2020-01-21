@@ -48,90 +48,25 @@ namespace Game {
             Objects = new GameObject[level.Width, level.Height];
             DiamondsCollected = 0;
             GotEnoughDiamonds = false;
+            isAmoebaFinished = false;
             Level = level;
             CurrentDiamondValue = level.IntialDiamondValue;
             TimeLeft = level.CaveTime;
-            for (var i = 0; i < level.Width; i++)
-            for (var j = 0; j < level.Height; j++) {
+            for (var j = 0; j < level.Height; j++) 
+            for (var i = 0; i < level.Width; i++) {
                 var position = new Vector2(i, j) * Globals.TILE_SIZE;
-                switch (level.Tiles[i, j]) {
-                    case TileType.SteelWall: {
-                        var obj = new SteelWall(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Door: {
-                        var obj = new Door(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Brick: {
-                        var obj = new Brick(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Boulder: {
-                        var obj = new Boulder(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Dirt: {
-                        var obj = new Dirt(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Firefly: {
-                        var obj = new Firefly(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.MagicWall: {
-                        var obj = new MagicWall(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Amoeba: {
-                        var obj = new Amoeba(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Diamond: {
-                        var obj = new Diamond(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Butterfly: {
-                        var obj = new Butterfly(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
-                    case TileType.Miner: {
-                        playerPosition = Vector2.one * position;
-                        break;
-                    }
-                    case TileType.ExpandingWall: {
-                        var obj = new ExpandingWall(position, level.Color1, level.Color2);
-                        Objects[i, j] = obj;
-                        AddChild(obj);
-                        break;
-                    }
+                int tile = level.Tiles[i, j];
+                if (tile != TileType.Miner && tile != TileType.Empty) {
+                    var obj = (GameObject) Activator.CreateInstance(Type.GetType(TileType.TileTypeToClassName[level.Tiles[i, j]]), position, level.Color1, level.Color2);
+                    Objects[i, j] = obj;
+                    AddChild(obj);
+                } else if (tile == TileType.Miner) {
+                    playerPosition = Vector2.one * position;
                 }
             }
-
             Player = new Player(playerPosition, level.Color1, level.Color2);
             Camera = new Camera(this);
-            var pos = UpdateCamera((int) Player.x, (int) Player.y);
-            Camera.SetPosition(pos);
+            Camera.SetPosition(UpdateCamera((int) Player.x, (int) Player.y));
             Objects[(int) (playerPosition.x / Globals.TILE_SIZE), (int) (playerPosition.y / Globals.TILE_SIZE)] = Player;
             AddChild(Player);
             AddChild(Camera);
@@ -150,7 +85,6 @@ namespace Game {
             if (TimeLeft < 0f)
                 TimeLeft = 0f;
 
-            #region Player Movement
             var movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (timeLeftToMovePlayer < 0f && movement.Equals(Vector2.zero))
                 Player.SetIdle(true);
@@ -175,7 +109,6 @@ namespace Game {
                         Level[movement + playerPositionGrid] = TileType.Empty;
                         moveDirt.Play();
                     }
-
                     if (!Input.GetKey(Key.LEFT_CTRL) && !Input.GetKey(Key.RIGHT_CTRL))
                         MovePlayer(movement);
                 } else if (movement.y == 0 && Level[movement + playerPositionGrid] == TileType.Boulder && Level[movement + movement + playerPositionGrid] == TileType.Empty) {
@@ -193,13 +126,11 @@ namespace Game {
                         MovePlayer(movement);
                 }
             }
-            #endregion
 
-            #region World Update
             if (timeLeftToUpdate < 0) {
                 var amoebaExpandedThisUpdate = false;
-                for (var i = 0; i < Level.Width; i++)
                 for (var j = 0; j < Level.Height; j++)
+                for (var i = 0; i < Level.Width; i++)
                     if (Level[i, j] == TileType.Diamond && !(Objects[i, j] as Diamond).UpdatedThisFrame)
                         UpdateDiamond(i, j);
                     else if (Level[i, j] == TileType.Boulder && !(Objects[i, j] as Boulder).UpdatedThisFrame)
@@ -220,8 +151,8 @@ namespace Game {
 
                 if (!isAmoebaFinished && Level.CaveTime - TimeLeft >= Level.AmoebaSlowGrowthTime) {
                     //transform amoeba
-                    for (var i = 0; i < Level.Width; i++)
                     for (var j = 0; j < Level.Height; j++)
+                    for (var i = 0; i < Level.Width; i++)
                         if (Level[i, j] == TileType.Amoeba) {
                             RemoveChild(Objects[i, j]);
                             Objects[i, j] = null;
@@ -239,17 +170,16 @@ namespace Game {
                     isAmoebaFinished = true;
                 }
 
-                for (var i = 0; i < Level.Width; i++)
-                for (var j = 0; j < Level.Height; j++) {
+                for (var j = 0; j < Level.Height; j++) 
+                for (var i = 0; i < Level.Width; i++) 
                     if (Level[i, j] == TileType.Boulder) (Objects[i, j] as Boulder).UpdatedThisFrame = false;
-                    if (Level[i, j] == TileType.Diamond) (Objects[i, j] as Diamond).UpdatedThisFrame = false;
-                    if (Level[i, j] == TileType.Butterfly) (Objects[i, j] as Butterfly).UpdatedThisFrame = false;
-                    if (Level[i, j] == TileType.Amoeba) (Objects[i, j] as Amoeba).UpdatedThisFrame = false;
-                    if (Level[i, j] == TileType.Firefly) (Objects[i, j] as Firefly).UpdatedThisFrame = false;
-                    if (Level[i, j] == TileType.DiamondSpawner) (Objects[i, j] as DiamondSpawner).UpdatedThisFrame = false;
-                }
+                    else if (Level[i, j] == TileType.Diamond) (Objects[i, j] as Diamond).UpdatedThisFrame = false;
+                    else if (Level[i, j] == TileType.Butterfly) (Objects[i, j] as Butterfly).UpdatedThisFrame = false;
+                    else if (Level[i, j] == TileType.Amoeba) (Objects[i, j] as Amoeba).UpdatedThisFrame = false;
+                    else if (Level[i, j] == TileType.Firefly) (Objects[i, j] as Firefly).UpdatedThisFrame = false;
+                    else if (Level[i, j] == TileType.DiamondSpawner) (Objects[i, j] as DiamondSpawner).UpdatedThisFrame = false;
+                
             }
-            #endregion
 
             Camera.SetPosition(UpdateCamera((int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)));
             if (timeLeftToUpdate < 0) timeLeftToUpdate += timeToUpdate;
@@ -280,10 +210,9 @@ namespace Game {
             if (tile == TileType.Door) {
                 Score += (int) TimeLeft;
                 ResetLevel(new Level(Level.NextLevelPath));
-            }
-            else if (tile == TileType.Dirt) moveDirt.Play();
+            } else if (tile == TileType.Dirt) moveDirt.Play();
             else if (tile == TileType.Empty) moveEmpty.Play();
-            
+
             Objects[(int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)] = null;
             Level[(int) (Player.x / Globals.TILE_SIZE), (int) (Player.y / Globals.TILE_SIZE)] = TileType.Empty;
             Player.Move(movement * Globals.TILE_SIZE);
@@ -400,10 +329,11 @@ namespace Game {
                         CollectDiamond();
                     }
                 }
-            } else {// not falling anymore
+            } else {
+                // not falling anymore
                 var obj = Objects[i, j] as Boulder;
                 System.Diagnostics.Debug.Assert(obj != null, $"Boulder at [{i}, {j}] should never be null");
-                if(obj.IsFalling)
+                if (obj.IsFalling)
                     boulderEnd.Play();
                 obj.IsFalling = false;
             }

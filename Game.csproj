@@ -61,7 +61,6 @@
     <Compile Include="Game\Objects\DiamondSpawner.cs" />
     <Compile Include="Game\Objects\Dirt.cs" />
     <Compile Include="Game\Objects\Door.cs" />
-    <Compile Include="Game\Objects\ExpandingWall.cs" />
     <Compile Include="Game\Objects\Firefly.cs" />
     <Compile Include="Game\Objects\MagicWall.cs" />
     <Compile Include="Game\Objects\SteelWall.cs" />

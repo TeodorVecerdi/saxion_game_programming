@@ -169,7 +169,6 @@
           <e p="DiamondSpawner.cs" t="Include" />
           <e p="Dirt.cs" t="Include" />
           <e p="Door.cs" t="Include" />
-          <e p="ExpandingWall.cs" t="Include" />
           <e p="Firefly.cs" t="Include" />
           <e p="MagicWall.cs" t="Include" />
           <e p="Player.cs" t="Include" />
