@@ -1,7 +1,6 @@
 <h4>TODO</h4>
 
 <span><b>General</b></span>
-- [ ] <span style="color: red">Player is able to move diagonally by pressing W&A or another combination of keys enabling sneaky and cheaty behaviour
 - [ ] <span style="color: darkgreen">Implement proper player death
 - [ ] <span style="color: darkgreen">Add start screen
 - [ ] <span style="color: darkgreen">Add end screen
@@ -12,8 +11,7 @@
 
 
 <span><b>Code Changes</b></span>
-+ [ ] convert public variables to private with getter where necessary
-+ [ ] general code cleanup; keep variables to correct name convention where necessary
+
 
 <hr/>
 <h4>DONE</h4>
@@ -39,3 +37,6 @@
 - [x] Implement camera behaviour
 - [x] Implement butterfly AI
 - [x] Add object for spawning diamonds (eg after butterfly explosion); also add to TileType
++ [x] convert public variables to private with getter where necessary
++ [x] general code cleanup; keep variables to correct name convention where necessary
+- [x] <span style="color: none">Player is able to move diagonally by pressing W&A or another combination of keys enabling sneaky and cheaty behaviour

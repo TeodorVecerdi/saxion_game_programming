@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Utils {
+namespace Game {
     /// <summary>
     /// Taken from source code of game Rimworld by Ludeon Studios
     /// </summary>

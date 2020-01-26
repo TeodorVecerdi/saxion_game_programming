@@ -5,11 +5,11 @@ using GXPEngine.Core;
 
 namespace Game {
     public class Amoeba : GameObject {
-        private readonly int animationFrames = 8;
-        private readonly Texture2D mainTexture;
-        private readonly float uvSize = 0.125F;
-        private int currentFrame;
         public bool UpdatedThisFrame = false;
+        private const int animationFrames = 8;
+        private const float uvSize = 0.125F;
+        private readonly Texture2D mainTexture;
+        private int currentFrame;
         public Amoeba(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
         public Amoeba(float x, float y, int color1, int color2) {
@@ -18,9 +18,9 @@ namespace Game {
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/amoeba.png", color1, color2);
                 mainTexture.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/amoeba.png");
-                throw e;
+                throw;
             }
         }
 

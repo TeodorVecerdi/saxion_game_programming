@@ -1,6 +1,6 @@
 using GXPEngine.Core;
 
-namespace Game.Utils {
+namespace Game {
     public static class UITextures {
         public static readonly Texture2D ZERO_WHITE = Texture2D.GetInstance("data/UI/0W.png", true);
         public static readonly Texture2D ONE_WHITE = Texture2D.GetInstance("data/UI/1W.png", true);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GXPEngine;
 
-namespace Game.Utils {
+namespace Game {
     /// <summary>
     /// Taken from source code of game Rimworld by Ludeon Studios
     /// </summary>

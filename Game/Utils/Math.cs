@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Utils {
+namespace Game {
     public static class Math {
         /// <summary>
         ///     Returns <paramref name="value" /> mapped from one range [<paramref name="minA" />, <paramref name="maxA" />] to
@@ -26,7 +26,6 @@ namespace Game.Utils {
         /// <param name="min">The minimum value to compare against (inclusive)</param>
         /// <param name="max">The maximum value to compare against (exclusive)</param>
         /// <returns><value>true</value> if <para>comp</para>>=<para>min</para> and <para>comp</para><<para>max</para></returns>
-
         public static bool Between<TA>(this TA comp, TA min, TA max) where TA : IComparable {
             return comp.CompareTo(min) >= 0 && comp.CompareTo(max) < 0;
         }

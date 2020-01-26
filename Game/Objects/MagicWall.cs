@@ -5,9 +5,9 @@ using GXPEngine.Core;
 
 namespace Game {
     public class MagicWall : GameObject {
-        private readonly int animationFrames = 5;
+        private const int animationFrames = 5;
+        private const float uvSize = 0.2F;
         private readonly Texture2D mainTexture;
-        private readonly float uvSize = 0.2F;
         private int currentFrame;
         public MagicWall(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
@@ -17,9 +17,9 @@ namespace Game {
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/magicWall.png", color1, color2);
                 mainTexture.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/magicWall.png");
-                throw e;
+                throw;
             }
         }
 

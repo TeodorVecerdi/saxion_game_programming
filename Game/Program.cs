@@ -9,6 +9,9 @@ namespace Game {
             pPixelArt: Globals.PIXEL_ART) {
             ShowMouse(true);
             targetFps = 24;
+            
+            Rand.PushState();
+            Rand.Seed = Time.now;
             var level1 = new Level("data/Levels/GameLevels/Level1.xml");
             var world = new World(level1);
             Input.AddAxis("Horizontal", new List<int> {Key.A, Key.LEFT}, new List<int> {Key.D, Key.RIGHT});

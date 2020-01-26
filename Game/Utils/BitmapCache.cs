@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Drawing;
 
-namespace Game.Utils {
+namespace Game {
+    /// <summary>
+    /// This class is used to store bitmaps which already have the level color applied to them so
+    /// the Game.Misc.ApplyLevelColor method is not called when needed. Gets cleaned every level reload.
+    /// </summary>
     public static class BitmapCache {
         public static readonly Hashtable Cache = new Hashtable();
 

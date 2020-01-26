@@ -5,14 +5,14 @@ using GXPEngine.Core;
 
 namespace Game {
     public class Player : GameObject {
-        private readonly int animationFrames = 8;
+        private const int animationFrames = 8;
+        private const float uvSize = 0.125F;
         private readonly Texture2D playerIdle;
         private readonly Texture2D playerIdleBlink;
         private readonly Texture2D playerIdleBlinkTap;
         private readonly Texture2D playerIdleTap;
         private readonly Texture2D playerLeft;
         private readonly Texture2D playerRight;
-        private readonly float uvSize = 0.125F;
         private int currentDirection = -1;
         private int currentFrame;
         private bool idleBlink;
@@ -22,60 +22,62 @@ namespace Game {
 
         public Player(Vector2 position, int color1, int color2) {
             SetXY(position.x, position.y);
+            #region Load Textures
             playerRight = Texture2D.GetInstance("data/tiles/playerRight.png", true);
             playerLeft = Texture2D.GetInstance("data/tiles/playerLeft.png", true);
             playerIdleBlinkTap = Texture2D.GetInstance("data/tiles/playerIdleBlinkTap.png", true);
             playerIdleBlink = Texture2D.GetInstance("data/tiles/playerIdleBlink.png", true);
             playerIdleTap = Texture2D.GetInstance("data/tiles/playerIdleTap.png", true);
             playerIdle = Texture2D.GetInstance("data/tiles/playerIdle.png", true);
+            
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/playerRight.png", color1, color2);
                 playerRight.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/playerRight.png");
-                throw e;
+                throw;
             }
 
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/playerLeft.png", color1, color2);
                 playerLeft.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/playerLeft.png");
-                throw e;
+                throw;
             }
 
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/playerIdleBlinkTap.png", color1, color2);
                 playerIdleBlinkTap.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/playerIdleBlinkTap.png");
-                throw e;
+                throw;
             }
 
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/playerIdleBlink.png", color1, color2);
                 playerIdleBlink.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/playerIdleBlink.png");
-                throw e;
+                throw;
             }
 
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/playerIdleTap.png", color1, color2);
                 playerIdleTap.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/playerIdleTap.png");
-                throw e;
+                throw;
             }
 
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/playerIdle.png", color1, color2);
                 playerIdle.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/playerIdle.png");
-                throw e;
+                throw;
             }
-
+            #endregion
             mainTexture = playerIdle;
         }
 

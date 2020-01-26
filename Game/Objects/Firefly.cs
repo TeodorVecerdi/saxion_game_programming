@@ -5,12 +5,12 @@ using GXPEngine.Core;
 
 namespace Game {
     public class Firefly : GameObject {
+        public bool UpdatedThisFrame = false;
+        public Vector2Int Direction = Vector2Int.left;
         private const int animationFrames = 8;
         private const float uvSize = 0.125f;
         private readonly Texture2D mainTexture;
         private int currentFrame;
-        public Vector2Int Direction = Vector2Int.left;
-        public bool UpdatedThisFrame = false;
         public Firefly(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
         public Firefly(float x, float y, int color1, int color2) {
@@ -19,9 +19,9 @@ namespace Game {
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/firefly.png", color1, color2);
                 mainTexture.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/firefly.png");
-                throw e;
+                throw;
             }
         }
 

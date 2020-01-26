@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using GXPEngine;
 
-namespace Game.Utils {
+namespace Game {
     public static class Misc {
         /// <summary>
         ///     Applies the current level color to a Bitmap to be later used as a Texture2D
@@ -16,8 +16,6 @@ namespace Game.Utils {
             var col1 = Color.FromArgb(0xff, (color1 >> 16) & 0xff, (color1 >> 8) & 0xff, color1 & 0xff);
             var col2 = Color.FromArgb(0xff, (color2 >> 16) & 0xff, (color2 >> 8) & 0xff, color2 & 0xff);
 
-            //a52a00 (165, 42, 0) -> color1
-            //3f3f3f (63, 63, 63) -> color2
             const int pixelSize = 4;
             var target = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
             BitmapData sourceData = null, targetData = null;

@@ -5,8 +5,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using GXPEngine;
 
-namespace Game.Utils {
-    public class Debug {
+namespace Game {
+    /// <summary>
+    /// Debug class with utility methods: Log, LogWarning, LogError and Assert
+    /// Inspired by the Unity implementation is the Debug class. Gets stripped from Release builds.
+    /// </summary>
+    public static class Debug {
         private const string LogFormat = " at {0}.{1}:{2} ({3}:line {2})";
 
         private static string GetString(object message) {
@@ -16,7 +20,7 @@ namespace Game.Utils {
             return formattable != null ? formattable.ToString(null, CultureInfo.InvariantCulture) : message.ToString();
         }
 
-        public static void Log(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void Log(object message, string messageTitle = "[LOG]", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
 #if DEBUG
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
@@ -33,15 +37,15 @@ namespace Game.Utils {
             method.Append(")");
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.Write("[LOG]");
+            Console.Write("[" + messageTitle + "]");
             Console.ResetColor();
-            Console.Write(" " + GetString(message) + $" at {Time.now / 1000f}");
+            Console.Write(" " + GetString(message));
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
 #endif
         }
 
-        public static void LogWarning(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void LogWarning(object message, string messageTitle = "[WARN]", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
 #if DEBUG
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
@@ -58,17 +62,17 @@ namespace Game.Utils {
             method.Append(")");
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkYellow;
-            Console.Write("[WARN]");
+            Console.Write("[" + messageTitle + "]");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write(" " + GetString(message) + $" at {Time.now / 1000f}");
+            Console.Write(" " + GetString(message));
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
 #endif
         }
 
-        public static void LogError(object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void LogError(object message, string messageTitle = "ERROR", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
 #if DEBUG
             var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
             var mth = new StackTrace().GetFrame(1).GetMethod();
@@ -85,13 +89,48 @@ namespace Game.Utils {
             method.Append(")");
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkRed;
-            Console.Write("[ERROR]");
+            Console.Write("[" + messageTitle + "]");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write(" " + GetString(message) + $" at {Time.now / 1000f}");
+            Console.Write(" " + GetString(message));
             Console.ResetColor();
             Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
             Console.ResetColor();
+#endif
+        }
+
+        public static void Assert(bool condition, object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+#if ASSERT || DEBUG
+            if (condition) return;
+            Fail(message, "ASSERTION FAILED", lineNumber, filePath);
+#endif
+        }
+
+        public static void Fail(object message, string messageTitle = "FAIL", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+#if ASSERT || DEBUG
+            var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
+            var mth = new StackTrace().GetFrame(1).GetMethod();
+            var className = mth.ReflectedType?.Name;
+            var method = new StringBuilder();
+            method.Append(mth.Name);
+            method.Append("(");
+            var methodParameters = mth.GetParameters();
+            for (var i = 0; i < methodParameters.Length; i++) {
+                method.Append(methodParameters[i].ParameterType);
+                if (i != methodParameters.Length - 1) method.Append(", ");
+            }
+
+            method.Append(")");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.Write("[" + messageTitle + "]");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write(" " + GetString(message));
+            Console.ResetColor();
+            Console.WriteLine(LogFormat.format(className, method, lineNumber, fileName));
+            Console.ResetColor();
+            Environment.Exit(4);
 #endif
         }
     }

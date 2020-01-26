@@ -5,12 +5,12 @@ using GXPEngine.Core;
 
 namespace Game {
     public class Diamond : GameObject {
-        private readonly int animationFrames = 8;
-        private readonly Texture2D mainTexture;
-        private readonly float uvSize = 0.125f;
-        private int currentFrame;
         public bool IsFalling = false;
         public bool UpdatedThisFrame = false;
+        private const int animationFrames = 8;
+        private const float uvSize = 0.125f;
+        private readonly Texture2D mainTexture;
+        private int currentFrame;
         public Diamond(Vector2 position, int color1, int color2) : this(position.x, position.y, color1, color2) { }
 
         public Diamond(float x, float y, int color1, int color2) {
@@ -19,9 +19,9 @@ namespace Game {
             try {
                 var target = Misc.ApplyLevelColor("data/tiles/diamond.png", color1, color2);
                 mainTexture.SetBitmap(target);
-            } catch (Exception e) {
+            } catch (Exception) {
                 Console.WriteLine("Could not find file data/tiles/diamond.png");
-                throw e;
+                throw;
             }
         }
 
