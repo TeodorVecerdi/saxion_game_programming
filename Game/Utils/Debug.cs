@@ -20,10 +20,13 @@ namespace Game {
             return formattable != null ? formattable.ToString(null, CultureInfo.InvariantCulture) : message.ToString();
         }
 
-        public static void Log(object message, string messageTitle = "[LOG]", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void Log(object message, string messageTitle = "[LOG]") {
 #if DEBUG
-            var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
-            var mth = new StackTrace().GetFrame(1).GetMethod();
+            // var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
+            var stack = new StackTrace().GetFrame(1);
+            var mth = stack.GetMethod();
+            var lineNumber = stack.GetFileLineNumber();
+            var fileName = stack.GetFileName();
             var className = mth.ReflectedType?.Name;
             var method = new StringBuilder();
             method.Append(mth.Name);
@@ -45,10 +48,12 @@ namespace Game {
 #endif
         }
 
-        public static void LogWarning(object message, string messageTitle = "[WARN]", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void LogWarning(object message, string messageTitle = "[WARN]") {
 #if DEBUG
-            var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
-            var mth = new StackTrace().GetFrame(1).GetMethod();
+            var stack = new StackTrace().GetFrame(1);
+            var mth = stack.GetMethod();
+            var lineNumber = stack.GetFileLineNumber();
+            var fileName = stack.GetFileName();
             var className = mth.ReflectedType?.Name;
             var method = new StringBuilder();
             method.Append(mth.Name);
@@ -72,10 +77,12 @@ namespace Game {
 #endif
         }
 
-        public static void LogError(object message, string messageTitle = "ERROR", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void LogError(object message, string messageTitle = "ERROR") {
 #if DEBUG
-            var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
-            var mth = new StackTrace().GetFrame(1).GetMethod();
+            var stack = new StackTrace().GetFrame(1);
+            var mth = stack.GetMethod();
+            var lineNumber = stack.GetFileLineNumber();
+            var fileName = stack.GetFileName();
             var className = mth.ReflectedType?.Name;
             var method = new StringBuilder();
             method.Append(mth.Name);
@@ -99,17 +106,23 @@ namespace Game {
 #endif
         }
 
-        public static void Assert(bool condition, object message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void Assert(bool condition, object message) {
 #if ASSERT || DEBUG
             if (condition) return;
-            Fail(message, "ASSERTION FAILED", lineNumber, filePath);
+            var stack = new StackTrace().GetFrame(1);
+            var lineNumber = stack.GetFileLineNumber();
+            var fileName = stack.GetFileName();
+            Fail(message, "ASSERTION FAILED", lineNumber, fileName);
 #endif
         }
 
-        public static void Fail(object message, string messageTitle = "FAIL", [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string filePath = "") {
+        public static void Fail(object message, string messageTitle = "FAIL", int lineNumber = 0, string filePath = "") {
 #if ASSERT || DEBUG
-            var fileName = filePath.Substring(filePath.LastIndexOf("\\", StringComparison.Ordinal) + 1);
-            var mth = new StackTrace().GetFrame(1).GetMethod();
+            var stack = new StackTrace().GetFrame(1);
+            var mth = stack.GetMethod();
+            if(lineNumber == 0)
+                lineNumber = stack.GetFileLineNumber();
+            var fileName = stack.GetFileName();
             var className = mth.ReflectedType?.Name;
             var method = new StringBuilder();
             method.Append(mth.Name);

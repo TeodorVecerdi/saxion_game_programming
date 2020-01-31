@@ -9,7 +9,7 @@ namespace GXPEngine {
 	///     The Input class contains functions for reading keys and mouse
 	/// </summary>
 	public class Input {
-		private static Dictionary<string, ValueTuple<List<int>, List<int>>> Axes = new Dictionary<string, (List<int>, List<int>)>();
+		private static Dictionary<string, ValueTuple<List<int>, List<int>>> Axes = new Dictionary<string, ValueTuple<List<int>, List<int>>>();
 		/// <summary>
 		///     Gets the current mouse x position in pixels.
 		/// </summary>
@@ -90,7 +90,7 @@ namespace GXPEngine {
         }
 
 		public static void AddAxis(string axisName, List<int> negativeKeys, List<int> positiveKeys) {
-			Axes.Add(axisName, ValueTuple.Create(negativeKeys, positiveKeys));
+			Axes.Add(axisName, ValueTuple<List<int>,List<int>>.Create(negativeKeys, positiveKeys));
 		}
 
 		public static float GetAxis(string axisName) {

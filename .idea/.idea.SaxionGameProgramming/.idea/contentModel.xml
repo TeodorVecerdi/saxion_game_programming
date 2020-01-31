@@ -188,6 +188,7 @@
           <e p="Rand.cs" t="Include" />
           <e p="RandomNumberGenerator.cs" t="Include" />
           <e p="UITextures.cs" t="Include" />
+          <e p="ValueTuple.cs" t="Include" />
         </e>
       </e>
       <e p="Game.csproj" t="IncludeRecursive" />
@@ -247,6 +248,7 @@
           <e p="MouseHandler.cs" t="Include" />
           <e p="Time.cs" t="Include" />
           <e p="Utils.cs" t="Include" />
+          <e p="ValueTuple.cs" t="Include" />
         </e>
       </e>
       <e p="GXPEngine.csproj" t="IncludeRecursive" />

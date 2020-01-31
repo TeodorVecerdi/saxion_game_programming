@@ -14,9 +14,9 @@ namespace Game.Utils {
         public Level(string path) {
             LevelPath = path;
             var gameLevel = Loader.LoadGameLevel(path);
-            RandomObjects = new List<(int, int)>();
+            RandomObjects = new List<ValueTuple<int, int>>();
             for (var i = 0; i < gameLevel.RandomObject.Count; i++)
-                RandomObjects.Add(ValueTuple.Create(gameLevel.RandomObject[i].Id, gameLevel.RandomObjectProb[i].Prob));
+                RandomObjects.Add(ValueTuple<int,int>.Create(gameLevel.RandomObject[i].Id, gameLevel.RandomObjectProb[i].Prob));
             Name = gameLevel.Name;
             Description = gameLevel.Description;
             Width = gameLevel.Width;

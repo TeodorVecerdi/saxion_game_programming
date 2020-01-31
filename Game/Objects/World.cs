@@ -325,23 +325,23 @@ namespace Game {
                 KillPlayer();
             } //turn butterfly into diamonds 
             else if (j < Level.Height - 1 && Level[i, j + 1] == TileType.Butterfly && obj.IsFalling) {
-                var validSpotsForDiamondSpawning = new List<(int, int)> {ValueTuple.Create(i, j), ValueTuple.Create(i, j + 1)};
+                var validSpotsForDiamondSpawning = new List<ValueTuple<int, int>> {ValueTuple<int,int>.Create(i, j), ValueTuple<int,int>.Create(i, j + 1)};
                 if (i > 2) {
-                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j));
-                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j + 1));
+                    validSpotsForDiamondSpawning.Add(ValueTuple<int, int>.Create(i - 1, j));
+                    validSpotsForDiamondSpawning.Add(ValueTuple<int,int>.Create(i - 1, j + 1));
                     if (j < Level.Height - 2)
-                        validSpotsForDiamondSpawning.Add(ValueTuple.Create(i - 1, j + 2));
+                        validSpotsForDiamondSpawning.Add(ValueTuple<int,int>.Create(i - 1, j + 2));
                 }
 
                 if (i < Level.Width - 2) {
-                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i + 1, j));
-                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i + 1, j + 1));
+                    validSpotsForDiamondSpawning.Add(ValueTuple<int,int>.Create(i + 1, j));
+                    validSpotsForDiamondSpawning.Add(ValueTuple<int,int>.Create(i + 1, j + 1));
                     if (j < Level.Height - 2)
-                        validSpotsForDiamondSpawning.Add(ValueTuple.Create(i + 1, j + 2));
+                        validSpotsForDiamondSpawning.Add(ValueTuple<int,int>.Create(i + 1, j + 2));
                 }
 
                 if (j < Level.Height - 2)
-                    validSpotsForDiamondSpawning.Add(ValueTuple.Create(i, j + 2));
+                    validSpotsForDiamondSpawning.Add(ValueTuple<int,int>.Create(i, j + 2));
 
                 foreach (var diamondSpawningSpot in validSpotsForDiamondSpawning) {
                     var obj1 = objects[diamondSpawningSpot.Item1, diamondSpawningSpot.Item2];
